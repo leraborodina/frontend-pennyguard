@@ -1,0 +1,23 @@
+<!-- Display error message if present -->
+<div *ngIf="errorMessage">
+    <p class="error-message">{{ errorMessage }}</p>
+</div>
+
+<!-- Login form container -->
+<div class="login-container">
+    <h2>Login</h2>
+
+    <!-- Login form with ngSubmit event binding to the login method -->
+    <form (ngSubmit)="login()">
+        <!-- Email input -->
+        <label for="email">Email:</label>
+        <input type="text" id="email" name="email" [(ngModel)]="email" required="required" />
+
+        <!-- Password input -->
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" [(ngModel)]="password" required="required" />
+
+        <!-- Submit button -->
+        <button type="submit">Login</button>
+    </form>
+</div>

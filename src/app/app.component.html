@@ -1,0 +1,15 @@
+<!-- app.component.html -->
+
+<div class="navbar">
+  <ul>
+    <li><a routerLink="/login">Login</a></li>
+    <li><a routerLink="/registration">Registration</a></li>
+    <li><a routerLink="/incomes">Incomes</a></li>
+    <li><a routerLink="/dashboard">Dashboard</a></li>
+  </ul>
+</div>
+
+<!-- Logout Component (conditionally rendered) -->
+<app-logout *ngIf="isAuthenticated"></app-logout>
+
+<router-outlet></router-outlet>

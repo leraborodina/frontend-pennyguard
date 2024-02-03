@@ -1,0 +1,7 @@
+<!-- Display content only if the user is authenticated -->
+<div *ngIf="isUserAuthenticated()">
+    <!-- Your authenticated content here -->
+
+    <!-- Example: Logout button triggering the logout method -->
+    <button (click)="logout()">Logout</button>
+</div>
