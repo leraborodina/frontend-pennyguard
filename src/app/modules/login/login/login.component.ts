@@ -45,7 +45,8 @@ export class LoginComponent implements OnInit {
     this.userService.setUserData(userData);
 
     // Navigate to the dashboard
-    this.router.navigate(['/dashboard']);
+    this.router.navigate(['/transaction-overview']);
+    
   }
 
   private handleLoginFailure(): void {

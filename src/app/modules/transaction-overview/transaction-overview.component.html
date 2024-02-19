@@ -1,0 +1,18 @@
+<table class="table">
+  <thead>
+    <tr>
+      <th>Purpose</th>
+      <th>Category ID</th>
+      <th>Amount</th>
+      <th>Date</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let transaction of transactions">
+      <td>{{ transaction.purpose }}</td>
+      <td>{{ transaction.categoryId }}</td>
+      <td>{{ transaction.amount }}</td>
+      <td>{{ transaction.date }}</td>
+    </tr>
+  </tbody>
+</table>

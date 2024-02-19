@@ -11,6 +11,8 @@ import { DashboardComponent } from './modules/dashboard/dashboard.component';
 import { IncomesComponent } from './modules/incomes/incomes.component';
 import { ExpensesComponent } from './modules/expenses/expenses.component';
 import { LogoutComponent } from './modules/logout/logout.component';
+import { TransactionComponent } from './modules/transaction/transaction.component';
+import { TransactionOverviewComponent } from './modules/transaction-overview/transaction-overview.component';
 
 
 @NgModule({
@@ -21,7 +23,9 @@ import { LogoutComponent } from './modules/logout/logout.component';
     RegistrationComponent,
     DashboardComponent,
     IncomesComponent,
-    ExpensesComponent
+    ExpensesComponent,
+    TransactionComponent,
+    TransactionOverviewComponent
   ],
   imports: [
     BrowserModule,
