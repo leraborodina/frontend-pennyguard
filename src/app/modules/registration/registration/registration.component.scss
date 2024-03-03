@@ -1,56 +1,60 @@
+.registration-label {
+  font-size: 24px; /* Adjust the font size as needed */
+  text-align: center; /* Align the text to the center */
+  margin-bottom: 20px; /* Add some space below the label */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100px; /* Set a fixed height to center vertically */
+}
+
 .registration-container {
-    max-width: 400px;
-    margin: auto;
-    padding: 20px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    background-color: #fff;
-  
-    h2 {
-      text-align: center;
-      color: #333;
-    }
-  
-    form {
-      display: flex;
-      flex-direction: column;
-  
-      label {
-        margin-bottom: 8px;
-        color: #555;
-      }
-  
-      input {
-        padding: 10px;
-        margin-bottom: 16px;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-        font-size: 16px;
-      }
-  
-      button {
-        background-color: #28a745;
-        color: #fff;
-        padding: 12px;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-        font-size: 16px;
-      }
-    }
-  }
-  
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
-  .success-message {
-    font-size: 30px;
-    font-weight: bold;
-    text-align: center;
-    color: #008622;
-  }
+mat-card {
+  width: 100%;
+  max-width: 400px; /* Adjust as needed for your design */
+  margin: auto;
+  padding: 20px;
+}
 
-  
-  .error-message {
-    font-size: 30px;
-    font-weight: bold;
-    text-align: center;
-    color: #860000;
-  }
+mat-card-header {
+  text-align: left; /* Align header text to the left */
+  margin-bottom: 20px; /* Add space between header and form */
+}
+
+.form-container {
+  display: flex;
+  flex-direction: column;
+}
+
+mat-form-field {
+  margin: 5px;
+}
+
+mat-error {
+  margin-top: 5px;
+  margin-bottom: 20px;
+}
+
+.registration-button {
+  width: 100%; /* Make the login button full width */
+  margin-bottom: 10px; /* Add space below the button */
+  margin-top: 10px;
+}
+
+.success-message {
+  color: green; /* Set the color of the success message */
+  font-size: 16px; /* Adjust the font size */
+  margin-top: 10px; /* Add some space between the success message and other elements */
+}
+
+.footer-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

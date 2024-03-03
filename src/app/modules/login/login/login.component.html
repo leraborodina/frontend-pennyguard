@@ -1,23 +1,29 @@
-<!-- Display error message if present -->
-<div *ngIf="errorMessage">
-    <p class="error-message">{{ errorMessage }}</p>
-</div>
-
-<!-- Login form container -->
-<div class="login-container">
-    <h2>Login</h2>
-
-    <!-- Login form with ngSubmit event binding to the login method -->
-    <form (ngSubmit)="login()">
-        <!-- Email input -->
-        <label for="email">Email:</label>
-        <input type="text" id="email" name="email" [(ngModel)]="email" required="required" />
-
-        <!-- Password input -->
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="password" [(ngModel)]="password" required="required" />
-
-        <!-- Submit button -->
-        <button type="submit">Login</button>
-    </form>
+<div fxLayout="column" fxLayoutAlign="center center" class="login-container">
+  <mat-card>
+    <mat-card-header class="login-label">Login</mat-card-header>
+    <mat-card-content>
+      <div class="form-container">
+        <mat-form-field>
+          <mat-label>Enter your email</mat-label>
+          <input matInput placeholder="pat@example.com" [formControl]="email" required>
+          <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error>
+        </mat-form-field>
+        <mat-error *ngIf="email.errors?.['notFound']">User not found. Please check your email.</mat-error>
+        <mat-form-field>
+          <mat-label>Enter your password</mat-label>
+          <input matInput [type]="hide ? 'password' : 'text'" [formControl]="password" required>
+          <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
+            [attr.aria-pressed]="hide">
+            <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+          </button>
+        </mat-form-field>
+        <mat-error *ngIf="password.errors?.['invalidCredentials']">Invalid password. Please enter correct credentials.</mat-error>
+        <button (click)="login()" mat-raised-button color="primary" class="login-button">Login</button>
+      </div>
+    </mat-card-content>
+    <mat-card-footer class="footer-container">
+      <span>Don't have an account?</span>
+      <a (click)="redirectToRegistry()" mat-button color="primary" class="registry-button">Register</a>
+    </mat-card-footer>
+  </mat-card>
 </div>

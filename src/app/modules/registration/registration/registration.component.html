@@ -1,42 +1,43 @@
-<!-- Display success message if available -->
-<div *ngIf="successMessage">
-    <p class="success-message">{{ successMessage }}</p>
-</div>
-
-<!-- Display error message if available -->
-<div *ngIf="errorMessage">
-    <p class="error-message">{{ errorMessage }}</p>
-</div>
-
-<!-- Registration form container -->
-<div class="registration-container">
-    <!-- Registration form heading -->
-    <h2>Registration</h2>
-
-    <!-- Registration form with Angular template-driven forms -->
-    <form (ngSubmit)="registerUser()">
-        <!-- Firstname input field with two-way data binding using ngModel -->
-        <label for="firstname">Firstname:</label>
-        <input type="text" id="firstname" name="firstname" [(ngModel)]="firstname" required />
-
-        <!-- Lastname input field with two-way data binding using ngModel -->
-        <label for="lastname">Lastname:</label>
-        <input type="text" id="lastname" name="lastname" [(ngModel)]="lastname" required />
-
-        <!-- Email input field with two-way data binding using ngModel -->
-        <label for="email">Email:</label>
-        <input type="text" id="email" name="email" [(ngModel)]="email" required />
-
-        <!-- Password input field with two-way data binding using ngModel -->
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="password" [(ngModel)]="password" required />
-
-        <!-- Confirm password input field with two-way data binding using ngModel -->
-        <label for="confirmedPassword">Confirm password:</label>
-        <input type="password" id="confirmedPassword" name="confirmedPassword" [(ngModel)]="confirmedPassword"
-            required />
-
-        <!-- Submit button for the registration form -->
-        <button type="submit">Register</button>
-    </form>
+<div fxLayout="column" fxLayoutAlign="center center" class="registration-container">
+  <mat-card>
+    <mat-card-header class="registration-label">Registration</mat-card-header>
+    <mat-card-content>
+      <div class="form-container">
+        <mat-form-field>
+          <mat-label>Enter your first name</mat-label>
+          <input matInput placeholder="John" [formControl]="firstname" required>
+          <mat-error *ngIf="firstname.invalid">First name is required</mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Enter your last name</mat-label>
+          <input matInput placeholder="Doe" [formControl]="lastname" required>
+          <mat-error *ngIf="lastname.invalid">Last name is required</mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Enter your email</mat-label>
+          <input matInput placeholder="john@example.com" [formControl]="email" required>
+          <mat-error *ngIf="email.invalid">Email is required</mat-error>
+          <mat-error *ngIf="email.errors?.['email']">Invalid email format</mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Enter your password</mat-label>
+          <input matInput type="password" [formControl]="password" required>
+          <mat-error *ngIf="password.invalid">Password is required</mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Confirm your password</mat-label>
+          <input matInput type="password" [formControl]="confirmedPassword" required>
+          <mat-error *ngIf="confirmedPassword.invalid">Confirmation is required</mat-error>
+          <mat-error *ngIf="password.value !== confirmedPassword.value">Passwords do not match</mat-error>
+        </mat-form-field>
+        <button class="registration-button" mat-raised-button color="primary" (click)="registerUser()">Register</button>
+        <p class="success-message" *ngIf="successMessage">{{ successMessage }}</p>
+        <p class="error-message" *ngIf="errorMessage">{{ errorMessage }}</p>
+      </div>
+    </mat-card-content>
+    <mat-card-footer class="footer-container">
+      <span>Already have an account?</span>
+      <a (click)="redirectToLogin()" mat-button color="primary" routerLink="/login">Login</a>
+    </mat-card-footer>
+  </mat-card>
 </div>

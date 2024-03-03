@@ -1,47 +1,38 @@
 .login-container {
-    max-width: 400px;
-    margin: auto;
-    padding: 20px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    background-color: #fff;
-  
-    h2 {
-      text-align: center;
-      color: #333;
-    }
-  
-    form {
-      display: flex;
-      flex-direction: column;
-  
-      label {
-        margin-bottom: 8px;
-        color: #555;
-      }
-  
-      input {
-        padding: 10px;
-        margin-bottom: 16px;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-        font-size: 16px;
-      }
-  
-      button {
-        background-color: #007bff;
-        color: #fff;
-        padding: 12px;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-        font-size: 16px;
-      }
-    }
-  }
-  
-  .error-message {
-    font-size: 30px;
-    font-weight: bold;
-    text-align: center;
-    color: #860000;
-  }
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+mat-card {
+  width: 100%;
+  max-width: 400px; /* Adjust as needed for your design */
+  margin: auto;
+  padding: 20px;
+}
+
+mat-card-header {
+  text-align: left; /* Align header text to the left */
+  margin-bottom: 20px; /* Add space between header and form */
+}
+
+.form-container {
+  display: flex;
+  flex-direction: column;
+}
+
+mat-error {
+  margin-bottom: 20px;
+}
+
+.login-button {
+  width: 100%; /* Make the login button full width */
+  margin-bottom: 10px; /* Add space below the button */
+}
+
+.footer-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

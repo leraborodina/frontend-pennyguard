@@ -41,7 +41,7 @@ export class AuthService {
     this.tokenSubject.next(storedToken);
   }
 
-  login(email: string, password: string): Observable<{ token: string }> {
+  login(email: string | null, password: string | null): Observable<{ token: string }> {
     // Send a login request and return the observable with the token response
     const loginRequest = { email, password };
     return this.http.post<{ token: string }>(`${this.authEndpoint}/login`, loginRequest);

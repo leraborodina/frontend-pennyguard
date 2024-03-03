@@ -3,6 +3,8 @@ import { Component } from '@angular/core';
 import { User } from '../../../shared/user.model';
 import { RegistrationService } from '../../../core/registration.service';
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
+import { FormControl, Validators } from '@angular/forms';
+import { Router } from '@angular/router'; 
 
 @Component({
   selector: 'app-registration',
@@ -10,44 +12,56 @@ import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
   styleUrls: ['./registration.component.scss']
 })
 export class RegistrationComponent {
-  firstname: string = '';
-  lastname: string = '';
-  email: string = '';
-  password: string = '';
-  confirmedPassword: string = '';
-  successMessage: string = '';
-  errorMessage: string = '';
 
-  constructor(private registrationService: RegistrationService) { }
+  firstname = new FormControl('', [Validators.required]);
+  lastname = new FormControl('', [Validators.required]);
+  email = new FormControl('', [Validators.required, Validators.email]);
+  password = new FormControl('', [Validators.required]);
+  confirmedPassword = new FormControl('', [Validators.required]);
+  successMessage = '';
+  errorMessage = '';
+
+  constructor(private registrationService: RegistrationService, private router: Router) { }
   
   // Method triggered when the registration form is submitted
   registerUser(): void {
-    // Check if passwords match before proceeding with registration
     if (this.arePasswordsMatch()) {
-      // Create a User object with the form input values
-      const user = new User(this.firstname, this.lastname, this.email, this.password);
+      const userData = {
+        firstname: this.firstname.value,
+        lastname: this.lastname.value,
+        email: this.email.value,
+        password: this.password.value
+      };
 
-      // Call the registration service to register the user
-      this.registrationService
-        .registerUser(user)
+      this.registrationService.registerUser(userData)
         .subscribe(
           (response) => this.handleSuccessResponse(response),
-          (error) => this.handleErrorResponse(error)
+          (error: HttpErrorResponse) => {
+            if (error.status === 400) {
+              this.errorMessage = error.error.message;
+            } else {
+              this.errorMessage = 'An unexpected error occurred. Please try again later.';
+            }
+          }
         );
     } else {
-      // Display error message when passwords don't match
-      this.errorMessage = "Passwords don't match";
+      this.errorMessage = 'Passwords do not match';
     }
   }
 
   // Check if the entered passwords match
-  private arePasswordsMatch(): boolean {
-    return this.password === this.confirmedPassword;
+    arePasswordsMatch(): boolean {
+    return this.password.value === this.confirmedPassword.value;
   }
 
   // Handle successful registration response
   private handleSuccessResponse(response: HttpResponse<any>): void {
     if (response.status === 201) {
+      this.firstname.setValue('');
+            this.lastname.setValue('');
+            this.email.setValue('');
+            this.password.setValue('');
+            this.confirmedPassword.setValue('');
       // Set success message based on the response data
       this.setSuccessMessage(response.body);
     }
@@ -100,5 +114,9 @@ export class RegistrationComponent {
     // Display detailed error message received from the server
     console.error('Internal server error:', response.body);
     // Additional actions if needed
+  }
+
+  redirectToLogin() {
+    this.router.navigate(['/login']);
   }
 }
