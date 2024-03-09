@@ -3,7 +3,7 @@ import { jwtDecode } from 'jwt-decode';
 import { EventService } from './event.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class TokenService {
   private token: string = '';
@@ -37,7 +37,7 @@ export class TokenService {
         const decodedToken: any = jwtDecode(token);
         const expirationTimestamp: number = decodedToken.exp * 1000;
         const isExpired = Date.now() > expirationTimestamp;
-       
+
         if (isExpired) {
           this.eventService.emitTokenExpired();
         }

@@ -5,20 +5,22 @@
       <div class="form-container">
         <mat-form-field>
           <mat-label>Enter your email</mat-label>
-          <input matInput placeholder="pat@example.com" [formControl]="email" required>
-          <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error>
+          <input matInput placeholder="pat@example.com" [formControl]="email" required />
+          <mat-error *ngIf="email.invalid">{{ getErrorMessage() }}</mat-error>
         </mat-form-field>
-        <mat-error *ngIf="email.errors?.['notFound']">User not found. Please check your email.</mat-error>
+        <mat-error *ngIf="email.errors?.['notFound']">{{email.errors?.['message']}}</mat-error>
         <mat-form-field>
           <mat-label>Enter your password</mat-label>
-          <input matInput [type]="hide ? 'password' : 'text'" [formControl]="password" required>
+          <input matInput [type]="hide ? 'password' : 'text'" [formControl]="password" required />
           <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
             [attr.aria-pressed]="hide">
-            <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+            <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
           </button>
         </mat-form-field>
-        <mat-error *ngIf="password.errors?.['invalidCredentials']">Invalid password. Please enter correct credentials.</mat-error>
-        <button (click)="login()" mat-raised-button color="primary" class="login-button">Login</button>
+        <mat-error *ngIf="password.errors?.['invalidCredentials']">{{password.errors?.['message']}}</mat-error>
+        <button (click)="login()" mat-raised-button color="primary" class="login-button">
+          Login
+        </button>
       </div>
     </mat-card-content>
     <mat-card-footer class="footer-container">

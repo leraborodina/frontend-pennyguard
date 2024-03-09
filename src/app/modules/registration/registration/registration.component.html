@@ -1,43 +1,85 @@
-<div fxLayout="column" fxLayoutAlign="center center" class="registration-container">
+<div
+  fxLayout="column"
+  fxLayoutAlign="center center"
+  class="registration-container"
+>
   <mat-card>
     <mat-card-header class="registration-label">Registration</mat-card-header>
     <mat-card-content>
       <div class="form-container">
         <mat-form-field>
           <mat-label>Enter your first name</mat-label>
-          <input matInput placeholder="John" [formControl]="firstname" required>
-          <mat-error *ngIf="firstname.invalid">First name is required</mat-error>
+          <input
+            matInput
+            placeholder="John"
+            [formControl]="firstname"
+            required
+          />
+          <mat-error *ngIf="firstname.invalid"
+            >First name is required</mat-error
+          >
         </mat-form-field>
         <mat-form-field>
           <mat-label>Enter your last name</mat-label>
-          <input matInput placeholder="Doe" [formControl]="lastname" required>
+          <input matInput placeholder="Doe" [formControl]="lastname" required />
           <mat-error *ngIf="lastname.invalid">Last name is required</mat-error>
         </mat-form-field>
         <mat-form-field>
           <mat-label>Enter your email</mat-label>
-          <input matInput placeholder="john@example.com" [formControl]="email" required>
+          <input
+            matInput
+            placeholder="john@example.com"
+            [formControl]="email"
+            required
+          />
           <mat-error *ngIf="email.invalid">Email is required</mat-error>
-          <mat-error *ngIf="email.errors?.['email']">Invalid email format</mat-error>
+          <mat-error *ngIf="email.errors?.['email']"
+            >Invalid email format</mat-error
+          >
         </mat-form-field>
         <mat-form-field>
           <mat-label>Enter your password</mat-label>
-          <input matInput type="password" [formControl]="password" required>
+          <input matInput type="password" [formControl]="password" required />
           <mat-error *ngIf="password.invalid">Password is required</mat-error>
         </mat-form-field>
         <mat-form-field>
           <mat-label>Confirm your password</mat-label>
-          <input matInput type="password" [formControl]="confirmedPassword" required>
-          <mat-error *ngIf="confirmedPassword.invalid">Confirmation is required</mat-error>
-          <mat-error *ngIf="password.value !== confirmedPassword.value">Passwords do not match</mat-error>
+          <input
+            matInput
+            type="password"
+            [formControl]="confirmedPassword"
+            required
+          />
+          <mat-error *ngIf="confirmedPassword.invalid"
+            >Confirmation is required</mat-error
+          >
+          <mat-error *ngIf="password.value !== confirmedPassword.value"
+            >Passwords do not match</mat-error
+          >
         </mat-form-field>
-        <button class="registration-button" mat-raised-button color="primary" (click)="registerUser()">Register</button>
-        <p class="success-message" *ngIf="successMessage">{{ successMessage }}</p>
+        <button
+          class="registration-button"
+          mat-raised-button
+          color="primary"
+          (click)="registerUser()"
+        >
+          Register
+        </button>
+        <p class="success-message" *ngIf="successMessage">
+          {{ successMessage }}
+        </p>
         <p class="error-message" *ngIf="errorMessage">{{ errorMessage }}</p>
       </div>
     </mat-card-content>
     <mat-card-footer class="footer-container">
       <span>Already have an account?</span>
-      <a (click)="redirectToLogin()" mat-button color="primary" routerLink="/login">Login</a>
+      <a
+        (click)="redirectToLogin()"
+        mat-button
+        color="primary"
+        routerLink="/login"
+        >Login</a
+      >
     </mat-card-footer>
   </mat-card>
 </div>

@@ -8,8 +8,10 @@ import { AuthService } from './auth.service';
   providedIn: 'root',
 })
 export class AuthGuard implements CanActivate {
-
-  constructor(private router: Router, private authService: AuthService) {}
+  constructor(
+    private router: Router,
+    private authService: AuthService,
+  ) {}
 
   // This method is called to check if the user is authenticated before navigating to a route
   canActivate(): boolean {
@@ -26,7 +28,10 @@ export class AuthGuard implements CanActivate {
   // Private method to check user authentication status based on custom logic
   private isAuthenticated(): boolean {
     // Check if the user is authenticated and the authentication token is still valid
-    if (this.authService.isAuthenticated() && this.authService.checkTokenExpiration()) {
+    if (
+      this.authService.isAuthenticated() &&
+      this.authService.checkTokenExpiration()
+    ) {
       // User is authenticated
       return true;
     }

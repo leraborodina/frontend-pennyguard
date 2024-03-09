@@ -1,29 +1,48 @@
-
 <div class="transaction-container">
-    <h2>New transaction</h2>
-    <form (ngSubmit)="createTransaction()">
-        <label for="purpose">Enter purpose:</label>
-        <input [(ngModel)]="purpose" type="text" id="purpose" name="purpose"/>
+  <h2>New transaction</h2>
+  <form (ngSubmit)="createTransaction()">
+    <label for="purpose">Enter purpose:</label>
+    <input [(ngModel)]="purpose" type="text" id="purpose" name="purpose" />
 
-        <label for="amount">Enter amount:</label>
-        <input [(ngModel)]="amount" type="number" id="amount" name="amount"/>
+    <label for="amount">Enter amount:</label>
+    <input [(ngModel)]="amount" type="number" id="amount" name="amount" />
 
-        <label for="date">Select date:</label>
-        <input [(ngModel)]="date" type="date" id="date" name="date"/>
+    <label for="date">Select date:</label>
+    <input [(ngModel)]="date" type="date" id="date" name="date" />
 
-        <label for="regulary">Regular transaction</label>
-        <input [(ngModel)]="regulary" type="checkbox" id="regulary" name="regulary"/>
+    <label for="regulary">Regular transaction</label>
+    <input
+      [(ngModel)]="regulary"
+      type="checkbox"
+      id="regulary"
+      name="regulary"
+    />
 
-        <label for="category">Select category:</label>
-        <select [(ngModel)]="selectedCategory" name="selectedCategory" (change)="onCategoryChange($event)">
-            <option *ngFor="let category of categories" [value]="category.id">{{category.value}}</option>
-        </select>
+    <label for="category">Select category:</label>
+    <select
+      [(ngModel)]="selectedCategory"
+      name="selectedCategory"
+      (change)="onCategoryChange($event)"
+    >
+      <option *ngFor="let category of categories" [value]="category.id">
+        {{ category.value }}
+      </option>
+    </select>
 
-        <label for="transactionType">Select transaction type:</label>
-        <select [(ngModel)]="selectedType" name="transactionType" (change)="onTransactionTypeChange($event)">
-            <option *ngFor="let transactionType of transactionTypes" [value]="transactionType.id">{{transactionType.type}}</option>
-        </select>
+    <label for="transactionType">Select transaction type:</label>
+    <select
+      [(ngModel)]="selectedType"
+      name="transactionType"
+      (change)="onTransactionTypeChange($event)"
+    >
+      <option
+        *ngFor="let transactionType of transactionTypes"
+        [value]="transactionType.id"
+      >
+        {{ transactionType.type }}
+      </option>
+    </select>
 
-        <button type="submit">Create</button>
-    </form>
+    <button type="submit">Create</button>
+  </form>
 </div>

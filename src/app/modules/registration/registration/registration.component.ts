@@ -4,15 +4,14 @@ import { User } from '../../../shared/user.model';
 import { RegistrationService } from '../../../core/registration.service';
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { FormControl, Validators } from '@angular/forms';
-import { Router } from '@angular/router'; 
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-registration',
   templateUrl: './registration.component.html',
-  styleUrls: ['./registration.component.scss']
+  styleUrls: ['./registration.component.scss'],
 })
 export class RegistrationComponent {
-
   firstname = new FormControl('', [Validators.required]);
   lastname = new FormControl('', [Validators.required]);
   email = new FormControl('', [Validators.required, Validators.email]);
@@ -21,8 +20,11 @@ export class RegistrationComponent {
   successMessage = '';
   errorMessage = '';
 
-  constructor(private registrationService: RegistrationService, private router: Router) { }
-  
+  constructor(
+    private registrationService: RegistrationService,
+    private router: Router,
+  ) {}
+
   // Method triggered when the registration form is submitted
   registerUser(): void {
     if (this.arePasswordsMatch()) {
@@ -30,27 +32,27 @@ export class RegistrationComponent {
         firstname: this.firstname.value,
         lastname: this.lastname.value,
         email: this.email.value,
-        password: this.password.value
+        password: this.password.value,
       };
 
-      this.registrationService.registerUser(userData)
-        .subscribe(
-          (response) => this.handleSuccessResponse(response),
-          (error: HttpErrorResponse) => {
-            if (error.status === 400) {
-              this.errorMessage = error.error.message;
-            } else {
-              this.errorMessage = 'An unexpected error occurred. Please try again later.';
-            }
+      this.registrationService.registerUser(userData).subscribe(
+        (response) => this.handleSuccessResponse(response),
+        (error: HttpErrorResponse) => {
+          if (error.status === 400) {
+            this.errorMessage = error.error.message;
+          } else {
+            this.errorMessage =
+              'An unexpected error occurred. Please try again later.';
           }
-        );
+        },
+      );
     } else {
       this.errorMessage = 'Passwords do not match';
     }
   }
 
   // Check if the entered passwords match
-    arePasswordsMatch(): boolean {
+  arePasswordsMatch(): boolean {
     return this.password.value === this.confirmedPassword.value;
   }
 
@@ -58,10 +60,10 @@ export class RegistrationComponent {
   private handleSuccessResponse(response: HttpResponse<any>): void {
     if (response.status === 201) {
       this.firstname.setValue('');
-            this.lastname.setValue('');
-            this.email.setValue('');
-            this.password.setValue('');
-            this.confirmedPassword.setValue('');
+      this.lastname.setValue('');
+      this.email.setValue('');
+      this.password.setValue('');
+      this.confirmedPassword.setValue('');
       // Set success message based on the response data
       this.setSuccessMessage(response.body);
     }

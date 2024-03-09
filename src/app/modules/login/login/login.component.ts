@@ -1,21 +1,25 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../../core/auth.service';
 import { HttpErrorResponse } from '@angular/common/http';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { UserData, UserService } from '../../../shared/user.service';
 import { FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+  styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit {
   email = new FormControl('', [Validators.required, Validators.email]);
-  password = new FormControl('', [Validators.required]);;
+  password = new FormControl('', [Validators.required]);
   hide = true;
 
-  constructor(private authService: AuthService, private router: Router, private userService: UserService) {}
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private userService: UserService,
+  ) {}
 
   ngOnInit(): void {
     // Initialization logic, if needed
@@ -27,13 +31,18 @@ export class LoginComponent implements OnInit {
       // Handle successful login response
       (response: { token: string }) => {
         // If token is present, handle successful login
-        response.token ? this.handleSuccessfulLogin(response.token) : this.handleLoginFailure();
+        console.log(response)
+        response.token
+          ? this.handleSuccessfulLogin(response.token)
+          : this.handleLoginFailure();
       },
       // Handle login errors
       (error) => {
         // If the error is an HTTP error, handle it
-        error instanceof HttpErrorResponse ? this.handleHttpError(error) : this.handleUnexpectedError(error);
-      }
+        error instanceof HttpErrorResponse
+          ? this.handleHttpError(error)
+          : this.handleUnexpectedError(error);
+      },
     );
   }
 
@@ -42,12 +51,12 @@ export class LoginComponent implements OnInit {
     this.authService.setAuthToken(token);
 
     // Get the email value if it's not null
-    const emailValue = this.email.value ? this.email.value : '';  
+    const emailValue = this.email.value ? this.email.value : '';
 
     // Set user data
     const userData: UserData = { email: emailValue };
     this.userService.setUserData(userData);
-  
+
     // Navigate to the dashboard
     this.router.navigate(['/transaction-overview']);
   }
@@ -67,11 +76,11 @@ export class LoginComponent implements OnInit {
     switch (error.status) {
       case 404:
         console.log('User not found:', error.error);
-        this.email.setErrors({ notFound: true });
+        this.email.setErrors({ notFound: true, message: error.error });
         break;
       case 400:
         console.log('Invalid login credentials:', error.error);
-        this.password.setErrors({ invalidCredentials: true });
+        this.password.setErrors({ invalidCredentials: true, message: error.error });
         break;
       default:
         // Log and display a generic error message for other HTTP errors

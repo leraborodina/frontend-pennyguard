@@ -3,12 +3,13 @@ import { CookieService } from 'ngx-cookie-service';
 import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class UserService {
-  private userDataSubject: BehaviorSubject<UserData | null> = new BehaviorSubject<UserData | null>(null);
+  private userDataSubject: BehaviorSubject<UserData | null> =
+    new BehaviorSubject<UserData | null>(null);
 
-  constructor(private cookieService: CookieService) { }
+  constructor(private cookieService: CookieService) {}
 
   /**
    * Set user data in both cookies and the BehaviorSubject.
@@ -17,7 +18,7 @@ export class UserService {
   setUserData(userData: UserData): void {
     // Set user email in cookie for persistence
     this.cookieService.set('userEmail', userData.email);
-    
+
     // Update the BehaviorSubject with new user data
     this.userDataSubject.next(userData);
   }
@@ -44,7 +45,7 @@ export class UserService {
   clearUserData(): void {
     // Clear user email cookie
     this.cookieService.delete('userEmail');
-    
+
     // Clear the BehaviorSubject by emitting null
     this.userDataSubject.next(null);
   }

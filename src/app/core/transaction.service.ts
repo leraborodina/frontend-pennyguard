@@ -8,29 +8,33 @@ import { TransactionType } from '../shared/transaction-type.model';
 import { Transaction } from '../shared/transaction.model';
 import { User } from '../shared/user.model';
 @Injectable({
-    providedIn: 'root'})
-
-export class TransactionService{
-
+  providedIn: 'root',
+})
+export class TransactionService {
   private readonly transactionEndpoint = `${urls.baseUrl}/transactions`;
-  
-  constructor (private http: HttpClient, private cookieService: CookieService) { }
+
+  constructor(
+    private http: HttpClient,
+    private cookieService: CookieService,
+  ) {}
 
   getCategories(email: string): Observable<Category[]> {
     const authToken = this.cookieService.get('authToken');
 
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
-      'Authorization': `Bearer ${authToken}`,
-      'X-User-Email': email
-    })
+      Authorization: `Bearer ${authToken}`,
+      'X-User-Email': email,
+    });
 
-    return this.http.get<Category[]>(`${this.transactionEndpoint}/categories`, { headers }).pipe(
-      catchError(error => {
-        console.error('Error in dashboard request:', error);
-        return throwError(error);
-      })
-    );
+    return this.http
+      .get<Category[]>(`${this.transactionEndpoint}/categories`, { headers })
+      .pipe(
+        catchError((error) => {
+          console.error('Error in dashboard request:', error);
+          return throwError(error);
+        }),
+      );
   }
 
   getTransactionTypes(email: string): Observable<TransactionType[]> {
@@ -38,34 +42,41 @@ export class TransactionService{
 
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
-      'Authorization': `Bearer ${authToken}`,
-      'X-User-Email': email
-    })
+      Authorization: `Bearer ${authToken}`,
+      'X-User-Email': email,
+    });
 
-    return this.http.get<TransactionType[]>(`${this.transactionEndpoint}/transactionTypes`, { headers }).pipe(
-      catchError(error => {
-        console.error('Error in transaction type request:', error);
-        return throwError(error);
-      })
-    );
+    return this.http
+      .get<
+        TransactionType[]
+      >(`${this.transactionEndpoint}/transactionTypes`, { headers })
+      .pipe(
+        catchError((error) => {
+          console.error('Error in transaction type request:', error);
+          return throwError(error);
+        }),
+      );
   }
 
-  createTransaction(transaction: Transaction): Observable<Transaction>{
-    return this.http.post<Transaction>(this.transactionEndpoint, transaction).pipe(
-        catchError(error => {
+  createTransaction(transaction: Transaction): Observable<Transaction> {
+    return this.http
+      .post<Transaction>(this.transactionEndpoint, transaction)
+      .pipe(
+        catchError((error) => {
           console.error('Error in transaction create request:', error);
           return throwError(error);
-      })
-    );
+        }),
+      );
   }
 
-  getTransactionsByUserId(userId: number): Observable<Transaction[]>{
-    return this.http.get<Transaction[]>(`${this.transactionEndpoint}/user/${userId}`).pipe(
-      catchError(error => {
-        console.error('Error in transaction overview request:', error);
-        return throwError(error);
-      }
-    )
-    );
+  getTransactionsByUserId(userId: number): Observable<Transaction[]> {
+    return this.http
+      .get<Transaction[]>(`${this.transactionEndpoint}/user/${userId}`)
+      .pipe(
+        catchError((error) => {
+          console.error('Error in transaction overview request:', error);
+          return throwError(error);
+        }),
+      );
   }
 }

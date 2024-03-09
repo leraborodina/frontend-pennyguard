@@ -8,10 +8,9 @@ describe('BudgetOverviewComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [BudgetOverviewComponent]
-    })
-    .compileComponents();
-    
+      declarations: [BudgetOverviewComponent],
+    }).compileComponents();
+
     fixture = TestBed.createComponent(BudgetOverviewComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

@@ -8,10 +8,9 @@ describe('TransactionOverviewComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [TransactionOverviewComponent]
-    })
-    .compileComponents();
-    
+      declarations: [TransactionOverviewComponent],
+    }).compileComponents();
+
     fixture = TestBed.createComponent(TransactionOverviewComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

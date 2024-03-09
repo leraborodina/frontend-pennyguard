@@ -28,7 +28,7 @@ export class AuthService {
     private http: HttpClient,
     private router: Router,
     private tokenService: TokenService,
-    private cookieService: CookieService
+    private cookieService: CookieService,
   ) {
     // Initialize authentication state based on token presence
     this.isUserAuthenticated.next(this.isAuthenticated());
@@ -41,10 +41,16 @@ export class AuthService {
     this.tokenSubject.next(storedToken);
   }
 
-  login(email: string | null, password: string | null): Observable<{ token: string }> {
+  login(
+    email: string | null,
+    password: string | null,
+  ): Observable<{ token: string }> {
     // Send a login request and return the observable with the token response
     const loginRequest = { email, password };
-    return this.http.post<{ token: string }>(`${this.authEndpoint}/login`, loginRequest);
+    return this.http.post<{ token: string }>(
+      `${this.authEndpoint}/login`,
+      loginRequest,
+    );
   }
 
   setAuthenticationStatus(status: boolean): void {
@@ -79,11 +85,10 @@ export class AuthService {
   checkTokenExpiration(): boolean {
     // Retrieve the authentication token from the cookie service
     const authToken: string | null = this.getAuthToken();
-  
+
     // Check if the authentication token is expired using the token service
     return authToken !== null && !this.tokenService.isTokenExpired(authToken);
   }
-  
 
   // Routing Management
   saveRouting(url: string): void {

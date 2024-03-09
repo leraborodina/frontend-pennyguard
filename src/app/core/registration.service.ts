@@ -1,11 +1,15 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse, HttpResponse } from '@angular/common/http';
+import {
+  HttpClient,
+  HttpErrorResponse,
+  HttpResponse,
+} from '@angular/common/http';
 import { Observable, catchError } from 'rxjs';
 import { throwError } from 'rxjs';
 import { urls } from '../config/config';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class RegistrationService {
   private registryEndpoint = `${urls.baseUrl}/user/register`;
@@ -19,9 +23,12 @@ export class RegistrationService {
    */
   registerUser(user: any): Observable<HttpResponse<any>> {
     // Make a POST request to the registration endpoint and observe the response
-    return this.http.post<HttpResponse<any>>(this.registryEndpoint, user, { observe: 'response' })
+    return this.http
+      .post<
+        HttpResponse<any>
+      >(this.registryEndpoint, user, { observe: 'response' })
       .pipe(
-        catchError(this.handleError) // Handle errors using the private handleError method
+        catchError(this.handleError), // Handle errors using the private handleError method
       );
   }
 
@@ -33,7 +40,7 @@ export class RegistrationService {
   private handleError(error: HttpErrorResponse): Observable<never> {
     // Default error message for unexpected errors
     let errorMessage = 'An error occurred during registration.';
-    
+
     // Check if the error is a client-side error
     if (error.error instanceof ErrorEvent) {
       errorMessage = error.error.message; // Extract client-side error message

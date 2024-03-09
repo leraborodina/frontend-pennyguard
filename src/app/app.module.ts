@@ -20,7 +20,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
-
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 
 @NgModule({
   declarations: [
@@ -32,7 +32,7 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
     IncomesComponent,
     ExpensesComponent,
     TransactionComponent,
-    TransactionOverviewComponent
+    TransactionOverviewComponent,
   ],
   imports: [
     BrowserModule,
@@ -46,13 +46,10 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
     MatInputModule,
     MatIconModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatSnackBarModule,
   ],
-  providers: [
-
-  
-    provideAnimationsAsync()
-  ],
-  bootstrap: [AppComponent]
+  providers: [provideAnimationsAsync()],
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

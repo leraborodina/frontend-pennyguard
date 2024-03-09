@@ -11,10 +11,22 @@ import { TransactionOverviewComponent } from './modules/transaction-overview/tra
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'registration', component: RegistrationComponent },
-  { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
+  {
+    path: 'dashboard',
+    component: DashboardComponent,
+    canActivate: [AuthGuard],
+  },
   { path: 'incomes', component: IncomesComponent, canActivate: [AuthGuard] },
-  { path: 'transaction', component: TransactionComponent, canActivate: [AuthGuard]},
-  { path: 'transaction-overview', component: TransactionOverviewComponent, canActivate: [AuthGuard]},
+  {
+    path: 'transaction',
+    component: TransactionComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'transaction-overview',
+    component: TransactionOverviewComponent,
+    canActivate: [AuthGuard],
+  },
   // Redirect to login if the path is empty
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   // Handle unknown paths (e.g., show a 404 page)

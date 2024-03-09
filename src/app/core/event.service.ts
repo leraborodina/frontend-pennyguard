@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { EventEmitter } from '@angular/core';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class EventService {
   // Event emitter for signaling token expiration

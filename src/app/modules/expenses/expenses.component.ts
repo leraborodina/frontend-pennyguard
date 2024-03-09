@@ -5,7 +5,7 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'app-expenses',
   templateUrl: './expenses.component.html',
-  styleUrls: ['./expenses.component.scss']
+  styleUrls: ['./expenses.component.scss'],
 })
 export class ExpensesComponent {
   totalExpenses: number = 1500; // Replace with your actual total expenses
@@ -21,7 +21,7 @@ export class ExpensesComponent {
 
   calculateBarHeight(amount: number): number {
     // Adjust the scale factor based on your data distribution
-    const scaleFactor = 0.5; 
+    const scaleFactor = 0.5;
     return amount * scaleFactor;
   }
 }

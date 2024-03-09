@@ -1,6 +1,12 @@
 // app.interceptor.ts
 import { Injectable } from '@angular/core';
-import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HTTP_INTERCEPTORS } from '@angular/common/http';
+import {
+  HttpInterceptor,
+  HttpRequest,
+  HttpHandler,
+  HttpEvent,
+  HTTP_INTERCEPTORS,
+} from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 @Injectable()
@@ -11,7 +17,10 @@ export class TokenInterceptor implements HttpInterceptor {
    * @param next The next HTTP handler in the chain.
    * @returns An observable of the HTTP event.
    */
-  intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+  intercept(
+    request: HttpRequest<any>,
+    next: HttpHandler,
+  ): Observable<HttpEvent<any>> {
     // Retrieve the authentication token from local storage
     const authToken = localStorage.getItem('authToken');
 
@@ -19,8 +28,8 @@ export class TokenInterceptor implements HttpInterceptor {
     if (authToken) {
       request = request.clone({
         setHeaders: {
-          Authorization: `Bearer ${authToken}`
-        }
+          Authorization: `Bearer ${authToken}`,
+        },
       });
     }
 
@@ -33,5 +42,5 @@ export class TokenInterceptor implements HttpInterceptor {
 export const TokenInterceptorProvider = {
   provide: HTTP_INTERCEPTORS,
   useClass: TokenInterceptor,
-  multi: true
+  multi: true,
 };
