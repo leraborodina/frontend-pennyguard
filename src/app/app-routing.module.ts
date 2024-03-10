@@ -2,21 +2,17 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './modules/login/login/login.component';
 import { RegistrationComponent } from './modules/registration/registration/registration.component';
-import { DashboardComponent } from './modules/dashboard/dashboard.component';
 import { AuthGuard } from './core/auth-guard';
 import { IncomesComponent } from './modules/incomes/incomes.component';
 import { TransactionComponent } from './modules/transaction/transaction.component';
 import { TransactionOverviewComponent } from './modules/transaction-overview/transaction-overview.component';
+import { ExpensesComponent } from './modules/expenses/expenses.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'registration', component: RegistrationComponent },
-  {
-    path: 'dashboard',
-    component: DashboardComponent,
-    canActivate: [AuthGuard],
-  },
   { path: 'incomes', component: IncomesComponent, canActivate: [AuthGuard] },
+  { path: 'expenses', component: ExpensesComponent, canActivate: [AuthGuard] },
   {
     path: 'transaction',
     component: TransactionComponent,

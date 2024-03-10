@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../../core/auth.service';
 import { HttpErrorResponse } from '@angular/common/http';
-import { ActivatedRoute, Router } from '@angular/router';
-import { UserData, UserService } from '../../../shared/user.service';
+import { Router } from '@angular/router';
+import { UserData, UserService } from '../../../shared/services/user.service';
 import { FormControl, Validators } from '@angular/forms';
+import { LoginResponse } from '../../../shared/interfaces/loginresponse.interface';
+
 
 @Component({
   selector: 'app-login',
@@ -29,35 +31,34 @@ export class LoginComponent implements OnInit {
     // Subscribe to the login service
     this.authService.login(this.email.value, this.password.value).subscribe(
       // Handle successful login response
-      (response: { token: string }) => {
+      (response: LoginResponse) => {
+        // Extract the token from the response body
+        const token = response.token;
+  
         // If token is present, handle successful login
-        console.log(response)
-        response.token
-          ? this.handleSuccessfulLogin(response.token)
-          : this.handleLoginFailure();
+        if (token) {
+          this.handleSuccessfulLogin(token);
+        } else {
+          this.handleLoginFailure();
+        }
       },
       // Handle login errors
       (error) => {
         // If the error is an HTTP error, handle it
-        error instanceof HttpErrorResponse
-          ? this.handleHttpError(error)
-          : this.handleUnexpectedError(error);
-      },
+        if (error instanceof HttpErrorResponse) {
+          this.handleHttpError(error);
+        } else {
+          this.handleUnexpectedError(error);
+        }
+      }
     );
   }
-
+  
   private handleSuccessfulLogin(token: string): void {
     // Set the authentication token
     this.authService.setAuthToken(token);
 
-    // Get the email value if it's not null
-    const emailValue = this.email.value ? this.email.value : '';
-
-    // Set user data
-    const userData: UserData = { email: emailValue };
-    this.userService.setUserData(userData);
-
-    // Navigate to the dashboard
+    // Navigate to the transaction-overview
     this.router.navigate(['/transaction-overview']);
   }
 

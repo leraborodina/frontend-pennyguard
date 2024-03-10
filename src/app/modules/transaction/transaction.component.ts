@@ -1,21 +1,19 @@
 import { Component, OnInit } from '@angular/core';
 import { TransactionService } from '../../core/transaction.service';
-import { UserData, UserService } from '../../shared/user.service';
-import { AuthService } from '../../core/auth.service';
+import { UserData, UserService } from '../../shared/services/user.service';
 import { CookieService } from 'ngx-cookie-service';
-import { Observable, take } from 'rxjs';
-import { Category } from '../../shared/category.model';
-import { TransactionType } from '../../shared/transaction-type.model';
-import { Transaction } from '../../shared/transaction.model';
-import { jwtDecode } from 'jwt-decode';
+import { Observable } from 'rxjs';
+import { Category } from '../../shared/models/category.model';
+import { TransactionType } from '../../shared/models/transaction-type.model';
+import { Transaction } from '../../shared/models/transaction.model';
 
 @Component({
   selector: 'app-transaction',
   templateUrl: './transaction.component.html',
-  styleUrl: './transaction.component.scss',
+  styleUrls: ['./transaction.component.scss'],
 })
 export class TransactionComponent implements OnInit {
-  userData$!: Observable<UserData | null>;
+  userData: UserData | null = null;
   transactionContent: string = '';
   categories: Category[] = [];
   transactionTypes: TransactionType[] = [];
@@ -31,59 +29,46 @@ export class TransactionComponent implements OnInit {
   constructor(
     private transactionService: TransactionService,
     private userService: UserService,
-    private authService: AuthService,
     private cookieService: CookieService,
   ) {}
 
   ngOnInit(): void {
-    this.userData$ = this.userService.getUserData();
+    // Get the user data directly
+    this.userData = this.userService.getUserData();
+    // Fetch categories and transaction types
     this.getCategories();
     this.getTransactionTypes();
   }
-
+  
   getTransactionTypes() {
-    this.userData$.pipe(take(1)).subscribe((userData: UserData | null) => {
-      const userEmail = userData
-        ? userData.email
-        : this.cookieService.get('userEmail');
+    const userEmail = this.userData?.email ?? this.cookieService.get('userEmail');
 
-      this.transactionService.getTransactionTypes(userEmail).subscribe(
-        (content: TransactionType[]) => {
-          this.transactionTypes = content;
-          this.transactionTypes.forEach((c) => {
-            console.log(c);
-          });
-        },
-        (error) => {
-          console.error('Error fetching transaction types:', error);
-        },
-      );
-    });
+    this.transactionService.getTransactionTypes(userEmail).subscribe(
+      (content: TransactionType[]) => {
+        this.transactionTypes = content;
+      },
+      (error) => {
+        console.error('Error fetching transaction types:', error);
+      },
+    );
   }
 
   getCategories() {
-    this.userData$.pipe(take(1)).subscribe((userData: UserData | null) => {
-      const userEmail = userData
-        ? userData.email
-        : this.cookieService.get('userEmail');
+    const userEmail = this.userData?.email ?? this.cookieService.get('userEmail');
 
-      this.transactionService.getCategories(userEmail).subscribe(
-        (content: Category[]) => {
-          this.categories = content;
-          this.categories.forEach((c) => {
-            console.log(c);
-          });
-        },
-        (error) => {
-          console.error('Error fetching categories:', error);
-        },
-      );
-    });
+    this.transactionService.getCategories(userEmail).subscribe(
+      (content: Category[]) => {
+        this.categories = content;
+      },
+      (error) => {
+        console.error('Error fetching categories:', error);
+      },
+    );
   }
 
   createTransaction() {
     const token = this.cookieService.get('authToken');
-    const decodedToken: any = jwtDecode(token);
+    const decodedToken: any = {}; // Implement decoding logic
     this.userId = decodedToken.sub;
     const transaction = new Transaction(
       this.userId,
@@ -94,21 +79,22 @@ export class TransactionComponent implements OnInit {
       this.selectedCategory,
       this.selectedType,
     );
-    console.log(transaction);
-    this.transactionService
-      .createTransaction(transaction)
-      .subscribe((response) => {
+
+    this.transactionService.createTransaction(transaction).subscribe(
+      (response) => {
         console.log(response);
-      });
+      },
+      (error) => {
+        console.error('Error creating transaction:', error);
+      }
+    );
   }
 
   onCategoryChange(event: any) {
     this.selectedCategory = event.target.value;
-    console.log(this.selectedCategory);
   }
 
   onTransactionTypeChange(event: any) {
     this.selectedType = event.target.value;
-    console.log(this.selectedType);
   }
 }

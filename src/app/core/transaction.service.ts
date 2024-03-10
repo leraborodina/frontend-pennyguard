@@ -3,10 +3,10 @@ import { urls } from '../config/config';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { CookieService } from 'ngx-cookie-service';
 import { Observable, catchError, throwError } from 'rxjs';
-import { Category } from '../shared/category.model';
-import { TransactionType } from '../shared/transaction-type.model';
-import { Transaction } from '../shared/transaction.model';
-import { User } from '../shared/user.model';
+import { Category } from '../shared/models/category.model';
+import { TransactionType } from '../shared/models/transaction-type.model';
+import { Transaction } from '../shared/models/transaction.model';
+import { User } from '../shared/models/user.model';
 @Injectable({
   providedIn: 'root',
 })
@@ -31,7 +31,7 @@ export class TransactionService {
       .get<Category[]>(`${this.transactionEndpoint}/categories`, { headers })
       .pipe(
         catchError((error) => {
-          console.error('Error in dashboard request:', error);
+          console.error('Error in get categories request:', error);
           return throwError(error);
         }),
       );

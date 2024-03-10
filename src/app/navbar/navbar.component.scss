@@ -1,0 +1,105 @@
+/* navbar.component.css */
+
+.primary-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: "Lucida Console", monospace;
+  background: linear-gradient(
+    to right,
+    #2c2c54,
+    #474787
+  ); /* Gradient background */
+}
+
+.left-content {
+  display: flex;
+  align-items: center;
+}
+
+.app-title {
+  font-size: 1.5rem;
+  color: white; /* White text color */
+  margin-right: 20px; /* Adjust spacing between app title and dropdown */
+}
+
+.dropdown {
+  position: relative;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #2c2c54; /* Dark Indigo */
+  min-width: 160px;
+  z-index: 1;
+  top: 100%;
+  left: 0;
+  padding-top: 5px;
+}
+
+.dropdown-content a {
+  color: white; /* White text color */
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+.mat-button {
+  color: #474787; /* Inherit text color */
+}
+
+.mat-button:hover {
+  background-color: #aaabb8; /* Cool Gray */
+}
+
+.user-greeting {
+  color: white; /* White text color */
+}
+
+.features-button {
+  color: white; /* White text color */
+  background-color: transparent; /* Transparent background */
+  border: none; /* No border */
+  cursor: pointer; /* Show pointer on hover */
+  font-family: "Lucida Console", monospace; /* Font family */
+  font-size: inherit; /* Inherit font size */
+  padding: 0; /* Remove default padding */
+}
+
+.features-button:hover {
+  background-color: rgba(255, 255, 255, 0.1); /* Hover background color */
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: rgba(44, 44, 84, 0.8); /* Dark Indigo with transparency */
+  min-width: 220px;
+  z-index: 1;
+  top: calc(100% + 5px);
+  left: 0;
+}
+
+.dropdown-content a {
+  color: white; /* White text color */
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+/* Responsive Styles */
+@media screen and (max-width: 768px) {
+  .dropdown-content {
+    min-width: 160px; /* Adjust the width for smaller screens */
+    top: calc(100% + 10px); /* Adjust the top position */
+  }
+
+  .dropdown-content a {
+    padding: 10px 14px; /* Adjust padding for smaller screens */
+  }
+}

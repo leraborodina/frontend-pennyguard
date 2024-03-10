@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Transaction } from '../../shared/transaction.model';
+import { Transaction } from '../../shared/models/transaction.model';
 import { TransactionService } from '../../core/transaction.service';
 import { CookieService } from 'ngx-cookie-service';
 import { jwtDecode } from 'jwt-decode';
@@ -17,7 +17,7 @@ export class TransactionOverviewComponent implements OnInit {
   transactions: Transaction[] = [];
   subscription: Subscription | undefined;
 
-  errorMessage: string = '';  
+  errorMessage: string = '';
 
   constructor(
     private transactionService: TransactionService,
@@ -61,18 +61,19 @@ export class TransactionOverviewComponent implements OnInit {
 
   setErrorMessages(error: any): void {
     switch (error?.status) {
-        case 404:
-          this.errorMessage = 'Resource not found. Please check your request and try again.';
-          break;
-        case 401:
-          this.errorMessage = 'Unauthorized. Please login again to continue.';
-          break;
-        case 500:
-          this.errorMessage = 'Internal server error. Please try again later.';
-          break;
-        default:
-          this.errorMessage = 'An error occurred. Please try again later.';
-          break;
+      case 404:
+        this.errorMessage =
+          'Resource not found. Please check your request and try again.';
+        break;
+      case 401:
+        this.errorMessage = 'Unauthorized. Please login again to continue.';
+        break;
+      case 500:
+        this.errorMessage = 'Internal server error. Please try again later.';
+        break;
+      default:
+        this.errorMessage = 'An error occurred. Please try again later.';
+        break;
     }
 
     // Show error message using MatSnackBar

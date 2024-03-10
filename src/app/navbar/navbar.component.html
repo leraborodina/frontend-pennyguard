@@ -1,0 +1,22 @@
+<mat-toolbar class="primary-toolbar">
+  <div class="left-content">
+    <span class="app-title">Penny Guard</span>
+    <!-- Navigation Links with Dropdown -->
+    <ng-container *ngIf="isLoggedIn()">
+      <div class="dropdown">
+        <button class="mat-button features-button">Features</button>
+        <div class="dropdown-content">
+          <a mat-button routerLink="/incomes">Incomes</a>
+          <a mat-button routerLink="/expenses">Expenses</a>
+          <a mat-button routerLink="/transaction">Transaction</a>
+          <a mat-button routerLink="/transaction-overview">Transaction Overview</a>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+
+  <ng-container *ngIf="isLoggedIn()">
+    <span class="user-greeting">Welcome, {{ getUserName() }}</span>
+    <button mat-button color="warn" (click)="logout()">Logout</button>
+  </ng-container>
+</mat-toolbar>

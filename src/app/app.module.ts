@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -7,7 +7,6 @@ import { LoginComponent } from './modules/login/login/login.component';
 import { RegistrationComponent } from './modules/registration/registration/registration.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { DashboardComponent } from './modules/dashboard/dashboard.component';
 import { IncomesComponent } from './modules/incomes/incomes.component';
 import { ExpensesComponent } from './modules/expenses/expenses.component';
 import { LogoutComponent } from './modules/logout/logout.component';
@@ -16,11 +15,14 @@ import { TransactionOverviewComponent } from './modules/transaction-overview/tra
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
-import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { NavbarComponent } from './navbar/navbar.component';
+import { MatButtonModule } from '@angular/material/button';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { AuthService } from './core/auth.service';
 
 @NgModule({
   declarations: [
@@ -28,11 +30,11 @@ import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
     LoginComponent,
     LogoutComponent,
     RegistrationComponent,
-    DashboardComponent,
     IncomesComponent,
     ExpensesComponent,
     TransactionComponent,
     TransactionOverviewComponent,
+    NavbarComponent,
   ],
   imports: [
     BrowserModule,
@@ -48,8 +50,19 @@ import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
     FormsModule,
     ReactiveFormsModule,
     MatSnackBarModule,
+    MatButtonModule,
+    MatToolbarModule,
   ],
-  providers: [provideAnimationsAsync()],
+  providers: [provideAnimationsAsync(),
+    AuthService,
+    {
+      provide: APP_INITIALIZER,
+      useFactory: (authService: AuthService) => () => {
+        return authService.checkTokenExpirationAndLogout();
+      },
+      deps: [AuthService],
+      multi: true
+    }],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

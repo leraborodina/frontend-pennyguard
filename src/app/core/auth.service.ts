@@ -2,11 +2,14 @@
 
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable, BehaviorSubject } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
+import { Observable, BehaviorSubject, map, catchError } from 'rxjs';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { TokenService } from './token.service';
 import { CookieService } from 'ngx-cookie-service';
 import { urls } from '../config/config';
+import { jwtDecode } from 'jwt-decode';
+import { UserData, UserService } from '../shared/services/user.service';
+import { LoginResponse } from '../shared/interfaces/loginresponse.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -29,6 +32,7 @@ export class AuthService {
     private router: Router,
     private tokenService: TokenService,
     private cookieService: CookieService,
+    private userService: UserService
   ) {
     // Initialize authentication state based on token presence
     this.isUserAuthenticated.next(this.isAuthenticated());
@@ -41,16 +45,42 @@ export class AuthService {
     this.tokenSubject.next(storedToken);
   }
 
-  login(
-    email: string | null,
-    password: string | null,
-  ): Observable<{ token: string }> {
-    // Send a login request and return the observable with the token response
+  login(email: string | null, password: string | null): Observable<LoginResponse> {
     const loginRequest = { email, password };
-    return this.http.post<{ token: string }>(
-      `${this.authEndpoint}/login`,
-      loginRequest,
+    return this.http.post<LoginResponse>(`${this.authEndpoint}/login`, loginRequest, { observe: 'response' }).pipe(
+      map((response: HttpResponse<LoginResponse>) => {
+        // Check if the response body is present
+        if (response.body) {
+          // Extract user data from the response body
+          const userData: UserData = {
+            email: response.body.email,
+            firstname: response.body.firstname,
+            lastname: response.body.lastname
+          };
+
+          // Set the user data using UserDataService
+          this.userService.setUserData(userData);
+          
+          // Return the extracted user data
+          return response.body;
+        } else {
+          // Handle the case where the response body is empty
+          throw new Error('Empty response body');
+        }
+      }),
+      catchError((error: any) => {
+        // Handle HTTP errors
+        console.error('HTTP error:', error);
+        // Re-throw the error to propagate it downstream
+        throw error;
+      })
     );
+  }
+
+  getUserDetails() {
+    const token = this.tokenService.getToken();
+    const decodedToken: any = jwtDecode(token);
+    return decodedToken.sub;
   }
 
   setAuthenticationStatus(status: boolean): void {
@@ -72,7 +102,7 @@ export class AuthService {
 
   isAuthenticated(): boolean {
     // Check if the user is authenticated based on the presence of the authentication token
-    return !!this.getAuthToken();
+    return this.checkTokenExpiration();
   }
 
   logout(): void {
@@ -80,6 +110,13 @@ export class AuthService {
     this.cookieService.delete(this.TOKEN_KEY);
     this.setAuthenticationStatus(false);
     this.router.navigate(['/login']);
+  }
+
+  checkTokenExpirationAndLogout(): void {
+    if (!this.checkTokenExpiration()) {
+      // Token expired, logout the user
+      this.logout();
+    }
   }
 
   checkTokenExpiration(): boolean {
@@ -106,3 +143,4 @@ export class AuthService {
     localStorage.removeItem(this.ROUTING_KEY);
   }
 }
+
