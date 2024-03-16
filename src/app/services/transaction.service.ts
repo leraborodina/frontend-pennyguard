@@ -23,8 +23,7 @@ export class TransactionService {
 
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
-      Authorization: `Bearer ${authToken}`,
-      'X-User-Email': email,
+      Authorization: `Bearer ${authToken}`
     });
 
     return this.http
@@ -42,8 +41,7 @@ export class TransactionService {
 
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
-      Authorization: `Bearer ${authToken}`,
-      'X-User-Email': email,
+      Authorization: `Bearer ${authToken}`
     });
 
     return this.http
@@ -69,9 +67,16 @@ export class TransactionService {
       );
   }
 
-  getTransactionsByUserId(userId: number): Observable<Transaction[]> {
+  getTransactionsByUserId(): Observable<Transaction[]> {
+    const authToken = this.cookieService.get('authToken');
+
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: `${authToken}`
+    });
+
     return this.http
-      .get<Transaction[]>(`${this.transactionEndpoint}/user/${userId}`)
+      .get<Transaction[]>(`${this.transactionEndpoint}/user/`, { headers })
       .pipe(
         catchError((error) => {
           console.error('Error in transaction overview request:', error);

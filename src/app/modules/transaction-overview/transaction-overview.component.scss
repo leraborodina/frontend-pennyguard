@@ -51,3 +51,76 @@
   background-color: red; /* Example background color */
   color: white; /* Example text color */
 }
+
+
+/* transaction-overview.component.css */
+.mat-table-responsive {
+  overflow-x: auto;
+  max-width: 100%;
+}
+
+.mat-table {
+  width: 100%;
+}
+
+.mat-table th, .mat-table td {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+
+.container {
+  margin: 20px;
+}
+
+.filter-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.mat-form-field {
+  min-width: 200px;
+}
+
+.mat-table {
+  width: 100%;
+  margin-top: 20px;
+}
+
+.mat-cell {
+  text-align: center;
+}
+
+.mat-header-cell {
+  text-align: center;
+}
+
+.last-transactions {
+  margin-top: 20px;
+}
+
+.last-transactions-item {
+  margin-bottom: 10px;
+}
+
+/* Button style */
+.mat-icon-button {
+  margin: 0 5px;
+  padding: 5px;
+  min-width: 0;
+}
+
+.mat-icon {
+  font-size: 20px;
+}
+
+.action-buttons {
+  display: flex;
+  justify-content: space-around;
+}
+
+.action-buttons button {
+  visibility: visible;
+}

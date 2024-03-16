@@ -1,6 +1,5 @@
 import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './modules/login/login/login.component';
@@ -17,12 +16,16 @@ import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
-import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { NavbarComponent } from './navbar/navbar.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { AuthService } from './core/auth.service';
+import { MatTableModule } from '@angular/material/table';
+import { MatSelectModule } from '@angular/material/select';
+import { MatDatepickerModule } from '@angular/material/datepicker'; // Corrected import statement
+import { MAT_DATE_LOCALE, DateAdapter } from '@angular/material/core';
+import { MatNativeDateModule } from '@angular/material/core'; // Import this module for native date support
 
 @NgModule({
   declarations: [
@@ -52,8 +55,12 @@ import { AuthService } from './core/auth.service';
     MatSnackBarModule,
     MatButtonModule,
     MatToolbarModule,
+    MatTableModule,
+    MatSelectModule,
+    MatDatepickerModule,
+    MatNativeDateModule // Import MatNativeDateModule for native date support
   ],
-  providers: [provideAnimationsAsync(),
+  providers: [
     AuthService,
     {
       provide: APP_INITIALIZER,
@@ -61,8 +68,12 @@ import { AuthService } from './core/auth.service';
         return authService.checkTokenExpirationAndLogout();
       },
       deps: [AuthService],
-      multi: true
-    }],
+      multi: true,
+    },
+    { provide: MAT_DATE_LOCALE, useValue: 'de-AT' }, // Change 'de-AT' to your desired locale
+    // Provide a DateAdapter (you can choose a specific one)
+    // Example: { provide: DateAdapter, useClass: YourDateAdapter }
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

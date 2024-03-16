@@ -1,18 +1,85 @@
-<table class="table">
-  <thead>
-    <tr>
-      <th>Purpose</th>
-      <th>Category ID</th>
-      <th>Amount</th>
-      <th>Date</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let transaction of transactions">
-      <td>{{ transaction.purpose }}</td>
-      <td>{{ transaction.categoryId }}</td>
-      <td>{{ transaction.amount }}</td>
-      <td>{{ transaction.date }}</td>
-    </tr>
-  </tbody>
-</table>
+<div class="container">
+  <div class="filter-container">
+    <mat-form-field class="filter-field">
+      <input matInput placeholder="Search ..." [formControl]="searchControl" (input)="applyFilters()">
+    </mat-form-field>
+
+    <mat-form-field class="filter-field">
+      <mat-label>Category</mat-label>
+      <mat-select [formControl]="categoriesControl" (selectionChange)="applyFilters()">
+        <mat-option *ngFor="let category of categories" [value]="category.value">{{ category.value }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field class="filter-field">
+      <mat-label>Transaction Type</mat-label>
+      <mat-select [formControl]="transactionTypeControl" (selectionChange)="applyFilters()">
+        <mat-option value="income">Income</mat-option>
+        <mat-option value="expense">Expense</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field class="filter-field">
+      <input matInput type="number" min="0" placeholder="Min Amount" [formControl]="minAmountControl"
+        (input)="applyFilters()">
+    </mat-form-field>
+
+    <mat-form-field class="filter-field">
+      <input matInput type="number" min="0" placeholder="Max Amount" [formControl]="maxAmountControl"
+        (input)="applyFilters()">
+    </mat-form-field>
+
+    <mat-form-field class="filter-field">
+      <input matInput [matDatepicker]="picker" placeholder="Transaction Date" [formControl]="maxDateControl"
+        (dateChange)="applyFilters()" [max]="maxDate">
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+  </div>
+
+
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 mat-table-responsive">
+    <ng-container matColumnDef="date">
+      <th mat-header-cell *matHeaderCellDef>Date</th>
+      <td mat-cell *matCellDef="let transaction">{{ transaction.date }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="description">
+      <th mat-header-cell *matHeaderCellDef>Description</th>
+      <td mat-cell *matCellDef="let transaction">{{ transaction.purpose }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="category">
+      <th mat-header-cell *matHeaderCellDef>Category</th>
+      <td mat-cell *matCellDef="let transaction">{{ transaction.categoryId }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="amount">
+      <th mat-header-cell *matHeaderCellDef>Amount</th>
+      <td mat-cell *matCellDef="let transaction">{{ transaction.amount }}</td>
+    </ng-container>
+
+    <!-- Add buttons for actions -->
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef>Actions</th>
+      <td mat-cell *matCellDef="let transaction">
+        <button mat-icon-button color="primary" (click)="deleteTransaction(transaction.id)">
+          <mat-icon>delete</mat-icon>
+        </button>
+        <button mat-icon-button color="primary" (click)="viewTransaction(transaction.id)">
+          <mat-icon>visibility</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+
+  <!-- Last 3 Transactions -->
+  <h2>Last 3 Transactions</h2>
+  <div *ngFor="let transaction of dataSource.data.slice(-3)">
+    {{ transaction.date }} - {{ transaction.purpose }} - {{ transaction.amount }}
+  </div>
+</div>

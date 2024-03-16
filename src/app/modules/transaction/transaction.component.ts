@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { TransactionService } from '../../core/transaction.service';
+import { TransactionService } from '../../services/transaction.service';
 import { UserData, UserService } from '../../shared/services/user.service';
 import { CookieService } from 'ngx-cookie-service';
 import { Observable } from 'rxjs';
