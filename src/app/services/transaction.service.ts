@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { urls } from '../config/config';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { CookieService } from 'ngx-cookie-service';
-import { Observable, catchError, throwError } from 'rxjs';
+import { Observable, catchError, map, throwError } from 'rxjs';
 import { Category } from '../shared/models/category.model';
 import { TransactionType } from '../shared/models/transaction-type.model';
 import { Transaction } from '../shared/models/transaction.model';
@@ -57,11 +57,36 @@ export class TransactionService {
   }
 
   createTransaction(transaction: Transaction): Observable<Transaction> {
+    const authToken = this.cookieService.get('authToken');
+
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: `${authToken}`
+    });
+
     return this.http
-      .post<Transaction>(this.transactionEndpoint, transaction)
+      .post<Transaction>(this.transactionEndpoint, transaction, { headers })
       .pipe(
         catchError((error) => {
           console.error('Error in transaction create request:', error);
+          return throwError(error);
+        }),
+      );
+  }
+
+  updateTransaction(transaction: Transaction, id: number | null): Observable<Transaction> {
+    const authToken = this.cookieService.get('authToken');
+
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: `${authToken}`
+    });
+
+    return this.http
+      .put<Transaction>(`${this.transactionEndpoint}/${id}`, transaction, { headers })
+      .pipe(
+        catchError((error) => {
+          console.error('Error in transaction update request:', error);
           return throwError(error);
         }),
       );
@@ -78,10 +103,35 @@ export class TransactionService {
     return this.http
       .get<Transaction[]>(`${this.transactionEndpoint}/user/`, { headers })
       .pipe(
+        map(transactions => {
+          return transactions.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+        }),
         catchError((error) => {
           console.error('Error in transaction overview request:', error);
           return throwError(error);
         }),
       );
-  }
+}
+
+getTransactionById(id: number): Observable<any>{
+  const authToken = this.cookieService.get('authToken');
+
+  const headers = new HttpHeaders({
+    'Content-Type': 'application/json',
+    Authorization: `${authToken}`
+  });
+  
+  return this.http.get<Transaction>(`${this.transactionEndpoint}/${id}`, { headers });
+} 
+
+  deleteTransactionById(id: number | null): Observable<any>{
+    const authToken = this.cookieService.get('authToken');
+
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: `${authToken}`
+    });
+    
+    return this.http.delete(`${this.transactionEndpoint}/${id}`, { headers });
+  } 
 }

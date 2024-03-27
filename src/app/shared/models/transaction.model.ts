@@ -1,7 +1,7 @@
 import { DATE_PIPE_DEFAULT_OPTIONS } from '@angular/common';
 
 export class Transaction {
-  userId: number = 0;
+  id: number | null = null;
   purpose: string = '';
   amount: number = 0.0;
   date: Date = new Date();
@@ -10,7 +10,7 @@ export class Transaction {
   transactionTypeId: number = 0;
 
   constructor(
-    userId: number,
+    id: number | null,
     purpose: string,
     amount: number,
     date: Date,
@@ -18,7 +18,7 @@ export class Transaction {
     selectedCategory: number,
     selectedType: number,
   ) {
-    this.userId = userId;
+    this.id = id;
     this.purpose = purpose;
     this.amount = amount;
     this.date = date;

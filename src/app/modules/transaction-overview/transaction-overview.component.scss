@@ -124,3 +124,65 @@
 .action-buttons button {
   visibility: visible;
 }
+
+.transaction-container {
+	margin: 20px;
+  }
+  
+  .transaction-label {
+	font-size: 24px;
+  }
+  
+  .transaction-list {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+  }
+  
+  .transaction-item {
+	display: flex;
+	align-items: center;
+	border: 1px solid #ccc;
+	padding: 10px;
+	border-radius: 5px;
+  }
+  
+  .transaction-date {
+	flex: 2;
+	font-weight: bold;
+  }
+  
+  .transaction-details {
+	flex: 3;
+	display: flex;
+	flex-direction: column;
+	gap: 5px;
+  }
+  
+  .transaction-category {
+	font-weight: bold;
+  }
+  
+  .transaction-amount {
+    flex: 3;
+  }
+
+  .transaction-amount span {
+    color: inherit; /* Наследовать цвет от родительского элемента */
+  }
+  
+  
+  .transaction-comment {
+	color: #666;
+  }
+
+  .red {
+    color: red;
+  }
+  
+  .green {
+    color: green;
+  }
+  
+  
+  

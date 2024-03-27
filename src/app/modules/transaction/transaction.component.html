@@ -1,6 +1,6 @@
 <div class="transaction-container">
   <h2>New transaction</h2>
-  <form (ngSubmit)="createTransaction()">
+  <form (ngSubmit)="createOrUpdate()">
     <label for="purpose">Enter purpose:</label>
     <input [(ngModel)]="purpose" type="text" id="purpose" name="purpose" />
 

@@ -6,6 +6,7 @@ import { Observable } from 'rxjs';
 import { Category } from '../../shared/models/category.model';
 import { TransactionType } from '../../shared/models/transaction-type.model';
 import { Transaction } from '../../shared/models/transaction.model';
+import { ActivatedRoute, Route, Router } from '@angular/router';
 
 @Component({
   selector: 'app-transaction',
@@ -25,11 +26,15 @@ export class TransactionComponent implements OnInit {
   selectedCategory: number = 0;
   selectedType: number = 0;
   userId: number = 0;
+  isEditing: boolean = false;
+  transactionId: number | null = null;
 
   constructor(
     private transactionService: TransactionService,
     private userService: UserService,
     private cookieService: CookieService,
+    private route: ActivatedRoute,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -38,6 +43,36 @@ export class TransactionComponent implements OnInit {
     // Fetch categories and transaction types
     this.getCategories();
     this.getTransactionTypes();
+
+    this.route.params.subscribe(params => {
+      const id = params['id'];
+      if (id) {
+        this.transactionId = id;
+        console.log('Transaction ID:', this.transactionId);
+        // Здесь вы можете выполнить действия с полученным идентификатором, например, загрузить данные транзакции для редактирования
+      }
+    });
+    if (this.transactionId !== null) {
+      this.getTransaction(this.transactionId);
+    }
+  }
+
+  getTransaction(id: number) {
+    // Получаем данные о редактируемой транзакции
+    this.transactionService.getTransactionById(id).subscribe(
+      (transaction: Transaction) => {
+        // Заполняем форму данными редактируемой транзакции
+        this.purpose = transaction.purpose;
+        this.amount = transaction.amount;
+        this.date = transaction.date;
+        this.regulary = transaction.regular;
+        this.selectedCategory = transaction.categoryId;
+        this.selectedType = transaction.transactionTypeId;
+      },
+      (error) => {
+        console.error('Error fetching transaction:', error);
+      }
+    );
   }
   
   getTransactionTypes() {
@@ -66,12 +101,19 @@ export class TransactionComponent implements OnInit {
     );
   }
 
+  createOrUpdate(){
+    if(this.transactionId == null){
+      console.log("if")
+      this.createTransaction();
+    } else{
+      console.log("else", this.transactionId)
+      this.updateTransaction();
+    }
+  }
+
   createTransaction() {
-    const token = this.cookieService.get('authToken');
-    const decodedToken: any = {}; // Implement decoding logic
-    this.userId = decodedToken.sub;
     const transaction = new Transaction(
-      this.userId,
+      0,
       this.purpose,
       this.amount,
       this.date,
@@ -83,6 +125,28 @@ export class TransactionComponent implements OnInit {
     this.transactionService.createTransaction(transaction).subscribe(
       (response) => {
         console.log(response);
+      },
+      (error) => {
+        console.error('Error creating transaction:', error);
+      }
+    );
+  }
+
+  updateTransaction() {
+    const transaction = new Transaction(
+      this.transactionId,
+      this.purpose,
+      this.amount,
+      this.date,
+      this.regulary,
+      this.selectedCategory,
+      this.selectedType,
+    );
+      console.log(transaction);
+    this.transactionService.updateTransaction(transaction, this.transactionId).subscribe(
+      (response) => {
+        console.log(response);
+        this.router.navigate(['/transaction-overview'])
       },
       (error) => {
         console.error('Error creating transaction:', error);
