@@ -25,7 +25,8 @@ import { MatTableModule } from '@angular/material/table';
 import { MatSelectModule } from '@angular/material/select';
 import { MatDatepickerModule } from '@angular/material/datepicker'; // Corrected import statement
 import { MAT_DATE_LOCALE, DateAdapter } from '@angular/material/core';
-import { MatNativeDateModule } from '@angular/material/core'; // Import this module for native date support
+import { MatNativeDateModule } from '@angular/material/core';
+import { TransactionChartComponent } from './modules/transaction-chart/transaction-chart.component';
 
 @NgModule({
   declarations: [
@@ -38,6 +39,7 @@ import { MatNativeDateModule } from '@angular/material/core'; // Import this mod
     TransactionComponent,
     TransactionOverviewComponent,
     NavbarComponent,
+    TransactionChartComponent,
   ],
   imports: [
     BrowserModule,
@@ -58,7 +60,7 @@ import { MatNativeDateModule } from '@angular/material/core'; // Import this mod
     MatTableModule,
     MatSelectModule,
     MatDatepickerModule,
-    MatNativeDateModule // Import MatNativeDateModule for native date support
+    MatNativeDateModule
   ],
   providers: [
     AuthService,

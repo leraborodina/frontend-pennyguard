@@ -18,7 +18,7 @@ export class TransactionService {
     private cookieService: CookieService,
   ) {}
 
-  getCategories(email: string): Observable<Category[]> {
+  getCategories(): Observable<Category[]> {
     const authToken = this.cookieService.get('authToken');
 
     const headers = new HttpHeaders({

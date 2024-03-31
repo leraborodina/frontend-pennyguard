@@ -1,0 +1,31 @@
+.category-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  justify-content: center;
+  align-items: center;
+}
+
+mat-card {
+  width: 90%;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+mat-card-header {
+  background-color: #f2f2f2;
+  padding: 12px;
+}
+
+mat-card-title {
+  font-size: 20px;
+}
+
+mat-card-content {
+  padding: 12px;
+}
+
+mat-card-content p {
+  margin: 0;
+}

@@ -7,6 +7,7 @@ import { IncomesComponent } from './modules/incomes/incomes.component';
 import { TransactionComponent } from './modules/transaction/transaction.component';
 import { TransactionOverviewComponent } from './modules/transaction-overview/transaction-overview.component';
 import { ExpensesComponent } from './modules/expenses/expenses.component';
+import { TransactionChartComponent } from './modules/transaction-chart/transaction-chart.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -26,6 +27,11 @@ const routes: Routes = [
   {
     path: 'transaction-overview',
     component: TransactionOverviewComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'transaction-chart',
+    component: TransactionChartComponent,
     canActivate: [AuthGuard],
   },
   // Redirect to login if the path is empty

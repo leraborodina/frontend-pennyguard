@@ -58,9 +58,7 @@ export class TransactionOverviewComponent implements OnInit {
   }
 
   getCategories() {
-    const userEmail = this.userData?.email ?? this.cookieService.get('userEmail');
-
-    this.transactionService.getCategories(userEmail).subscribe(
+    this.transactionService.getCategories().subscribe(
       (content: Category[]) => {
         this.categories = content;
       },
@@ -176,7 +174,6 @@ export class TransactionOverviewComponent implements OnInit {
       );
     }
   
-  
     // Filter by date range
     const minDateValue = this.minDateControl.value;
     const minDate = minDateValue instanceof Date ? minDateValue : null;
@@ -195,8 +192,6 @@ export class TransactionOverviewComponent implements OnInit {
       );
     }
 
-
-  
     this.filteredTransactions = filteredTransactions;
     this.dataSource.data = filteredTransactions;
   }

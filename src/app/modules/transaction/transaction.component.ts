@@ -89,9 +89,7 @@ export class TransactionComponent implements OnInit {
   }
 
   getCategories() {
-    const userEmail = this.userData?.email ?? this.cookieService.get('userEmail');
-
-    this.transactionService.getCategories(userEmail).subscribe(
+    this.transactionService.getCategories().subscribe(
       (content: Category[]) => {
         this.categories = content;
       },
