@@ -23,10 +23,11 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { AuthService } from './core/auth.service';
 import { MatTableModule } from '@angular/material/table';
 import { MatSelectModule } from '@angular/material/select';
-import { MatDatepickerModule } from '@angular/material/datepicker'; // Corrected import statement
-import { MAT_DATE_LOCALE, DateAdapter } from '@angular/material/core';
+import { MatDatepickerModule } from '@angular/material/datepicker';  
+import { MAT_DATE_LOCALE } from '@angular/material/core';
 import { MatNativeDateModule } from '@angular/material/core';
 import { TransactionChartComponent } from './modules/transaction-chart/transaction-chart.component';
+import { MatMenuModule } from '@angular/material/menu';
 
 @NgModule({
   declarations: [
@@ -60,7 +61,8 @@ import { TransactionChartComponent } from './modules/transaction-chart/transacti
     MatTableModule,
     MatSelectModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    MatMenuModule
   ],
   providers: [
     AuthService,

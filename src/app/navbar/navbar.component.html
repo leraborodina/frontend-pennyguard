@@ -1,23 +1,25 @@
-<mat-toolbar class="primary-toolbar">
+<mat-toolbar color="primary">
+  <!-- Left side items -->
   <div class="left-content">
     <span class="app-title">Penny Guard</span>
-    <!-- Navigation Links with Dropdown -->
     <ng-container *ngIf="isLoggedIn()">
       <div class="dropdown">
-        <button class="mat-button features-button">Features</button>
-        <div class="dropdown-content">
-          <a mat-button routerLink="/incomes">Incomes</a>
-          <a mat-button routerLink="/expenses">Expenses</a>
-          <a mat-button routerLink="/transaction">Transaction</a>
-          <a mat-button routerLink="/transaction-overview">Transaction Overview</a>
-          <a mat-button routerLink="/transaction-chart">Transaction Chart</a>
-        </div>
+        <button mat-button [matMenuTriggerFor]="transactionMenu">Transactions</button>
+        <mat-menu #transactionMenu="matMenu">
+          <button mat-menu-item routerLink="/transaction">Create</button>
+          <button mat-menu-item routerLink="/transaction-overview">Overview</button>
+          <button mat-menu-item routerLink="/transaction-chart">Chart</button>
+        </mat-menu>
       </div>
+      <button mat-button>Limits</button>
+      <button mat-button>Reminder</button>
     </ng-container>
   </div>
 
-  <ng-container *ngIf="isLoggedIn()">
-    <span class="user-greeting">Welcome, {{ getUserName() }}</span>
-    <button mat-button color="warn" (click)="logout()">Logout</button>
-  </ng-container>
+  <!-- Right side items -->
+  <div>
+    <ng-container *ngIf="isLoggedIn()">
+      <a (click)="logout()" class="user-greeting">Welcome, <span class="username">{{ getUserName() }}</span></a>
+    </ng-container>
+  </div>
 </mat-toolbar>

@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { AgChartOptions } from 'ag-charts-community';
 import Chart from 'chart.js/auto';
 import { Category } from '../../shared/models/category.model';
 import { TransactionService } from '../../services/transaction.service';
@@ -11,7 +10,6 @@ import { Transaction } from '../../shared/models/transaction.model';
   styleUrls: ['./transaction-chart.component.scss']
 })
 export class TransactionChartComponent implements OnInit {
-  public chartOptions: AgChartOptions | undefined;
   private categories: Category [] = []; 
   private transactions: Transaction [] = [];
   public chart: any;
