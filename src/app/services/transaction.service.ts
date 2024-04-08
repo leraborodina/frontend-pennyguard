@@ -12,6 +12,7 @@ import { User } from '../shared/models/user.model';
 })
 export class TransactionService {
   private readonly transactionEndpoint = `${urls.baseUrl}/transactions`;
+  private readonly uploadEndpoint = `${urls.baseUrl}/upload`;
 
   constructor(
     private http: HttpClient,
@@ -134,4 +135,17 @@ getTransactionById(id: number): Observable<any>{
     
     return this.http.delete(`${this.transactionEndpoint}/${id}`, { headers });
   } 
+
+  uploadPDF(pdfFile: File): Observable<any> {
+    const authToken = this.cookieService.get('authToken');
+  
+    const headers = new HttpHeaders({
+      Authorization: `${authToken}`
+    });
+  
+    const formData = new FormData();
+    formData.append('pdfFile', pdfFile);
+  
+    return this.http.post<any>(`${this.uploadEndpoint}/pdf`, formData, { headers });
+  }
 }

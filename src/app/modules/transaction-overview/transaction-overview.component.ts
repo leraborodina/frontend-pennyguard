@@ -40,6 +40,7 @@ export class TransactionOverviewComponent implements OnInit {
   dataSource = new MatTableDataSource<Transaction>();
   categories:  Category[] = [];
   transactionTypes: TransactionType[] = [];
+  rowCounter: number = 0; // Initialize the row counter
 
   constructor(
     private transactionService: TransactionService,
@@ -235,4 +236,9 @@ export class TransactionOverviewComponent implements OnInit {
     const absAmount = Math.abs(amount);
     return `${sign}${absAmount}₽`;
   }
+
+  getRowNumber(index: number): number {
+    return index + 1; // Adjust for 0-based index
+  }
+
 }

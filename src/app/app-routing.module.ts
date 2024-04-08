@@ -8,6 +8,7 @@ import { TransactionComponent } from './modules/transaction/transaction.componen
 import { TransactionOverviewComponent } from './modules/transaction-overview/transaction-overview.component';
 import { ExpensesComponent } from './modules/expenses/expenses.component';
 import { TransactionChartComponent } from './modules/transaction-chart/transaction-chart.component';
+import { UploadPdfComponent } from './modules/upload-pdf/upload-pdf.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -32,6 +33,11 @@ const routes: Routes = [
   {
     path: 'transaction-chart',
     component: TransactionChartComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'upload',
+    component: UploadPdfComponent,
     canActivate: [AuthGuard],
   },
   // Redirect to login if the path is empty

@@ -28,6 +28,7 @@ import { MAT_DATE_LOCALE } from '@angular/material/core';
 import { MatNativeDateModule } from '@angular/material/core';
 import { TransactionChartComponent } from './modules/transaction-chart/transaction-chart.component';
 import { MatMenuModule } from '@angular/material/menu';
+import { UploadPdfComponent } from './modules/upload-pdf/upload-pdf.component';
 
 @NgModule({
   declarations: [
@@ -41,6 +42,7 @@ import { MatMenuModule } from '@angular/material/menu';
     TransactionOverviewComponent,
     NavbarComponent,
     TransactionChartComponent,
+    UploadPdfComponent,
   ],
   imports: [
     BrowserModule,
