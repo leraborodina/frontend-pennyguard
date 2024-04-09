@@ -1,58 +1,75 @@
+// Define common variables
+$padding: 10px;
+$font-size: 14px;
+$border-color: #ddd;
+
+// Table styles
 .table {
   width: 100%;
-  border: none;
   margin-bottom: 20px;
-  border-collapse: separate;
-}
-.table thead th {
-  font-weight: bold;
-  text-align: left;
-  border: none;
-  padding: 10px 15px;
-  background: #ededed;
-  font-size: 14px;
-  border-top: 1px solid #ddd;
-}
-.table tr th:first-child,
-.table tr td:first-child {
-  border-left: 1px solid #ddd;
-}
-.table tr th:last-child,
-.table tr td:last-child {
-  border-right: 1px solid #ddd;
-}
-.table thead tr th:first-child {
-  border-radius: 20px 0 0 0;
-}
-.table thead tr th:last-child {
-  border-radius: 0 20px 0 0;
-}
-.table tbody td {
-  text-align: left;
-  border: none;
-  padding: 10px 15px;
-  font-size: 14px;
-  vertical-align: top;
-}
-.table tbody tr:nth-child(even) {
-  background: #f8f8f8;
-}
-.table tbody tr:last-child td {
-  border-bottom: 1px solid #ddd;
-}
-.table tbody tr:last-child td:first-child {
-  border-radius: 0 0 0 20px;
-}
-.table tbody tr:last-child td:last-child {
-  border-radius: 0 0 20px 0;
+
+  thead th {
+    font-weight: bold;
+    text-align: center; // Align text horizontally in the center
+    border: none;
+    padding: $padding;
+    background: #ededed;
+    font-size: $font-size;
+    border-top: 1px solid $border-color;
+    vertical-align: middle; // Align text vertically in the middle
+
+    &:first-child {
+      border-radius: 20px 0 0 0;
+      border-left: 1px solid $border-color;
+    }
+
+    &:last-child {
+      border-radius: 0 20px 0 0;
+      border-right: 1px solid $border-color;
+    }
+  }
+
+  tbody td {
+    text-align: left;
+    border: none;
+    padding: $padding;
+    font-size: $font-size;
+    vertical-align: middle;
+
+    &:first-child {
+      border-left: 1px solid $border-color;
+    }
+
+    &:last-child {
+      border-right: 1px solid $border-color;
+    }
+  }
+
+  tbody tr:nth-child(even) {
+    background: #f8f8f8;
+  }
+
+  tbody tr:last-child td {
+    border-bottom: 1px solid $border-color;
+
+    &:first-child {
+      border-radius: 0 0 0 20px;
+    }
+
+    &:last-child {
+      border-radius: 0 0 20px 0;
+    }
+  }
 }
 
+
+// Error snackbar
 .error-snackbar {
-  background-color: red; /* Example background color */
-  color: white; /* Example text color */
+  background-color: red;
+  color: white;
 }
 
-/* transaction-overview.component.css */
+// Mat table
 .mat-table-responsive {
   overflow-x: auto;
   max-width: 100%;
@@ -69,42 +86,100 @@
   text-overflow: ellipsis;
 }
 
+// Container styles
 .container {
   margin: 20px;
+
+  // Filter container styles
+  .filter-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: space-between; // Align items evenly
+
+    .filter-field {
+      flex: 1;
+      min-width: 200px;
+
+      // Adjust input and select styles
+      input.mat-input, mat-select {
+        width: 100%;
+      }
+    }
+  }
+
+  // Transaction container styles
+  .transaction-container {
+    margin-top: 20px; // Add margin to separate filter and transactions
+
+    .transaction-label {
+      font-size: 24px;
+      margin-bottom: 5px; /* Adjust as needed */
+      margin-left: 10px;
+    }
+
+    .transaction-table-container {
+      position: relative;
+    }
+    
+    .transaction-quantity {
+      position: absolute;
+      top: 0;
+      right: 0;
+      margin-top: 20px; /* Adjust as needed */
+      margin-right: 20px; /* Adjust as needed */
+    }
+
+    .transaction-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+
+      .transaction-item {
+        display: flex;
+        align-items: center;
+        border: 1px solid #ccc;
+        padding: 10px;
+        border-radius: 5px;
+
+        .transaction-date {
+          flex: 2;
+          font-weight: bold;
+        }
+
+        .transaction-details {
+          flex: 3;
+          display: flex;
+          flex-direction: column;
+          gap: 5px;
+
+          .transaction-category {
+            font-weight: bold;
+          }
+
+          .transaction-comment {
+            color: #666;
+          }
+        }
+
+        .transaction-amount {
+          flex: 3;
+        }
+
+        .transaction-counter {
+          font-weight: bold;
+        }
+
+        .transaction-space {
+          width: 20px;
+        }
+      }
+    }
+  }
 }
 
-.filter-container {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-}
 
-.mat-form-field {
-  min-width: 200px;
-}
-
-.mat-table {
-  width: 100%;
-  margin-top: 20px;
-}
-
-.mat-cell {
-  text-align: center;
-}
-
-.mat-header-cell {
-  text-align: center;
-}
-
-.last-transactions {
-  margin-top: 20px;
-}
-
-.last-transactions-item {
-  margin-bottom: 10px;
-}
-
-/* Button style */
+// Button styles
 .mat-icon-button {
   margin: 0 5px;
   padding: 5px;
@@ -118,75 +193,15 @@
 .action-buttons {
   display: flex;
   justify-content: space-around;
+
+  button {
+    visibility: visible;
+  }
 }
 
-.action-buttons button {
-  visibility: visible;
-}
-
-.transaction-container {
-  margin: 20px;
-}
-
-.transaction-label {
-  font-size: 24px;
-}
-
-.transaction-list {
+.empty-list-message {
   display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.transaction-item {
-  display: flex;
-  align-items: center;
-  border: 1px solid #ccc;
-  padding: 10px;
-  border-radius: 5px;
-}
-
-.transaction-date {
-  flex: 2;
-  font-weight: bold;
-}
-
-.transaction-details {
-  flex: 3;
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-}
-
-.transaction-category {
-  font-weight: bold;
-}
-
-.transaction-amount {
-  flex: 3;
-}
-
-.transaction-amount span {
-  color: inherit; /* Наследовать цвет от родительского элемента */
-}
-
-.transaction-comment {
-  color: #666;
-}
-
-.red {
-  color: red;
-}
-
-.green {
-  color: green;
-}
-
-
-.transaction-counter {
-  font-weight: bold; /* Make the counter bold */
-}
-
-.transaction-space {
-  width: 20px; /* Add space to the next column */
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Center vertically */
+  height: 100%; /* Make the div fill the entire height of the card content */
 }

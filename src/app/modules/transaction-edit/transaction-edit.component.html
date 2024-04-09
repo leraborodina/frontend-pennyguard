@@ -1,0 +1,105 @@
+<!-- transaction-edit.component.html -->
+
+<div mat-dialog-content class="dialog-container">
+    <mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+        <ng-container matColumnDef="date">
+            <mat-header-cell *matHeaderCellDef>Date</mat-header-cell>
+            <mat-cell *matCellDef="let transaction" [ngClass]="{ 'edit-mode': transaction.editing, 'edit-mode-date': transaction.editing }">
+                <ng-container *ngIf="!transaction.editing; else editMode">
+                    {{ transaction.date | date }}
+                </ng-container>
+                <ng-template #editMode>
+                    <div class="edit-container">
+                        <input type="date" [(ngModel)]="transaction.date" class="edit-input-date"
+                            (click)="$event.stopPropagation()">
+                    </div>
+                </ng-template>
+            </mat-cell>
+        </ng-container>
+        
+        <ng-container matColumnDef="category">
+            <mat-header-cell *matHeaderCellDef>Category</mat-header-cell>
+            <mat-cell *matCellDef="let transaction" [ngClass]="{ 'edit-mode': transaction.editing }">
+                <ng-container *ngIf="!transaction.editing; else editMode">
+                    {{ transaction.categoryId }}
+                </ng-container>
+                <ng-template #editMode>
+                    <input type="text" [(ngModel)]="transaction.category" class="edit-input"
+                        (click)="$event.stopPropagation()">
+                </ng-template>
+            </mat-cell>
+        </ng-container>
+        
+
+        <!-- Amount Column -->
+        <ng-container matColumnDef="amount">
+            <mat-header-cell *matHeaderCellDef>Amount</mat-header-cell>
+            <mat-cell *matCellDef="let transaction" [ngClass]="{ 'edit-mode': transaction.editing }">
+                <ng-container *ngIf="!transaction.editing; else editMode">
+                    {{ transaction.amount }}
+                </ng-container>
+                <ng-template #editMode>
+                    <input type="number" [(ngModel)]="transaction.amount" class="edit-input"
+                        (click)="$event.stopPropagation()">
+                </ng-template>
+            </mat-cell>
+        </ng-container>
+
+        <!-- Purpose Column -->
+        <ng-container matColumnDef="purpose">
+            <mat-header-cell *matHeaderCellDef>Purpose</mat-header-cell>
+            <mat-cell *matCellDef="let transaction" [ngClass]="{ 'edit-mode': transaction.editing }">
+                <ng-container *ngIf="!transaction.editing; else editMode">
+                    {{ transaction.purpose }}
+                </ng-container>
+                <ng-template #editMode>
+                    <input type="text" [(ngModel)]="transaction.purpose" class="edit-input"
+                        (click)="$event.stopPropagation()">
+                </ng-template>
+            </mat-cell>
+        </ng-container>
+
+        <!-- Regular Column -->
+        <ng-container matColumnDef="regular">
+            <mat-header-cell *matHeaderCellDef>Regular</mat-header-cell>
+            <mat-cell *matCellDef="let transaction" [ngClass]="{ 'edit-mode': transaction.editing }">
+                <ng-container *ngIf="!transaction.editing; else editMode">
+                    {{ transaction.regular ? 'Yes' : 'No' }}
+                </ng-container>
+                <ng-template #editMode>
+                    <select [(ngModel)]="transaction.regular" (click)="$event.stopPropagation()">
+                        <option value="true">Yes</option>
+                        <option value="false">No</option>
+                    </select>
+                </ng-template>
+            </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="transactionType">
+            <mat-header-cell *matHeaderCellDef>Transaction Type</mat-header-cell>
+            <mat-cell *matCellDef="let transaction" [ngClass]="{ 'edit-mode': transaction.editing }">
+                <ng-container *ngIf="!transaction.editing; else editMode">
+                    {{ transaction.transactionTypeId === 1 ? 'Expense' : 'Income' }}
+                </ng-container>
+                <ng-template #editMode>
+                    <select [(ngModel)]="transaction.transactionTypeId" (click)="$event.stopPropagation()">
+                        <option value="1">Expense</option>
+                        <option value="2">Income</option>
+                    </select>
+                </ng-template>
+            </mat-cell>
+        </ng-container>
+
+        <!-- Table Rows -->
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let transaction; columns: displayedColumns" (click)="onRowClick(transaction)"
+            [ngClass]="{ 'editing': transaction.editing }"></mat-row>
+    </mat-table>
+
+    <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+</div>
+
+<div mat-dialog-actions>
+    <button mat-button color="primary" (click)="onApply()">Apply</button>
+    <button mat-button color="warn" (click)="onCancel()">Cancel</button>
+</div>

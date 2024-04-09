@@ -41,43 +41,46 @@
     <mat-card>
       <mat-card-header class="transaction-label">Transactions</mat-card-header>
       <mat-card-content>
-        <form>
-          <div class="transaction-list">
-            <div *ngFor="let transaction of filteredTransactions; let i = index" class="transaction-item">
-              <!-- Display the row counter with bold style -->
-              <div class="transaction-counter"><strong>{{ getRowNumber(i) }}</strong></div>
-              <!-- Add space to the next column -->
-              <div class="transaction-space"></div>
-              <!-- Other transaction details -->
-              <div class="transaction-date">{{ transaction.date | date:'dd.MM.yyyy' }}</div>
-              <div class="transaction-details">
-                <div class="transaction-category">{{ transaction.categoryId }}</div>
-                <div class="transaction-comment">{{ transaction.purpose }}</div>
-              </div>
-              <div class="transaction-amount"
-                [style.color]="getAmountColorByTransactionType(transaction.transactionTypeId)">
-                {{ getAmountWithSignAndColor(transaction.amount, transaction.transactionTypeId) }}
-              </div>
-              <div>
-                <button mat-icon-button color="primary" type="button" (click)="deleteTransaction(transaction.id)">
-                  <mat-icon>delete</mat-icon>
-                </button>
-                <button mat-icon-button color="primary" type="button" (click)="editTransaction(transaction.id)">
-                  <mat-icon>edit</mat-icon>
-                </button>
-              </div>
-            </div>
-          </div>
+        <div class="transaction-quantity">
+          <span>Total Transactions: {{ filteredTransactions.length }}</span>
+        </div>
+        <form *ngIf="filteredTransactions.length > 0">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Category</th>
+                <th>Purpose</th>
+                <th>Amount</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let transaction of filteredTransactions; let i = index" class="transaction-item">
+                <td>{{ transaction.date | date:'dd.MM.yyyy' }}</td>
+                <td>{{ transaction.categoryId || 'N/A' }}</td>
+                <td>{{ transaction.purpose || 'N/A' }}</td>
+                <td [style.color]="getAmountColorByTransactionType(transaction.transactionTypeId)">
+                  {{ getAmountWithSignAndColor(transaction.amount, transaction.transactionTypeId) || 'N/A' }}
+                </td>
+                <td>
+                  <div class="action-buttons">
+                    <button mat-icon-button color="primary" type="button" (click)="deleteTransaction(transaction.id)">
+                      <mat-icon>delete</mat-icon>
+                    </button>
+                    <button mat-icon-button color="primary" type="button" (click)="editTransaction(transaction.id)">
+                      <mat-icon>edit</mat-icon>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </form>
+        <div *ngIf="filteredTransactions.length === 0" class="empty-list-message">
+          No transactions available.
+        </div>
       </mat-card-content>
     </mat-card>
-  </div>
-
-
-
-  <!-- Last 3 Transactions -->
-  <h2>Last 3 Transactions</h2>
-  <div *ngFor="let transaction of dataSource.data.slice(-3)">
-    {{ transaction.date }} - {{ transaction.purpose }} - {{ transaction.amount }}
   </div>
 </div>

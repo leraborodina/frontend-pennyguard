@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { TransactionService } from '../../services/transaction.service';
 import { UserData, UserService } from '../../shared/services/user.service';
 import { CookieService } from 'ngx-cookie-service';
-import { Observable } from 'rxjs';
 import { Category } from '../../shared/models/category.model';
 import { TransactionType } from '../../shared/models/transaction-type.model';
 import { Transaction } from '../../shared/models/transaction.model';
@@ -101,10 +100,8 @@ export class TransactionComponent implements OnInit {
 
   createOrUpdate(){
     if(this.transactionId == null){
-      console.log("if")
       this.createTransaction();
     } else{
-      console.log("else", this.transactionId)
       this.updateTransaction();
     }
   }
@@ -118,6 +115,7 @@ export class TransactionComponent implements OnInit {
       this.regulary,
       this.selectedCategory,
       this.selectedType,
+      this.isEditing
     );
 
     this.transactionService.createTransaction(transaction).subscribe(
@@ -139,6 +137,7 @@ export class TransactionComponent implements OnInit {
       this.regulary,
       this.selectedCategory,
       this.selectedType,
+      this.isEditing
     );
       console.log(transaction);
     this.transactionService.updateTransaction(transaction, this.transactionId).subscribe(

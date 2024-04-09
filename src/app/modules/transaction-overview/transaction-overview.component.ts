@@ -240,5 +240,4 @@ export class TransactionOverviewComponent implements OnInit {
   getRowNumber(index: number): number {
     return index + 1; // Adjust for 0-based index
   }
-
 }

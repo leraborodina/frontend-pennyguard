@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { urls } from '../config/config';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { CookieService } from 'ngx-cookie-service';
-import { Observable, catchError, map, throwError } from 'rxjs';
+import { Observable, catchError, forkJoin, map, throwError } from 'rxjs';
 import { Category } from '../shared/models/category.model';
 import { TransactionType } from '../shared/models/transaction-type.model';
 import { Transaction } from '../shared/models/transaction.model';
@@ -75,6 +75,25 @@ export class TransactionService {
       );
   }
 
+  saveTransactions(transactions: Transaction[]): Observable<Transaction[]> {
+    // Create an array to store observables of create or update requests
+    const requests: Observable<Transaction>[] = [];
+
+    // Iterate over transactions
+    transactions.forEach(transaction => {
+      // If the transaction has an ID, it needs to be updated
+      if (transaction.id) {
+        requests.push(this.updateTransaction(transaction, transaction.id));
+      } else {
+        // If the transaction does not have an ID, it needs to be created
+        requests.push(this.createTransaction(transaction));
+      }
+    });
+
+    // Combine all observables into one and return
+    return forkJoin(requests);
+  }
+
   updateTransaction(transaction: Transaction, id: number | null): Observable<Transaction> {
     const authToken = this.cookieService.get('authToken');
 
@@ -135,8 +154,8 @@ getTransactionById(id: number): Observable<any>{
     
     return this.http.delete(`${this.transactionEndpoint}/${id}`, { headers });
   } 
-
-  uploadPDF(pdfFile: File): Observable<any> {
+  
+  uploadPDF(pdfFile: File): Observable<Transaction[]> {
     const authToken = this.cookieService.get('authToken');
   
     const headers = new HttpHeaders({
@@ -146,6 +165,11 @@ getTransactionById(id: number): Observable<any>{
     const formData = new FormData();
     formData.append('pdfFile', pdfFile);
   
-    return this.http.post<any>(`${this.uploadEndpoint}/pdf`, formData, { headers });
+    return this.http.post<any>(`${this.uploadEndpoint}/pdf`, formData, { headers }).pipe(
+      catchError((error) => {
+        console.error('Error uploading file:', error);
+        return throwError(error);
+      })
+    );
   }
 }

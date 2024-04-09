@@ -29,6 +29,10 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { TransactionChartComponent } from './modules/transaction-chart/transaction-chart.component';
 import { MatMenuModule } from '@angular/material/menu';
 import { UploadPdfComponent } from './modules/upload-pdf/upload-pdf.component';
+import { TransactionEditComponent } from './modules/transaction-edit/transaction-edit.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { CommonModule } from '@angular/common';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 @NgModule({
   declarations: [
@@ -43,6 +47,7 @@ import { UploadPdfComponent } from './modules/upload-pdf/upload-pdf.component';
     NavbarComponent,
     TransactionChartComponent,
     UploadPdfComponent,
+    TransactionEditComponent,
   ],
   imports: [
     BrowserModule,
@@ -64,7 +69,10 @@ import { UploadPdfComponent } from './modules/upload-pdf/upload-pdf.component';
     MatSelectModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    MatMenuModule
+    MatMenuModule,
+    MatDialogModule,
+    CommonModule,
+    MatPaginatorModule 
   ],
   providers: [
     AuthService,
