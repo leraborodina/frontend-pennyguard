@@ -33,6 +33,8 @@ import { TransactionEditComponent } from './modules/transaction-edit/transaction
 import { MatDialogModule } from '@angular/material/dialog';
 import { CommonModule } from '@angular/common';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { NotificationsComponent } from './notifications/notifications.component';
+import { WebsocketService } from './core/websocket.service';
 
 @NgModule({
   declarations: [
@@ -48,6 +50,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     TransactionChartComponent,
     UploadPdfComponent,
     TransactionEditComponent,
+    NotificationsComponent,
   ],
   imports: [
     BrowserModule,
@@ -72,7 +75,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     MatMenuModule,
     MatDialogModule,
     CommonModule,
-    MatPaginatorModule 
+    MatPaginatorModule,
   ],
   providers: [
     AuthService,
