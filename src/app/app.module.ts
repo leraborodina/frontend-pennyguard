@@ -1,4 +1,4 @@
-import { APP_INITIALIZER, NgModule } from '@angular/core';
+import { APP_INITIALIZER, ErrorHandler, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -33,6 +33,7 @@ import { TransactionEditComponent } from './modules/transaction-edit/transaction
 import { MatDialogModule } from '@angular/material/dialog';
 import { CommonModule } from '@angular/common';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { GlobalErrorHandlerService } from './services/global-error-handler.service.service';
 
 @NgModule({
   declarations: [
@@ -87,6 +88,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     { provide: MAT_DATE_LOCALE, useValue: 'de-AT' }, // Change 'de-AT' to your desired locale
     // Provide a DateAdapter (you can choose a specific one)
     // Example: { provide: DateAdapter, useClass: YourDateAdapter }
+    { provide: ErrorHandler, useClass: GlobalErrorHandlerService }
   ],
   bootstrap: [AppComponent],
 })

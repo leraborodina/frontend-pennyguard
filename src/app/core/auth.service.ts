@@ -2,8 +2,8 @@
 
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable, BehaviorSubject, map, catchError } from 'rxjs';
-import { HttpClient, HttpResponse } from '@angular/common/http';
+import { Observable, BehaviorSubject, map, catchError, tap, throwError } from 'rxjs';
+import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { TokenService } from './token.service';
 import { CookieService } from 'ngx-cookie-service';
 import { urls } from '../config/config';
@@ -45,6 +45,31 @@ export class AuthService {
     this.tokenSubject.next(storedToken);
   }
 
+
+refreshToken(): Observable<any> {
+  const oldToken = this.getAuthToken()!;
+  const decodedToken: any = jwtDecode(oldToken);
+  const userId: string = decodedToken.sub;
+
+  const headers = new HttpHeaders({
+    'Content-Type': 'application/json',
+    'X-UserId': userId  
+  });
+
+  return this.http.post<any>(
+    `${this.authEndpoint}/refresh-token`, {}, { headers }).pipe(
+      map((response: any) => {
+        this.setAuthToken(response.token);
+        return response; 
+      }),
+      catchError((error) => {
+        console.error('Error in refresh token request:', error);
+        return throwError(error);
+      })
+  );
+}
+
+  
   login(email: string | null, password: string | null): Observable<LoginResponse> {
     const loginRequest = { email, password };
     return this.http.post<LoginResponse>(`${this.authEndpoint}/login`, loginRequest, { observe: 'response' }).pipe(

@@ -6,6 +6,8 @@ import { Category } from '../../shared/models/category.model';
 import { TransactionType } from '../../shared/models/transaction-type.model';
 import { Transaction } from '../../shared/models/transaction.model';
 import { ActivatedRoute, Route, Router } from '@angular/router';
+import { ErrorNotificationService } from '../../services/error-notification.service.service';
+import { GlobalErrorHandlerService } from '../../services/global-error-handler.service.service';
 
 @Component({
   selector: 'app-transaction',
@@ -33,7 +35,8 @@ export class TransactionComponent implements OnInit {
     private userService: UserService,
     private cookieService: CookieService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private globalErrorHandlingService: GlobalErrorHandlerService
   ) {}
 
   ngOnInit(): void {
@@ -124,6 +127,7 @@ export class TransactionComponent implements OnInit {
       },
       (error) => {
         console.error('Error creating transaction:', error);
+        this.globalErrorHandlingService.handleError(error);
       }
     );
   }
