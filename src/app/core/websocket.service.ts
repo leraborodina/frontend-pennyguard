@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
     providedIn: 'root'
 })
 export class WebsocketService {
-  private websocket: WebSocket = new WebSocket('');
+  private websocket!: WebSocket;
 
   constructor() { }
 

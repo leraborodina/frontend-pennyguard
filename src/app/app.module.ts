@@ -12,7 +12,7 @@ import { LogoutComponent } from './modules/logout/logout.component';
 import { TransactionComponent } from './modules/transaction/transaction.component';
 import { TransactionOverviewComponent } from './modules/transaction-overview/transaction-overview.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatCardModule } from '@angular/material/card';
+import { MatCard, MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
@@ -35,6 +35,14 @@ import { CommonModule } from '@angular/common';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { NotificationsComponent } from './notifications/notifications.component';
 import { WebsocketService } from './core/websocket.service';
+import { LimitFormComponent } from './modules/limit-form/limit-form.component';
+import { MatSidenav, MatSidenavModule } from '@angular/material/sidenav';
+import { MatListModule } from '@angular/material/list';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { StartpageComponent } from './modules/startpage/startpage.component';
+import { DashboardComponent } from './modules/dashboard/dashboard.component';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { LastTransactionsComponent } from './modules/last-transactions/last-transactions.component';
 
 @NgModule({
   declarations: [
@@ -51,6 +59,10 @@ import { WebsocketService } from './core/websocket.service';
     UploadPdfComponent,
     TransactionEditComponent,
     NotificationsComponent,
+    LimitFormComponent,
+    StartpageComponent,
+    DashboardComponent,
+    LastTransactionsComponent
   ],
   imports: [
     BrowserModule,
@@ -76,6 +88,11 @@ import { WebsocketService } from './core/websocket.service';
     MatDialogModule,
     CommonModule,
     MatPaginatorModule,
+    MatSidenavModule,
+    MatSidenav,
+    MatListModule,
+    MatExpansionModule,
+    MatGridListModule,
   ],
   providers: [
     AuthService,
