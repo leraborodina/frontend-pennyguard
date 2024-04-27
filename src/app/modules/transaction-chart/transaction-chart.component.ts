@@ -3,6 +3,7 @@ import Chart from 'chart.js/auto';
 import { Category } from '../../shared/models/category.model';
 import { TransactionService } from '../../services/transaction.service';
 import { Transaction } from '../../shared/models/transaction.model';
+import { CategoryService } from '../../services/category.service';
 
 @Component({
   selector: 'app-transaction-chart',
@@ -17,6 +18,7 @@ export class TransactionChartComponent implements OnInit {
 
   constructor(
     private transactionService: TransactionService,
+    private categoryService: CategoryService,
   ) { }
 
   ngOnInit(): void {
@@ -24,7 +26,7 @@ export class TransactionChartComponent implements OnInit {
   }
 
   getCategories() {
-    this.transactionService.getCategories().subscribe((categories: Category[]) => { 
+    this.categoryService.getCategories().subscribe((categories: Category[]) => { 
       this.categories = categories;
       this.getTransactions();
     },
@@ -56,7 +58,7 @@ export class TransactionChartComponent implements OnInit {
       const totalAmount = transactionsForCategory.reduce((total, transaction) => total + transaction.amount, 0);
       
       if (transactionsForCategory.length > 0) {
-        labels.push(category.value);
+        labels.push(category.name);
         data.push(totalAmount);
       }
     });
@@ -85,7 +87,7 @@ export class TransactionChartComponent implements OnInit {
       const categoryTotalAmount = transactionsForCategory.reduce((total, transaction) => total + transaction.amount, 0);
       const percent = (categoryTotalAmount / totalAmount) * 100;
       return {
-        name: category.value,
+        name: category.name,
         percent: percent,
         totalAmount: categoryTotalAmount
       };

@@ -4,7 +4,8 @@
     <mat-table [dataSource]="dataSource" class="mat-elevation-z8">
         <ng-container matColumnDef="date">
             <mat-header-cell *matHeaderCellDef>Date</mat-header-cell>
-            <mat-cell *matCellDef="let transaction" [ngClass]="{ 'edit-mode': transaction.editing, 'edit-mode-date': transaction.editing }">
+            <mat-cell *matCellDef="let transaction"
+                [ngClass]="{ 'edit-mode': transaction.editing, 'edit-mode-date': transaction.editing }">
                 <ng-container *ngIf="!transaction.editing; else editMode">
                     {{ transaction.date | date }}
                 </ng-container>
@@ -16,7 +17,7 @@
                 </ng-template>
             </mat-cell>
         </ng-container>
-        
+
         <ng-container matColumnDef="category">
             <mat-header-cell *matHeaderCellDef>Category</mat-header-cell>
             <mat-cell *matCellDef="let transaction" [ngClass]="{ 'edit-mode': transaction.editing }">
@@ -29,7 +30,7 @@
                 </ng-template>
             </mat-cell>
         </ng-container>
-        
+
 
         <!-- Amount Column -->
         <ng-container matColumnDef="amount">

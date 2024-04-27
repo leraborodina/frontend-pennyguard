@@ -4,6 +4,7 @@ import { LimitType } from '../../shared/models/limit-type.model';
 import { TransactionService } from '../../services/transaction.service';
 import { LimitService } from '../../services/limit.service';
 import { Limit } from '../../shared/models/limit.model';
+import { CategoryService } from '../../services/category.service';
 
 @Component({
   selector: 'app-limit-form',
@@ -22,7 +23,8 @@ export class LimitFormComponent implements OnInit{
 
   constructor(
     private transactionService: TransactionService,
-    private limitService: LimitService
+    private limitService: LimitService,
+    private categoryService: CategoryService
   ) {}
 
   ngOnInit(): void {
@@ -31,7 +33,7 @@ export class LimitFormComponent implements OnInit{
   }
 
   getCategories() {
-    this.transactionService.getCategories().subscribe(
+    this.categoryService.getCategories().subscribe(
       (content: Category[]) => {
         this.categories = content;
       },
