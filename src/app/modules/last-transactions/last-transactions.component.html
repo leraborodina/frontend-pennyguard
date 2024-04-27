@@ -1,0 +1,25 @@
+<div fxLayout="column" fxLayoutAlign="center center" class="transaction-container">
+    <mat-card>
+        <mat-card-content>
+            <div *ngIf="transactions.length > 0">
+            <table class="responsive-table">
+                <tbody *ngFor="let transaction of transactions; let i = index">
+                    <tr>
+                        <td rowspan="2">{{ transaction.date | date:'dd.MM.yy' }}</td>
+                        <td>{{ transaction.categoryId || 'N/A' }}</td>
+                        <td rowspan="2" [style.color]="getAmountColorByTransactionType(transaction.transactionTypeId)">
+                            {{ getAmountWithSignAndColor(transaction.amount, transaction.transactionTypeId) || 'N/A' }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>{{ transaction.purpose || 'N/A' }}</td>
+                    </tr>
+                </tbody>
+            </table>
+            </div>
+            <div *ngIf="transactions.length === 0" class="empty-list-message">
+                Нет транзакций.
+            </div>
+        </mat-card-content>
+    </mat-card>
+</div>
