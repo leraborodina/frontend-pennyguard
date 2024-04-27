@@ -1,61 +1,29 @@
-<div fxLayout="column" fxLayoutAlign="center center" class="login-container">
-  <mat-card>
-    <mat-card-header class="login-label">Login</mat-card-header>
-    <mat-card-content>
-      <div class="form-container">
-        <mat-form-field>
-          <mat-label>Enter your email</mat-label>
-          <input
-            matInput
-            placeholder="pat@example.com"
-            [formControl]="email"
-            required
-          />
-          <mat-error *ngIf="email.invalid">{{ getErrorMessage() }}</mat-error>
-        </mat-form-field>
-        <mat-error *ngIf="email.errors?.['notFound']">{{
-          email.errors?.["message"]
-        }}</mat-error>
-        <mat-form-field>
-          <mat-label>Enter your password</mat-label>
-          <input
-            matInput
-            [type]="hide ? 'password' : 'text'"
-            [formControl]="password"
-            required
-          />
-          <button
-            mat-icon-button
-            matSuffix
-            (click)="hide = !hide"
-            [attr.aria-label]="'Hide password'"
-            [attr.aria-pressed]="hide"
-          >
-            <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
-          </button>
-        </mat-form-field>
-        <mat-error *ngIf="password.errors?.['invalidCredentials']">{{
-          password.errors?.["message"]
-        }}</mat-error>
-        <button
-          (click)="login()"
-          mat-raised-button
-          color="primary"
-          class="login-button"
-        >
-          Login
-        </button>
-      </div>
-    </mat-card-content>
-    <mat-card-footer class="footer-container">
-      <span>Don't have an account?</span>
-      <a
-        (click)="redirectToRegistry()"
-        mat-button
-        color="primary"
-        class="registry-button"
-        >Register</a
-      >
-    </mat-card-footer>
-  </mat-card>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" />
+<body>
+  <div class="wrapper">
+    <div class="content">
+      <h2>Добро пожаловать в Penny Guard</h2>
+      <p>Еще нет аккаунта? 
+        <a (click)="redirectToRegistry()" routerLink="/login">Зарегистрироваться</a>
+      </p>
+        <form (ngSubmit)="login()">
+          <label>Почта</label>
+          <input type="email" placeholder="email@example.com" [formControl]="email" required>
+          <label class="error-message" *ngIf="email.invalid && email.touched">{{ getErrorMessage() }}</label>
+  
+          <div class="password-container">
+            <label>Пароль</label>
+            <a matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+              <mat-icon>{{ hide ? 'visibility_off' : 'visibility' }}</mat-icon>
+            </a>
+          </div>       
+          <input [type]="hide ? 'password' : 'text'" [formControl]="password" required/>         
+          <label class="error-message" *ngIf="password.errors?.['invalidCredentials']">
+          {{ password.errors?.["message"]}}</label>
+          <button type="submit">Войти</button>
+        </form>
+      </div> 
 </div>
+</body>
+
+

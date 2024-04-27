@@ -26,6 +26,16 @@ export class AuthService {
 
   // BehaviorSubject to keep track of the authentication token
   private tokenSubject = new BehaviorSubject<string | null>(null);
+  
+  private redirectUrl!: string;
+   
+   setRedirectUrl(url: string): void {
+     this.redirectUrl = url;
+   }
+   
+   getRedirectUrl(): string {
+     return this.redirectUrl || '/default-path';
+   }
 
   constructor(
     private http: HttpClient,
@@ -134,7 +144,7 @@ refreshToken(): Observable<any> {
     // Delete the authentication token, update authentication status, and navigate to login page
     this.cookieService.delete(this.TOKEN_KEY);
     this.setAuthenticationStatus(false);
-    this.router.navigate(['/login']);
+    this.router.navigate(['/startpage']);
   }
 
   checkTokenExpirationAndLogout(): void {

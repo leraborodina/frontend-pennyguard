@@ -7,6 +7,7 @@ import { catchError, map } from 'rxjs/operators';
 import { TransactionType } from '../shared/models/transaction-type.model';
 import { Transaction } from '../shared/models/transaction.model';
 
+import { LimitType } from '../shared/models/limit-type.model';
 @Injectable({
   providedIn: 'root',
 })

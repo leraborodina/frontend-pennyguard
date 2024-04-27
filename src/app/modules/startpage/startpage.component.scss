@@ -1,0 +1,139 @@
+/* General styles */
+.main {
+    font-family: 'Inter', sans-serif;
+    background-color:#E0E3E1;
+    min-height: 100vh;
+    display:grid;
+    grid-template-columns: 1fr;
+}
+
+/* Grid container */
+.grid-container {
+    display: grid;
+    justify-content: center;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    padding: 20px;
+    position: relative;
+    margin-bottom: 5%;
+}
+
+/* Text container */
+.text-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 1rem;
+    padding-left: 10%;
+}
+
+.limit{
+    text-align: right;
+    padding-right: 10%;
+    padding-left: 0%;
+}
+/* Buttons */
+button {
+    background-color: #333333;
+    padding: 2%;
+    color: #E0E3E1;
+    border-radius: 12px;
+    min-width: fit-content;
+    width: 30%;
+    font-family: 'Inter', sans-serif;
+}
+
+/* Image container */
+.image-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Images */
+img {
+    max-width: 70%;
+    height: auto;
+    border-radius: 5%;   
+}
+
+/* Headings */
+h2 {
+    font-size: 52px;
+}
+
+/* Paragraphs */
+p {
+    font-family: 'Jura', sans-serif;
+    font-size: x-large;
+}
+
+/* Button container */
+.button-container {
+    display: flex;
+    gap: 1rem;
+}
+
+/* Media queries */
+@media (max-width: 600px) {
+    .grid-container, .main {
+        min-width: 400px;
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr 1fr;
+        grid-gap: 20px;
+    }
+}
+
+.tiles-container{
+    background-color: #E0E3E1;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    justify-content: center;
+    gap: 5%;
+    padding: 20px;
+    position:static;
+    margin-bottom: 10%;
+    align-items: center;
+    margin-bottom: 5%;
+}
+
+@media (max-width: 600px){
+    .tiles-container{
+        min-width: 400px;
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr 1fr 1fr 1fr;
+        grid-gap: 20px;
+    }
+}
+
+.tile{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    border-radius: 25px;
+    //border: 3px solid #8b8a8a;
+    min-height: 300px;
+    max-height: 300px;
+    background-color: #f6fff9;
+}
+
+.tile-content{
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+}
+
+.tile-image{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.image{
+    width: 12em;
+    height: 12em;
+}
+
+p{
+    font-size: 17px;
+}

@@ -1,60 +1,78 @@
-.registration-label {
-  font-size: 24px; /* Adjust the font size as needed */
-  text-align: center; /* Align the text to the center */
-  margin-bottom: 20px; /* Add some space below the label */
+h2 {
+  font-family: 'Poppins', sans-serif;
+  color: #333333;
+}
+
+body{
+  background-color: #E0E3E1;
+}
+
+.container {
+  width: 50%;
+  margin: 0 auto;
+  text-align: left;
+}
+
+input[type="email"], input[type="text"], input[type="password"] {
+  width: 60%;
+  height: 40%;
+  padding: 10px;
+  border-radius: 12px;
+  border: 1px solid #38393D;
+  border-color: #666666;
+  background-color: transparent;
+  outline: none;
+}
+
+.password-container{
+  width: 62%;
+  justify-content:space-between;
   display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100px; /* Set a fixed height to center vertically */
 }
 
-.registration-container {
-  height: 100vh;
+.error-message{
+  color: #d14949;
+}
+
+button {
+  margin-top: 40px;
+  width: 30%;
+  height: 30%;
+  padding: 10px;
+  background-color: #38393D;
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 15px;
+  border-radius: 35px;
+}
+
+button:hover {
+  background-color: #546078;
+}
+
+.wrapper {
   display: flex;
-  justify-content: center;
-  align-items: center;
 }
 
-mat-card {
-  width: 100%;
-  max-width: 400px; /* Adjust as needed for your design */
-  margin: auto;
-  padding: 20px;
+label{
+color: #666666;
 }
 
-mat-card-header {
-  text-align: left; /* Align header text to the left */
-  margin-bottom: 20px; /* Add space between header and form */
+.content {
+  width: 50%;
+  text-align: left;
+  margin-left: 15%;   
 }
 
-.form-container {
+form{
   display: flex;
   flex-direction: column;
+  align-items: flex-start; 
+  gap: 10px;
 }
 
-mat-form-field {
-  margin: 5px;
+.mat-icon{
+color: #333333;
 }
 
-mat-error {
-  margin-top: 5px;
-  margin-bottom: 20px;
-}
-
-.registration-button {
-  width: 100%; /* Make the login button full width */
-  margin-bottom: 10px; /* Add space below the button */
-  margin-top: 10px;
-}
-
-.success-message {
-  color: green; /* Set the color of the success message */
-  font-size: 16px; /* Adjust the font size */
-  margin-top: 10px; /* Add some space between the success message and other elements */
-}
-
-.footer-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
