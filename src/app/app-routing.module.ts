@@ -9,6 +9,9 @@ import { TransactionOverviewComponent } from './modules/transaction-overview/tra
 import { ExpensesComponent } from './modules/expenses/expenses.component';
 import { TransactionChartComponent } from './modules/transaction-chart/transaction-chart.component';
 import { UploadPdfComponent } from './modules/upload-pdf/upload-pdf.component';
+import { LimitFormComponent } from './modules/limit-form/limit-form.component';
+import { StartpageComponent } from './modules/startpage/startpage.component';
+import { DashboardComponent } from './modules/dashboard/dashboard.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -40,6 +43,17 @@ const routes: Routes = [
     component: UploadPdfComponent,
     canActivate: [AuthGuard],
   },
+  {
+    path: 'limit-form',
+    component: LimitFormComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'dashboard',
+    component: DashboardComponent,
+    canActivate: [AuthGuard],
+  },
+  { path: 'startpage', component: StartpageComponent},
   // Redirect to login if the path is empty
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   // Handle unknown paths (e.g., show a 404 page)

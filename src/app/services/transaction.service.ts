@@ -7,6 +7,7 @@ import { Category } from '../shared/models/category.model';
 import { TransactionType } from '../shared/models/transaction-type.model';
 import { Transaction } from '../shared/models/transaction.model';
 import { User } from '../shared/models/user.model';
+import { LimitType } from '../shared/models/limit-type.model';
 @Injectable({
   providedIn: 'root',
 })
@@ -36,6 +37,25 @@ export class TransactionService {
         }),
       );
   }
+
+  getLimitTypes(): Observable<LimitType[]>{        
+    const authToken = this.cookieService.get('authToken');
+
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${authToken}`
+    });
+    
+    return this.http
+      .get<LimitType[]>(`${this.transactionEndpoint}/limit-types`, { headers })
+      .pipe(
+        catchError((error) => {
+          console.error('Error in transaction limit types request:', error);
+          return throwError(error);
+        }),
+      );
+    }
+
 
   getTransactionTypes(email: string): Observable<TransactionType[]> {
     const authToken = this.cookieService.get('authToken');
