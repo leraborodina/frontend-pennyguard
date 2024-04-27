@@ -4,10 +4,10 @@ import { UserData, UserService } from '../../shared/services/user.service';
 import { CookieService } from 'ngx-cookie-service';
 import { Category } from '../../shared/models/category.model';
 import { TransactionType } from '../../shared/models/transaction-type.model';
-import { Transaction } from '../../shared/models/transaction.model';
-import { ActivatedRoute, Route, Router } from '@angular/router';
-import { ErrorNotificationService } from '../../services/error-notification.service.service';
+import { ActivatedRoute, Router } from '@angular/router';
 import { GlobalErrorHandlerService } from '../../services/global-error-handler.service.service';
+import { Transaction } from '../../shared/models/transaction.model';
+import { CategoryService } from '../../services/category.service';
 
 @Component({
   selector: 'app-transaction',
@@ -16,60 +16,62 @@ import { GlobalErrorHandlerService } from '../../services/global-error-handler.s
 })
 export class TransactionComponent implements OnInit {
   userData: UserData | null = null;
-  transactionContent: string = '';
   categories: Category[] = [];
   transactionTypes: TransactionType[] = [];
+  transaction: Transaction = {} as Transaction;
 
   purpose: string = '';
-  amount: number = 0.0;
-  date: Date = new Date();
-  regulary: boolean = false;
-  selectedCategory: number = 0;
-  selectedType: number = 0;
-  userId: number = 0;
-  isEditing: boolean = false;
-  transactionId: number | null = null;
+  createdAt: any;
+  amount!: number;
+  regular: boolean = false;
+  categoryId!: number;
+  typeId!: number;
+
+  date: string = '';  
+  time: string = '';
 
   constructor(
     private transactionService: TransactionService,
+    private categoryService: CategoryService,
     private userService: UserService,
     private cookieService: CookieService,
     private route: ActivatedRoute,
     private router: Router,
     private globalErrorHandlingService: GlobalErrorHandlerService
-  ) {}
-
+  ) { }
+  
   ngOnInit(): void {
-    // Get the user data directly
     this.userData = this.userService.getUserData();
-    // Fetch categories and transaction types
     this.getCategories();
     this.getTransactionTypes();
 
     this.route.params.subscribe(params => {
       const id = params['id'];
       if (id) {
-        this.transactionId = id;
-        console.log('Transaction ID:', this.transactionId);
-        // Здесь вы можете выполнить действия с полученным идентификатором, например, загрузить данные транзакции для редактирования
+        this.getTransaction(id);
       }
     });
-    if (this.transactionId !== null) {
-      this.getTransaction(this.transactionId);
-    }
   }
-
+  
   getTransaction(id: number) {
-    // Получаем данные о редактируемой транзакции
     this.transactionService.getTransactionById(id).subscribe(
       (transaction: Transaction) => {
-        // Заполняем форму данными редактируемой транзакции
-        this.purpose = transaction.purpose;
-        this.amount = transaction.amount;
-        this.date = transaction.date;
-        this.regulary = transaction.regular;
-        this.selectedCategory = transaction.categoryId;
-        this.selectedType = transaction.transactionTypeId;
+        this.transaction = this.transactionService.mapTransactionFromBackend(transaction);
+ 
+        console.log(this.transaction)
+        this.purpose = this.transaction.purpose;
+        this.amount = this.transaction.amount;
+        this.regular = this.transaction.regular;
+        this.categoryId = this.transaction.categoryId;
+        this.typeId = this.transaction.typeId;
+
+        const [formattedDate, formattedTime] = this.transaction.createdAt.split(' ');
+
+        const [day, month, year] = formattedDate.split('.');
+        const isoFormattedDate = `${year}-${month}-${day}`;
+
+        this.date = isoFormattedDate;
+        this.time = formattedTime;
       },
       (error) => {
         console.error('Error fetching transaction:', error);
@@ -91,7 +93,7 @@ export class TransactionComponent implements OnInit {
   }
 
   getCategories() {
-    this.transactionService.getCategories().subscribe(
+    this.categoryService.getCategories().subscribe(
       (content: Category[]) => {
         this.categories = content;
       },
@@ -102,25 +104,29 @@ export class TransactionComponent implements OnInit {
   }
 
   createOrUpdate(){
-    if(this.transactionId == null){
+    if (!this.transaction.id) {
       this.createTransaction();
-    } else{
+    } else {
       this.updateTransaction();
     }
   }
 
   createTransaction() {
-    const transaction = new Transaction(
-      0,
-      this.purpose,
-      this.amount,
-      this.date,
-      this.regulary,
-      this.selectedCategory,
-      this.selectedType,
-      this.isEditing
-    );
-
+    // Combine date and time strings into a single Date object
+    const dateTimeString = `${this.date}T${this.time}`;
+    const formattedDateTime = new Date(dateTimeString);
+  
+    // Create the transaction object
+    const transaction: Transaction = {
+      purpose: this.purpose,
+      amount: this.amount,
+      createdAt: formattedDateTime.toISOString(), // Format date to ISO string
+      regular: this.regular,
+      categoryId: this.categoryId,
+      typeId: this.typeId
+    }
+  
+    // Call the service to create the transaction
     this.transactionService.createTransaction(transaction).subscribe(
       (response) => {
         console.log(response);
@@ -132,34 +138,25 @@ export class TransactionComponent implements OnInit {
     );
   }
 
+
   updateTransaction() {
-    const transaction = new Transaction(
-      this.transactionId,
-      this.purpose,
-      this.amount,
-      this.date,
-      this.regulary,
-      this.selectedCategory,
-      this.selectedType,
-      this.isEditing
-    );
-      console.log(transaction);
-    this.transactionService.updateTransaction(transaction, this.transactionId).subscribe(
+    console.log(this.transaction);
+    this.transactionService.updateTransaction(this.transaction).subscribe(
       (response) => {
         console.log(response);
-        this.router.navigate(['/transaction-overview'])
+        this.router.navigate(['/transaction-overview']);
       },
       (error) => {
-        console.error('Error creating transaction:', error);
+        console.error('Error updating transaction:', error);
       }
     );
   }
 
   onCategoryChange(event: any) {
-    this.selectedCategory = event.target.value;
+    this.transaction.categoryId = event.target.value;
   }
 
   onTransactionTypeChange(event: any) {
-    this.selectedType = event.target.value;
+    this.transaction.typeId = event.target.value;
   }
 }

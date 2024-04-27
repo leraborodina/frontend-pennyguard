@@ -2,9 +2,9 @@ import { Component, Inject, ViewChild } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
-import { Transaction } from '../../shared/models/transaction.model';
 import { TransactionService } from '../../services/transaction.service';
 import { Router } from '@angular/router';
+import { Transaction } from '../../shared/models/transaction.model';
 
 @Component({
   selector: 'app-transaction-edit',
@@ -59,11 +59,6 @@ export class TransactionEditComponent {
   onCancel(): void {
     // Close the dialog without saving changes
     this.dialogRef.close();
-  }
-
-  updateTransaction(transaction: Transaction, newValue: any, fieldName: string): void {
-    // Update the corresponding field in the Transaction object
-    transaction[fieldName] = newValue;
   }
 
   isNullOrWhitespace(value: string): boolean {

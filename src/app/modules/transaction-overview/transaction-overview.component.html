@@ -7,7 +7,7 @@
     <mat-form-field class="filter-field">
       <mat-label>Category</mat-label>
       <mat-select [formControl]="categoriesControl" (selectionChange)="applyFilters()">
-        <mat-option *ngFor="let category of categories" [value]="category.id">{{ category.value }}</mat-option>
+        <mat-option *ngFor="let category of categories" [value]="category.id">{{ category.name }}</mat-option>
       </mat-select>
     </mat-form-field>
 
@@ -31,7 +31,7 @@
 
     <mat-form-field class="filter-field">
       <input matInput [matDatepicker]="picker" placeholder="Transaction Date" [formControl]="maxDateControl"
-        (dateChange)="applyFilters()" [max]="maxDate">
+        (dateChange)="applyFilters()" [max]="maxDateControl">
       <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
       <mat-datepicker #picker></mat-datepicker>
     </mat-form-field>
@@ -56,12 +56,12 @@
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let transaction of filteredTransactions; let i = index" class="transaction-item">
-                <td>{{ transaction.date | date:'dd.MM.yyyy' }}</td>
+              <tr *ngFor="let transaction of transactions; let i = index" class="transaction-item">
+                <td>{{ transaction.createdAt }}</td>
                 <td>{{ transaction.categoryId || 'N/A' }}</td>
                 <td>{{ transaction.purpose || 'N/A' }}</td>
-                <td [style.color]="getAmountColorByTransactionType(transaction.transactionTypeId)">
-                  {{ getAmountWithSignAndColor(transaction.amount, transaction.transactionTypeId) || 'N/A' }}
+                <td [style.color]="getAmountColorByTransactionType(transaction.typeId)">
+                  {{ getAmountWithSignAndColor(transaction.amount, transaction.typeId) || 'N/A' }}
                 </td>
                 <td>
                   <div class="action-buttons">
