@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, HostListener, OnInit, Output, Renderer2, ViewChild } from '@angular/core';
 import { AuthService } from '../core/auth.service';
 import { UserService } from '../shared/services/user.service';
 
@@ -7,8 +7,14 @@ import { UserService } from '../shared/services/user.service';
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.scss'],
 })
-export class NavbarComponent {
-  constructor(private authService: AuthService, private userService: UserService) {}
+export class NavbarComponent{
+  showMenu = false;
+
+  toggleMenu() {
+    this.showMenu = !this.showMenu;
+  }
+  constructor(private authService: AuthService, private userService: UserService) {
+  }
 
   isLoggedIn(): boolean {
     return this.authService.isAuthenticated();
