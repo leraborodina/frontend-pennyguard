@@ -12,6 +12,7 @@ import { UploadPdfComponent } from './modules/upload-pdf/upload-pdf.component';
 import { LimitFormComponent } from './modules/limit-form/limit-form.component';
 import { StartpageComponent } from './modules/startpage/startpage.component';
 import { DashboardComponent } from './modules/dashboard/dashboard.component';
+import { LimitOverviewComponent } from './modules/limit-overview/limit-overview.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -51,6 +52,11 @@ const routes: Routes = [
   {
     path: 'dashboard',
     component: DashboardComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'limit-overview',
+    component: LimitOverviewComponent,
     canActivate: [AuthGuard],
   },
   { path: 'startpage', component: StartpageComponent},

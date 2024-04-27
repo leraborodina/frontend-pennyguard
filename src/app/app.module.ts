@@ -43,6 +43,7 @@ import { StartpageComponent } from './modules/startpage/startpage.component';
 import { DashboardComponent } from './modules/dashboard/dashboard.component';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { LastTransactionsComponent } from './modules/last-transactions/last-transactions.component';
+import { LimitOverviewComponent } from './modules/limit-overview/limit-overview.component';
 
 @NgModule({
   declarations: [
@@ -62,7 +63,8 @@ import { LastTransactionsComponent } from './modules/last-transactions/last-tran
     LimitFormComponent,
     StartpageComponent,
     DashboardComponent,
-    LastTransactionsComponent
+    LastTransactionsComponent,
+    LimitOverviewComponent
   ],
   imports: [
     BrowserModule,
