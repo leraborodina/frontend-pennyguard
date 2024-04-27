@@ -18,7 +18,7 @@ export class TransactionService {
   constructor(
     private http: HttpClient,
     private cookieService: CookieService
-  ) {}
+  ) { }
 
   getTransactionTypes(email: string): Observable<TransactionType[]> {
     const authToken = this.cookieService.get('authToken');
@@ -32,6 +32,23 @@ export class TransactionService {
       .pipe(
         catchError((error) => {
           console.error('Error in transaction type request:', error);
+          return throwError(error);
+        })
+      );
+  }
+
+  getLimitTypes(): Observable<LimitType[]> {
+    const authToken = this.cookieService.get('authToken');
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${authToken}`
+    });
+
+    return this.http
+      .get<LimitType[]>(`${this.transactionEndpoint}/limit-types`, { headers })
+      .pipe(
+        catchError((error) => {
+          console.error('Error in transaction limit type request:', error);
           return throwError(error);
         })
       );
