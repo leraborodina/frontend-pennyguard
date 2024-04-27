@@ -19,6 +19,7 @@ export class RegistrationComponent {
   confirmedPassword = new FormControl('', [Validators.required]);
   successMessage = '';
   errorMessage = '';
+  hide = true;
 
   constructor(
     private registrationService: RegistrationService,
@@ -27,7 +28,7 @@ export class RegistrationComponent {
 
   // Method triggered when the registration form is submitted
   registerUser(): void {
-    if (this.arePasswordsMatch()) {
+    if (this.arePasswordsMatch() && this.isFormValid()) {
       const userData = {
         firstname: this.firstname.value,
         lastname: this.lastname.value,
@@ -42,13 +43,27 @@ export class RegistrationComponent {
             this.errorMessage = error.error.message;
           } else {
             this.errorMessage =
-              'An unexpected error occurred. Please try again later.';
+            'An unexpected error occurred. Please try again later.';
           }
         },
       );
-    } else {
-      this.errorMessage = 'Passwords do not match';
+    } else if (!this.isFormValid())
+      {
+        this.errorMessage = 'Заполните пустые поля';
+      }
+      else {
+      this.errorMessage = 'Пароли не совпадают';
     }
+  }
+
+  isFormValid(): boolean {
+    return (
+      this.firstname.valid &&
+      this.lastname.valid &&
+      this.email.valid &&
+      this.password.valid &&
+      this.confirmedPassword.valid
+    );
   }
 
   // Check if the entered passwords match
@@ -73,7 +88,7 @@ export class RegistrationComponent {
   private setSuccessMessage(userData: any): void {
     try {
       const savedUserName = `${userData.firstname} ${userData.lastname}`;
-      this.successMessage = `User ${savedUserName} registered successfully!`;
+      this.successMessage = `Пользователь ${savedUserName} успешно зарегистрирован!`;
     } catch (error) {
       console.error('Error parsing JSON response:', error);
     }

@@ -1,38 +1,81 @@
-.login-container {
-  height: 100vh;
+h2 {
+  font-family: 'Poppins', sans-serif;
+  color: #333333;
+}
+
+.container {
+  width: 50%;
+  margin: 0 auto;
+  text-align: left;
+}
+
+body{
+  background-color: #E0E3E1;
+}
+
+input[type="email"], input[type="text"], input[type="password"] {
+  width: 60%;
+  height: 40%;
+  padding: 10px;
+  border-radius: 12px;
+  border: 1px solid #38393D;
+  border-color: #666666;
+  background-color: transparent;
+  outline: none;
+}
+
+.password-container{
+  width: 62%;
+  justify-content:space-between;
   display: flex;
-  justify-content: center;
-  align-items: center;
 }
 
-mat-card {
-  width: 100%;
-  max-width: 400px; /* Adjust as needed for your design */
-  margin: auto;
-  padding: 20px;
+.error-message{
+  color: #d14949;
 }
 
-mat-card-header {
-  text-align: left; /* Align header text to the left */
-  margin-bottom: 20px; /* Add space between header and form */
+button {
+  margin-top: 40px;
+  width: 30%;
+  padding: 10px;
+  background-color: #38393D;
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 15px;
+  border-radius: 35px;
+  min-width: fit-content;
 }
 
-.form-container {
+button:hover {
+  background-color: #546078;
+}
+
+.wrapper {
+  display: flex;
+  padding-top:10%;
+}
+
+label{
+color: #666666;
+}
+
+.content {
+  width: 50%;
+  text-align: left;
+  margin-left: 15%;   
+}
+
+form{
   display: flex;
   flex-direction: column;
+  align-items: flex-start; 
+  gap: 10px;
 }
 
-mat-error {
-  margin-bottom: 20px;
+.mat-icon{
+color: #333333;
 }
 
-.login-button {
-  width: 100%; /* Make the login button full width */
-  margin-bottom: 10px; /* Add space below the button */
-}
 
-.footer-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
+

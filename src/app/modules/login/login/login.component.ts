@@ -39,7 +39,7 @@ export class LoginComponent implements OnInit {
         if (token) {
           this.handleSuccessfulLogin(token);
         } else {
-          this.handleLoginFailure();
+          this.handleLoginFailure();          
         }
       },
       // Handle login errors
@@ -55,11 +55,19 @@ export class LoginComponent implements OnInit {
   }
   
   private handleSuccessfulLogin(token: string): void {
+    // // Set the authentication token
+    // this.authService.setAuthToken(token);
+    
+    // // Navigate to the transaction-overview
+    // this.router.navigate(['/transaction-overview']);
+
+
     // Set the authentication token
     this.authService.setAuthToken(token);
-
-    // Navigate to the transaction-overview
-    this.router.navigate(['/transaction-overview']);
+     
+    // Navigate to the saved url or transaction-overview
+    const redirectUrl = this.authService.getRedirectUrl();
+    this.router.navigate([redirectUrl]);
   }
 
   private handleLoginFailure(): void {
@@ -95,10 +103,10 @@ export class LoginComponent implements OnInit {
 
   getErrorMessage() {
     if (this.email.hasError('required')) {
-      return 'You must enter a value';
+      return 'Обязательное поле';
     }
 
-    return this.email.hasError('email') ? 'Not a valid email' : '';
+    return this.email.hasError('email') ? 'Неверная почта' : '';
   }
 
   redirectToRegistry(): void {
