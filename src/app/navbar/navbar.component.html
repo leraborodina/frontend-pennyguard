@@ -13,13 +13,13 @@
             <button mat-menu-item routerLink="/transaction">Создать</button>
             <button mat-menu-item routerLink="/upload">Загрузить из банка</button>
             <button mat-menu-item routerLink="/transaction-overview">Транзакции</button>
-            <button mat-menu-item routerLink="/transaction-chart">Анализ</button>      
+            <button mat-menu-item routerLink="/transaction-chart">Анализ</button>
           </mat-menu>
         </div>
         <button mat-button routerLink="/limit-form">Лимиты</button>
-        <button mat-button>Напоминания</button>
+        <button mat-button routerLink="/notifications-overview">Напоминания</button>
         <a mat-button (click)="logout()">Выход</a>
-      </ng-container>    
+      </ng-container>
     </div>
     <button mat-icon-button class="menu-button" (click)="toggleMenu()">
       <mat-icon>menu</mat-icon>

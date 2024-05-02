@@ -12,6 +12,8 @@ import { UploadPdfComponent } from './modules/upload-pdf/upload-pdf.component';
 import { LimitFormComponent } from './modules/limit-form/limit-form.component';
 import { StartpageComponent } from './modules/startpage/startpage.component';
 import { DashboardComponent } from './modules/dashboard/dashboard.component';
+import { NotificationsComponent } from './modules/notifications/notifications.component';
+import { NotificationsOverviewComponent } from './modules/notifications-overview/notifications-overview.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -46,6 +48,11 @@ const routes: Routes = [
   {
     path: 'limit-form',
     component: LimitFormComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'notifications-overview',
+    component: NotificationsOverviewComponent,
     canActivate: [AuthGuard],
   },
   {

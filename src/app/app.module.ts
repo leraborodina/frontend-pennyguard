@@ -34,8 +34,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { CommonModule } from '@angular/common';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { GlobalErrorHandlerService } from './services/global-error-handler.service.service';
-import { NotificationsComponent } from './notifications/notifications.component';
-import { WebsocketService } from './core/websocket.service';
+import { NotificationsComponent } from './modules/notifications/notifications.component';
 import { LimitFormComponent } from './modules/limit-form/limit-form.component';
 import { MatSidenav, MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
@@ -44,6 +43,13 @@ import { StartpageComponent } from './modules/startpage/startpage.component';
 import { DashboardComponent } from './modules/dashboard/dashboard.component';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { LastTransactionsComponent } from './modules/last-transactions/last-transactions.component';
+import { PopupMessageComponent } from './modules/popup-message/popup-message.component';
+import { WebSocketService } from './core/websocket.service';
+import { SocketIoConfig } from 'ngx-socket-io';
+import { NotificationService } from './shared/services/notification.service';
+import { NotificationsOverviewComponent } from './modules/notifications-overview/notifications-overview.component';
+
+const config: SocketIoConfig = { url: 'ws://localhost:8080', options: {} };
 
 @NgModule({
   declarations: [
@@ -63,7 +69,9 @@ import { LastTransactionsComponent } from './modules/last-transactions/last-tran
     LimitFormComponent,
     StartpageComponent,
     DashboardComponent,
-    LastTransactionsComponent
+    LastTransactionsComponent,
+    PopupMessageComponent,
+    NotificationsOverviewComponent
   ],
   imports: [
     BrowserModule,
@@ -93,10 +101,12 @@ import { LastTransactionsComponent } from './modules/last-transactions/last-tran
     MatSidenav,
     MatListModule,
     MatExpansionModule,
-    MatGridListModule,
+    MatGridListModule
   ],
   providers: [
     AuthService,
+    WebSocketService,
+    NotificationService,
     {
       provide: APP_INITIALIZER,
       useFactory: (authService: AuthService) => () => {
@@ -105,9 +115,7 @@ import { LastTransactionsComponent } from './modules/last-transactions/last-tran
       deps: [AuthService],
       multi: true,
     },
-    { provide: MAT_DATE_LOCALE, useValue: 'de-AT' }, // Change 'de-AT' to your desired locale
-    // Provide a DateAdapter (you can choose a specific one)
-    // Example: { provide: DateAdapter, useClass: YourDateAdapter }
+    { provide: MAT_DATE_LOCALE, useValue: 'ru-RU' },
     { provide: ErrorHandler, useClass: GlobalErrorHandlerService }
   ],
   bootstrap: [AppComponent],
