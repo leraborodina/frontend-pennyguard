@@ -11,8 +11,7 @@
         <mat-card-content class="dashboard-card-content">
           <div>
             <app-last-transactions *ngIf="card.title === 'Последние транзакции'"></app-last-transactions>
-            <app-transaction-chart *ngIf="card.title === ''"></app-transaction-chart>
-
+            <app-chart *ngIf="card.title === 'Анализ'"></app-chart>
           </div>
         </mat-card-content>
       </mat-card>

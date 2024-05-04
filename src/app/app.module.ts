@@ -45,6 +45,7 @@ import { DashboardComponent } from './modules/dashboard/dashboard.component';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { LastTransactionsComponent } from './modules/last-transactions/last-transactions.component';
 import { LimitOverviewComponent } from './modules/limit-overview/limit-overview.component';
+import { ChartComponent } from './modules/chart/chart.component';
 
 @NgModule({
   declarations: [
@@ -65,7 +66,8 @@ import { LimitOverviewComponent } from './modules/limit-overview/limit-overview.
     StartpageComponent,
     DashboardComponent,
     LastTransactionsComponent,
-    LimitOverviewComponent
+    LimitOverviewComponent,
+    ChartComponent
   ],
   imports: [
     BrowserModule,
