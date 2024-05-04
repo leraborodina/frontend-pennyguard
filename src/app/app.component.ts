@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from './core/auth.service';
-import { WebsocketService } from './core/websocket.service';
+import { WebSocketService } from './core/websocket.service';
 
 @Component({
   selector: 'app-root',
@@ -9,26 +9,54 @@ import { WebsocketService } from './core/websocket.service';
 })
 export class AppComponent implements OnInit {
   isAuthenticated: boolean = false;
+  notification: string | null = null;
+  notifications: string[] = []; // Array to hold notifications
 
-  constructor(private authService: AuthService, private websocketService: WebsocketService) {}
+  constructor(private authService: AuthService, private webSocketService: WebSocketService) {}
 
   ngOnInit() {
-    // Check the authentication status when the component initializes
     this.isAuthenticated = this.authService.isAuthenticated();
 
-    this.websocketService.connect('ws://localhost:8080/ws/notifications').subscribe(
-      (message: any) => {
-        console.log('Received message from server:', message);
-        // Handle incoming message (e.g., update UI)
-      },
-      (error: any) => {
-        console.error('WebSocket error:', error);
-        // Handle error
-      },
-      () => {
-        console.log('WebSocket connection closed');
-        // Handle connection closed
-      }
-    );
+    this.webSocketService.connect();
+
+    this.webSocketService.getMessages().subscribe(message => {
+      this.displayNotification(message);
+    });
   }
+
+  
+  // displayNotification(message: string) {
+  //   // Set the received message as the notification
+  //   this.notification = message;
+
+  //   // Automatically dismiss the notification after 15 seconds
+  //   setTimeout(() => {
+  //     this.dismissNotification();
+  //   }, 15000);
+  // }
+
+  // dismissNotification() {
+  //   // Clear the notification
+  //   this.notification = null;
+  // }
+
+
+  displayNotification(message: string) {
+    // Add the message to the notifications array
+    this.notifications.push(message);
+
+    // Automatically dismiss the notification after 15 seconds
+    setTimeout(() => {
+      this.dismissNotification(message);
+    }, 15000);
+  }
+
+  dismissNotification(message: string) {
+    // Remove the notification from the notifications array
+    const index = this.notifications.indexOf(message);
+    if (index !== -1) {
+      this.notifications.splice(index, 1);
+    }
+  }
+  
 }

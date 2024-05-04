@@ -34,8 +34,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { CommonModule } from '@angular/common';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { GlobalErrorHandlerService } from './services/global-error-handler.service.service';
-import { NotificationsComponent } from './notifications/notifications.component';
-import { WebsocketService } from './core/websocket.service';
+import { NotificationsComponent } from './modules/notifications/notifications.component';
 import { LimitFormComponent } from './modules/limit-form/limit-form.component';
 import { MatSidenav, MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
@@ -46,6 +45,13 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { LastTransactionsComponent } from './modules/last-transactions/last-transactions.component';
 import { LimitOverviewComponent } from './modules/limit-overview/limit-overview.component';
 import { ChartComponent } from './modules/chart/chart.component';
+import { WebSocketService } from './core/websocket.service';
+import { NotificationService } from './shared/services/notification.service';
+import { PopupMessageComponent } from './modules/popup-message/popup-message.component';
+import { NotificationsOverviewComponent } from './modules/notifications-overview/notifications-overview.component';
+import { SocketIoConfig } from 'ngx-socket-io';
+
+const config: SocketIoConfig = { url: 'ws://localhost:8080', options: {} };
 
 @NgModule({
   declarations: [
@@ -67,7 +73,9 @@ import { ChartComponent } from './modules/chart/chart.component';
     DashboardComponent,
     LastTransactionsComponent,
     LimitOverviewComponent,
-    ChartComponent
+    ChartComponent,
+    PopupMessageComponent,
+    NotificationsOverviewComponent
   ],
   imports: [
     BrowserModule,
@@ -97,10 +105,12 @@ import { ChartComponent } from './modules/chart/chart.component';
     MatSidenav,
     MatListModule,
     MatExpansionModule,
-    MatGridListModule,
+    MatGridListModule
   ],
   providers: [
     AuthService,
+    WebSocketService,
+    NotificationService,
     {
       provide: APP_INITIALIZER,
       useFactory: (authService: AuthService) => () => {
@@ -109,9 +119,7 @@ import { ChartComponent } from './modules/chart/chart.component';
       deps: [AuthService],
       multi: true,
     },
-    { provide: MAT_DATE_LOCALE, useValue: 'de-AT' }, // Change 'de-AT' to your desired locale
-    // Provide a DateAdapter (you can choose a specific one)
-    // Example: { provide: DateAdapter, useClass: YourDateAdapter }
+    { provide: MAT_DATE_LOCALE, useValue: 'ru-RU' },
     { provide: ErrorHandler, useClass: GlobalErrorHandlerService }
   ],
   bootstrap: [AppComponent],

@@ -13,6 +13,8 @@ import { LimitFormComponent } from './modules/limit-form/limit-form.component';
 import { StartpageComponent } from './modules/startpage/startpage.component';
 import { DashboardComponent } from './modules/dashboard/dashboard.component';
 import { LimitOverviewComponent } from './modules/limit-overview/limit-overview.component';
+import { NotificationsOverviewComponent } from './modules/notifications-overview/notifications-overview.component';
+import { NotificationsComponent } from './modules/notifications/notifications.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -47,6 +49,11 @@ const routes: Routes = [
   {
     path: 'limit-form',
     component: LimitFormComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'notifications-overview',
+    component: NotificationsOverviewComponent,
     canActivate: [AuthGuard],
   },
   {

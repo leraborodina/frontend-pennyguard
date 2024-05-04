@@ -1,23 +1,17 @@
 <div class="limit-container">
-  <h2>Limit</h2>
+  <h2>Лимит</h2>
   <form (ngSubmit)="createLimit()">
-    <label for="limit_value">Enter limit value</label>
-    <input [(ngModel)]="limitValue" type="number" id="limit_value" name="limit_value" />
+    <label for="amount">Введите сумму лимита</label>
+    <input [(ngModel)]="limit.amount" type="number" id="amount" name="amount" />
 
-    <label for="limit_type">Select limit type:</label>
-    <select [(ngModel)]="limitType" name="selectedLimitType" (change)="onLimitTypeChange($event)">
-      <option *ngFor="let limitType of limitTypes" [value]="limitType.type">
-        {{ limitType.type }}
-      </option>
+    <label for="salaryDay">Выберите день зарплаты:</label>
+    <input [(ngModel)]="limit.salaryDay" type="number" id="salaryDay" name="salaryDay" min="1" max="31" />
+
+    <label for="category">Выберите категорию:</label>
+    <select [(ngModel)]="limit.categoryId" name="selectedCategory">
+      <option *ngFor="let category of categories" [value]="category.id">{{ category.name }}</option>
     </select>
 
-    <label for="category">Select category:</label>
-    <select [(ngModel)]="categoryId" name="selectedCategory" (change)="onCategoryChange($event)">
-      <option *ngFor="let category of categories" [value]="category.id">
-        {{ category.name }}
-      </option>
-    </select>
-
-    <button type="submit">Save</button>
+    <button type="submit">Сохранить</button>
   </form>
 </div>

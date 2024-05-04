@@ -1,2 +1,10 @@
 <app-navbar></app-navbar>
+<!-- <app-notifications *ngIf="notification" [message]="notification" (dismiss)="dismissNotification()"></app-notifications> -->
+
+<ng-container *ngFor="let notification of notifications; let i = index">
+    <div class="notification-popup" [style.--popup-index]="i">
+        <app-notifications [message]="notification" (dismiss)="dismissNotification(notification)"></app-notifications>
+    </div>
+</ng-container>
+
 <router-outlet></router-outlet>
