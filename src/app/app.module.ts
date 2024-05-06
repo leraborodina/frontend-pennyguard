@@ -43,14 +43,16 @@ import { StartpageComponent } from './modules/startpage/startpage.component';
 import { DashboardComponent } from './modules/dashboard/dashboard.component';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { LastTransactionsComponent } from './modules/last-transactions/last-transactions.component';
-import { PopupMessageComponent } from './modules/popup-message/popup-message.component';
+import { LimitOverviewComponent } from './modules/limit-overview/limit-overview.component';
+import { ChartComponent } from './modules/chart/chart.component';
 import { WebSocketService } from './core/websocket.service';
-import { SocketIoConfig } from 'ngx-socket-io';
 import { NotificationService } from './shared/services/notification.service';
+import { PopupMessageComponent } from './modules/popup-message/popup-message.component';
 import { NotificationsOverviewComponent } from './modules/notifications-overview/notifications-overview.component';
 import { FinancialGoalFormComponent } from './modules/financial-goal-form/financial-goal-form.component';
 import { SavingsCalculatorComponent } from './modules/savings-calculator/savings-calculator.component';
 import { SavingsProgressComponent } from './modules/savings-progress/savings-progress.component';
+import { SocketIoConfig } from 'ngx-socket-io';
 
 const config: SocketIoConfig = { url: 'ws://localhost:8080', options: {} };
 
@@ -73,6 +75,8 @@ const config: SocketIoConfig = { url: 'ws://localhost:8080', options: {} };
     StartpageComponent,
     DashboardComponent,
     LastTransactionsComponent,
+    LimitOverviewComponent,
+    ChartComponent,
     PopupMessageComponent,
     NotificationsOverviewComponent,
     FinancialGoalFormComponent,

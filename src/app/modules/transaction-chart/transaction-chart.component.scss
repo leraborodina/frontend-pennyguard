@@ -1,31 +1,22 @@
-.category-list {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  justify-content: center;
-  align-items: center;
+.grid-container {
+  margin: 20px;
 }
 
-mat-card {
-  width: 90%;
-  border-radius: 10px;
-  overflow: hidden;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+.dashboard-card {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  right: 15px;
+  bottom: 15px;
+  margin: 5px;
+  background-color: #E8F3E0;
+  border-radius: 20px;
 }
 
-mat-card-header {
-  background-color: #f2f2f2;
-  padding: 12px;
+.dashboard-card-content {
+  text-align: left;
 }
 
-mat-card-title {
-  font-size: 20px;
-}
-
-mat-card-content {
-  padding: 12px;
-}
-
-mat-card-content p {
-  margin: 0;
+body{
+  background-color: #D5E9C6;
 }

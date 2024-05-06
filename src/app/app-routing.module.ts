@@ -12,9 +12,10 @@ import { UploadPdfComponent } from './modules/upload-pdf/upload-pdf.component';
 import { LimitFormComponent } from './modules/limit-form/limit-form.component';
 import { StartpageComponent } from './modules/startpage/startpage.component';
 import { DashboardComponent } from './modules/dashboard/dashboard.component';
-import { NotificationsComponent } from './modules/notifications/notifications.component';
+import { LimitOverviewComponent } from './modules/limit-overview/limit-overview.component';
 import { NotificationsOverviewComponent } from './modules/notifications-overview/notifications-overview.component';
 import { FinancialGoalFormComponent } from './modules/financial-goal-form/financial-goal-form.component';
+import { NotificationsComponent } from './modules/notifications/notifications.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -67,6 +68,12 @@ const routes: Routes = [
     canActivate: [AuthGuard],
   },
   { path: 'startpage', component: StartpageComponent },
+  {
+    path: 'limit-overview',
+    component: LimitOverviewComponent,
+    canActivate: [AuthGuard],
+  },
+  { path: 'startpage', component: StartpageComponent},
   // Redirect to login if the path is empty
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   // Handle unknown paths (e.g., show a 404 page)
