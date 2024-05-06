@@ -48,6 +48,9 @@ import { WebSocketService } from './core/websocket.service';
 import { SocketIoConfig } from 'ngx-socket-io';
 import { NotificationService } from './shared/services/notification.service';
 import { NotificationsOverviewComponent } from './modules/notifications-overview/notifications-overview.component';
+import { FinancialGoalFormComponent } from './modules/financial-goal-form/financial-goal-form.component';
+import { SavingsCalculatorComponent } from './modules/savings-calculator/savings-calculator.component';
+import { SavingsProgressComponent } from './modules/savings-progress/savings-progress.component';
 
 const config: SocketIoConfig = { url: 'ws://localhost:8080', options: {} };
 
@@ -71,7 +74,10 @@ const config: SocketIoConfig = { url: 'ws://localhost:8080', options: {} };
     DashboardComponent,
     LastTransactionsComponent,
     PopupMessageComponent,
-    NotificationsOverviewComponent
+    NotificationsOverviewComponent,
+    FinancialGoalFormComponent,
+    SavingsCalculatorComponent,
+    SavingsProgressComponent
   ],
   imports: [
     BrowserModule,

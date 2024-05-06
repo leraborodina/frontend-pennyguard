@@ -120,6 +120,23 @@ export class TransactionService {
       );
   }
 
+  getUserIncomes(): Observable<Transaction[]> {
+    const authToken = this.cookieService.get('authToken');
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: `${authToken}`
+    });
+
+    return this.http
+      .get<Transaction[]>(`${this.transactionEndpoint}/user/incomes`, { headers })
+      .pipe(
+        catchError((error) => {
+          console.error('Error in transaction limit type request:', error);
+          return throwError(error);
+        })
+      );
+  }
+
   getTransactionById(id?: number): Observable<Transaction> {
     const authToken = this.cookieService.get('authToken');
     const headers = new HttpHeaders({
@@ -162,7 +179,7 @@ export class TransactionService {
     const date = new Date(transaction.createdAt * 1000); // Convert Unix timestamp to milliseconds
     // Format the date to the desired format: "yyyy-MM-dd HH:mm:ss"
     const formattedCreatedAt = `${('0' + date.getDate()).slice(-2)}.${('0' + (date.getMonth() + 1)).slice(-2)}.${date.getFullYear()} ${('0' + date.getHours()).slice(-2)}:${('0' + date.getMinutes()).slice(-2)}`;
-  
+
     // Map the properties to the Transaction interface
     return {
       id: transaction.id,
@@ -174,5 +191,5 @@ export class TransactionService {
       typeId: transaction.typeId
     };
   }
-  
+
 }

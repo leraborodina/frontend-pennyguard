@@ -14,6 +14,7 @@ import { StartpageComponent } from './modules/startpage/startpage.component';
 import { DashboardComponent } from './modules/dashboard/dashboard.component';
 import { NotificationsComponent } from './modules/notifications/notifications.component';
 import { NotificationsOverviewComponent } from './modules/notifications-overview/notifications-overview.component';
+import { FinancialGoalFormComponent } from './modules/financial-goal-form/financial-goal-form.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -56,11 +57,16 @@ const routes: Routes = [
     canActivate: [AuthGuard],
   },
   {
+    path: 'financial-goal-form',
+    component: FinancialGoalFormComponent,
+    canActivate: [AuthGuard],
+  },
+  {
     path: 'dashboard',
     component: DashboardComponent,
     canActivate: [AuthGuard],
   },
-  { path: 'startpage', component: StartpageComponent},
+  { path: 'startpage', component: StartpageComponent },
   // Redirect to login if the path is empty
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   // Handle unknown paths (e.g., show a 404 page)
@@ -71,4 +77,4 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }
