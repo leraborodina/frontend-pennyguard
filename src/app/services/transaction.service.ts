@@ -120,7 +120,7 @@ export class TransactionService {
       );
   }
 
-  getUserIncomes(): Observable<Transaction[]> {
+  getUserBalanceAfterSettinigGoals(): Observable<number> {
     const authToken = this.cookieService.get('authToken');
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
@@ -128,7 +128,7 @@ export class TransactionService {
     });
 
     return this.http
-      .get<Transaction[]>(`${this.transactionEndpoint}/user/incomes`, { headers })
+      .get<number>(`${this.transactionEndpoint}/user/incomes`, { headers })
       .pipe(
         catchError((error) => {
           console.error('Error in transaction limit type request:', error);

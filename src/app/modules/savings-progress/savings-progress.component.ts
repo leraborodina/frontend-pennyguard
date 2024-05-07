@@ -11,31 +11,21 @@ import { Transaction } from '../../shared/models/transaction.model';
 })
 export class SavingsProgressComponent {
   financialGoals: FinancialGoal[] = [];
-  transactions: Transaction[] = [];
+  balance: number = 0;
 
   constructor(private financialGoalService: FinancialGoalService, private transactionService: TransactionService) { }
 
   ngOnInit(): void {
     this.loadFinancialGoals();
-    this.loadTransactions();
-
-    console.log('goals: ', this.financialGoals);
-    console.log('transactions: ', this.transactions);
+    this.loadUserBalanceAfterSettingGoals();
   }
 
   loadFinancialGoals(): void {
     this.financialGoalService.getFinancialGoals().subscribe(goals => this.financialGoals = goals);
   }
 
-  loadTransactions(): void {
-    this.transactionService.getUserIncomes().subscribe(transactions => this.transactions = transactions);
-  }
-
-  getCurrentAmount(goalId: number): number {
-    // Filter transactions with the type "income" and for the specific goal
-    const goalTransactions = this.transactions;
-    // Calculate the total amount from income transactions for the specific goal
-    return goalTransactions.reduce((sum, transaction) => sum + transaction.amount, 0);
+  loadUserBalanceAfterSettingGoals(): void {
+    this.transactionService.getUserBalanceAfterSettinigGoals().subscribe(balance => this.balance = balance);
   }
 
   getTotalGoal(goalId: number): number {
