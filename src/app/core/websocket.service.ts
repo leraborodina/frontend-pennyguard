@@ -5,7 +5,7 @@ import SockJS from 'sockjs-client/dist/sockjs';
 import { Observable, Subject } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class WebSocketService {
   private stompClient: any;

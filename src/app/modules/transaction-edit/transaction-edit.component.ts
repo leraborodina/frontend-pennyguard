@@ -9,24 +9,31 @@ import { Transaction } from '../../shared/models/transaction.model';
 @Component({
   selector: 'app-transaction-edit',
   templateUrl: './transaction-edit.component.html',
-  styleUrls: ['./transaction-edit.component.scss']
+  styleUrls: ['./transaction-edit.component.scss'],
 })
 export class TransactionEditComponent {
   dataSource: MatTableDataSource<Transaction>;
-  displayedColumns: string[] = ['date', 'category', 'amount', 'purpose', 'regular', 'transactionType'];
+  displayedColumns: string[] = [
+    'date',
+    'category',
+    'amount',
+    'purpose',
+    'regular',
+    'transactionType',
+  ];
 
   @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
-  
+
   constructor(
     public dialogRef: MatDialogRef<TransactionEditComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private transactionService: TransactionService,
-    private router: Router 
+    private router: Router,
   ) {
     const transactions = data.transactions.map((transaction: Transaction) => ({
       ...transaction,
       // Add editing flag
-      editing: false
+      editing: false,
     }));
     this.dataSource = new MatTableDataSource(transactions);
   }
@@ -41,7 +48,7 @@ export class TransactionEditComponent {
   }
 
   onApply(): void {
-    console.log(this.dataSource.data)
+    console.log(this.dataSource.data);
     // Save changes and close the dialog
     this.transactionService.saveTransactions(this.dataSource.data).subscribe(
       (savedTransactions: Transaction[]) => {
@@ -50,10 +57,10 @@ export class TransactionEditComponent {
         // Close the dialog
         this.dialogRef.close(savedTransactions);
       },
-      error => {
+      (error) => {
         // Handle error if saving fails
         console.error('Error saving transactions:', error);
-      }
+      },
     );
   }
   onCancel(): void {

@@ -8,10 +8,9 @@ describe('LimitFormComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [LimitFormComponent]
-    })
-    .compileComponents();
-    
+      declarations: [LimitFormComponent],
+    }).compileComponents();
+
     fixture = TestBed.createComponent(LimitFormComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

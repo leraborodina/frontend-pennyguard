@@ -6,7 +6,6 @@ import { UserData, UserService } from '../../../shared/services/user.service';
 import { FormControl, Validators } from '@angular/forms';
 import { LoginResponse } from '../../../shared/interfaces/loginresponse.interface';
 
-
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -34,12 +33,12 @@ export class LoginComponent implements OnInit {
       (response: LoginResponse) => {
         // Extract the token from the response body
         const token = response.token;
-  
+
         // If token is present, handle successful login
         if (token) {
           this.handleSuccessfulLogin(token);
         } else {
-          this.handleLoginFailure();          
+          this.handleLoginFailure();
         }
       },
       // Handle login errors
@@ -50,21 +49,20 @@ export class LoginComponent implements OnInit {
         } else {
           this.handleUnexpectedError(error);
         }
-      }
+      },
     );
   }
-  
+
   private handleSuccessfulLogin(token: string): void {
     // // Set the authentication token
     // this.authService.setAuthToken(token);
-    
+
     // // Navigate to the transaction-overview
     // this.router.navigate(['/transaction-overview']);
 
-
     // Set the authentication token
     this.authService.setAuthToken(token);
-     
+
     // Navigate to the saved url or transaction-overview
     const redirectUrl = this.authService.getRedirectUrl();
     this.router.navigate([redirectUrl]);
@@ -89,7 +87,10 @@ export class LoginComponent implements OnInit {
         break;
       case 400:
         console.log('Invalid login credentials:', error.error);
-        this.password.setErrors({ invalidCredentials: true, message: error.error });
+        this.password.setErrors({
+          invalidCredentials: true,
+          message: error.error,
+        });
         break;
       default:
         // Log and display a generic error message for other HTTP errors

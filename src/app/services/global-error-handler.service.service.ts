@@ -4,25 +4,29 @@ import { ErrorNotificationService } from './error-notification.service.service';
 import { AuthService } from '../core/auth.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class GlobalErrorHandlerService implements ErrorHandler {
+  constructor(
+    private errorNotificationService: ErrorNotificationService,
+    private authService: AuthService,
+  ) {}
 
-  constructor(private errorNotificationService: ErrorNotificationService, private authService: AuthService) { }
-  
   handleError(error: any): void {
     if (error instanceof HttpErrorResponse && error.status === 403) {
-    const errorMessage = this.getErrorMessage(error);
-    this.errorNotificationService.showError(errorMessage);
+      const errorMessage = this.getErrorMessage(error);
+      this.errorNotificationService.showError(errorMessage);
 
       this.authService.refreshToken().subscribe(
         (response) => {
-          this.errorNotificationService.showInfo('Your token was refreshed. Repeat your last action, please.');
+          this.errorNotificationService.showInfo(
+            'Your token was refreshed. Repeat your last action, please.',
+          );
         },
         (error) => {
           const errorMessage = this.getErrorMessage(error);
           this.errorNotificationService.showError(errorMessage);
-        }
+        },
       );
     } else {
       // TODO: handle other errors

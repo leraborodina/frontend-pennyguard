@@ -1,10 +1,10 @@
 h2 {
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
   color: #333333;
 }
 
-body{
-  background-color: #E0E3E1;
+body {
+  background-color: #e0e3e1;
 }
 
 .container {
@@ -13,24 +13,26 @@ body{
   text-align: left;
 }
 
-input[type="email"], input[type="text"], input[type="password"] {
+input[type="email"],
+input[type="text"],
+input[type="password"] {
   width: 60%;
   height: 40%;
   padding: 10px;
   border-radius: 12px;
-  border: 1px solid #38393D;
+  border: 1px solid #38393d;
   border-color: #666666;
   background-color: transparent;
   outline: none;
 }
 
-.password-container{
+.password-container {
   width: 62%;
-  justify-content:space-between;
+  justify-content: space-between;
   display: flex;
 }
 
-.error-message{
+.error-message {
   color: #d14949;
 }
 
@@ -39,7 +41,7 @@ button {
   width: 30%;
   height: 30%;
   padding: 10px;
-  background-color: #38393D;
+  background-color: #38393d;
   color: white;
   border: none;
   cursor: pointer;
@@ -55,24 +57,23 @@ button:hover {
   display: flex;
 }
 
-label{
-color: #666666;
+label {
+  color: #666666;
 }
 
 .content {
   width: 50%;
   text-align: left;
-  margin-left: 15%;   
+  margin-left: 15%;
 }
 
-form{
+form {
   display: flex;
   flex-direction: column;
-  align-items: flex-start; 
+  align-items: flex-start;
   gap: 10px;
 }
 
-.mat-icon{
-color: #333333;
+.mat-icon {
+  color: #333333;
 }
-

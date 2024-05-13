@@ -66,7 +66,7 @@ const routes: Routes = [
     component: LimitOverviewComponent,
     canActivate: [AuthGuard],
   },
-  { path: 'startpage', component: StartpageComponent},
+  { path: 'startpage', component: StartpageComponent },
   // Redirect to login if the path is empty
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   // Handle unknown paths (e.g., show a 404 page)

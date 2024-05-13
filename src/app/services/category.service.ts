@@ -21,9 +21,8 @@ export class CategoryService {
 
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
-      Authorization: `Bearer ${authToken}`
+      Authorization: `Bearer ${authToken}`,
     });
-    
 
     return this.http
       .get<Category[]>(`${this.categoriesEndpoint}`, { headers })

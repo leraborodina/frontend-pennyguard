@@ -1,16 +1,17 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Message } from '../interfaces/message.interface';
- 
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class PopupMessageService {
-  private messagesSubject: BehaviorSubject<Message[]> = new BehaviorSubject<Message[]>([]);
+  private messagesSubject: BehaviorSubject<Message[]> = new BehaviorSubject<
+    Message[]
+  >([]);
   public messages$: Observable<Message[]> = this.messagesSubject.asObservable();
 
-  constructor() { }
+  constructor() {}
 
   addMessage(message: Message): void {
     const messages = this.messagesSubject.getValue();

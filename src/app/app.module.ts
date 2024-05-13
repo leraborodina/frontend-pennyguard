@@ -23,7 +23,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { AuthService } from './core/auth.service';
 import { MatTableModule } from '@angular/material/table';
 import { MatSelectModule } from '@angular/material/select';
-import { MatDatepickerModule } from '@angular/material/datepicker';  
+import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MAT_DATE_LOCALE } from '@angular/material/core';
 import { MatNativeDateModule } from '@angular/material/core';
 import { TransactionChartComponent } from './modules/transaction-chart/transaction-chart.component';
@@ -50,6 +50,7 @@ import { NotificationService } from './shared/services/notification.service';
 import { PopupMessageComponent } from './modules/popup-message/popup-message.component';
 import { NotificationsOverviewComponent } from './modules/notifications-overview/notifications-overview.component';
 import { SocketIoConfig } from 'ngx-socket-io';
+import { BarchartComponent } from './modules/barchart/barchart.component';
 
 const config: SocketIoConfig = { url: 'ws://localhost:8080', options: {} };
 
@@ -75,7 +76,8 @@ const config: SocketIoConfig = { url: 'ws://localhost:8080', options: {} };
     LimitOverviewComponent,
     ChartComponent,
     PopupMessageComponent,
-    NotificationsOverviewComponent
+    NotificationsOverviewComponent,
+    BarchartComponent,
   ],
   imports: [
     BrowserModule,
@@ -105,7 +107,7 @@ const config: SocketIoConfig = { url: 'ws://localhost:8080', options: {} };
     MatSidenav,
     MatListModule,
     MatExpansionModule,
-    MatGridListModule
+    MatGridListModule,
   ],
   providers: [
     AuthService,
@@ -120,7 +122,7 @@ const config: SocketIoConfig = { url: 'ws://localhost:8080', options: {} };
       multi: true,
     },
     { provide: MAT_DATE_LOCALE, useValue: 'ru-RU' },
-    { provide: ErrorHandler, useClass: GlobalErrorHandlerService }
+    { provide: ErrorHandler, useClass: GlobalErrorHandlerService },
   ],
   bootstrap: [AppComponent],
 })

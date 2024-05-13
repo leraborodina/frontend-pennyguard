@@ -43,15 +43,13 @@ export class RegistrationComponent {
             this.errorMessage = error.error.message;
           } else {
             this.errorMessage =
-            'An unexpected error occurred. Please try again later.';
+              'An unexpected error occurred. Please try again later.';
           }
         },
       );
-    } else if (!this.isFormValid())
-      {
-        this.errorMessage = 'Заполните пустые поля';
-      }
-      else {
+    } else if (!this.isFormValid()) {
+      this.errorMessage = 'Заполните пустые поля';
+    } else {
       this.errorMessage = 'Пароли не совпадают';
     }
   }

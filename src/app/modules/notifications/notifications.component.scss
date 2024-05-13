@@ -11,7 +11,9 @@
 
 .notification-popup {
   position: fixed;
-  top: calc(30px + (150px * var(--popup-index))); /* Adjust the initial position */
+  top: calc(
+    30px + (150px * var(--popup-index))
+  ); /* Adjust the initial position */
   right: 20px;
   z-index: 9999; /* Ensure the popup is above other content */
   max-width: 300px; /* Set maximum width for better responsiveness */
@@ -19,31 +21,29 @@
   margin-bottom: 10px; /* Add margin between popups */
 }
 
-  
-  .alert {
-    border-radius: 8px; /* Add a slight border-radius for a modern look */
-    background-color: #fff; /* Set background color to white */
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Add a subtle box shadow for depth */
-    padding: 16px; /* Add padding for spacing */
-    position: relative; /* Position relative for the close button */
-  }
-  
-  /* Additional styles for heading */
-  .alert-heading {
-    font-size: 1.125rem; /* Increase font size for heading */
-    margin-bottom: 8px; /* Add spacing below heading */
-  }
-  
-  .close-btn {
-    position: absolute;
-    top: 8px;
-    right: 8px;
-    cursor: pointer;
-    background-color: transparent; /* Set background color to transparent */
-    border: none; /* Remove border */
-  }
-  
-  .close-btn:hover {
-    color: #ff0000; /* Change color on hover */
-  }
-  
+.alert {
+  border-radius: 8px; /* Add a slight border-radius for a modern look */
+  background-color: #fff; /* Set background color to white */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Add a subtle box shadow for depth */
+  padding: 16px; /* Add padding for spacing */
+  position: relative; /* Position relative for the close button */
+}
+
+/* Additional styles for heading */
+.alert-heading {
+  font-size: 1.125rem; /* Increase font size for heading */
+  margin-bottom: 8px; /* Add spacing below heading */
+}
+
+.close-btn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  cursor: pointer;
+  background-color: transparent; /* Set background color to transparent */
+  border: none; /* Remove border */
+}
+
+.close-btn:hover {
+  color: #ff0000; /* Change color on hover */
+}

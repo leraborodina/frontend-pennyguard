@@ -2,7 +2,7 @@ export interface Transaction {
   id?: number;
   purpose: string;
   amount: number;
-  createdAt: string;  
+  createdAt: string;
   regular: boolean;
   categoryId: number;
   typeId: number;

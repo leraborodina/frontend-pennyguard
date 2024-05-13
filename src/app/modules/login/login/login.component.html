@@ -1,29 +1,53 @@
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" />
+<link
+  rel="stylesheet"
+  href="https://fonts.googleapis.com/css2?family=Poppins&display=swap"
+/>
 <body>
   <div class="wrapper">
     <div class="content">
       <h2>Добро пожаловать в Penny Guard</h2>
-      <p>Еще нет аккаунта? 
-        <a (click)="redirectToRegistry()" routerLink="/login">Зарегистрироваться</a>
+      <p>
+        Еще нет аккаунта?
+        <a (click)="redirectToRegistry()" routerLink="/login"
+          >Зарегистрироваться</a
+        >
       </p>
-        <form (ngSubmit)="login()">
-          <label>Почта</label>
-          <input type="email" placeholder="email@example.com" [formControl]="email" required>
-          <label class="error-message" *ngIf="email.invalid && email.touched">{{ getErrorMessage() }}</label>
-  
-          <div class="password-container">
-            <label>Пароль</label>
-            <a matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
-              <mat-icon>{{ hide ? 'visibility_off' : 'visibility' }}</mat-icon>
-            </a>
-          </div>       
-          <input [type]="hide ? 'password' : 'text'" [formControl]="password" required/>         
-          <label class="error-message" *ngIf="password.errors?.['invalidCredentials']">
-          {{ password.errors?.["message"]}}</label>
-          <button type="submit">Войти</button>
-        </form>
-      </div> 
-</div>
+      <form (ngSubmit)="login()">
+        <label>Почта</label>
+        <input
+          type="email"
+          placeholder="email@example.com"
+          [formControl]="email"
+          required
+        />
+        <label class="error-message" *ngIf="email.invalid && email.touched">{{
+          getErrorMessage()
+        }}</label>
+
+        <div class="password-container">
+          <label>Пароль</label>
+          <a
+            matSuffix
+            (click)="hide = !hide"
+            [attr.aria-label]="'Hide password'"
+            [attr.aria-pressed]="hide"
+          >
+            <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
+          </a>
+        </div>
+        <input
+          [type]="hide ? 'password' : 'text'"
+          [formControl]="password"
+          required
+        />
+        <label
+          class="error-message"
+          *ngIf="password.errors?.['invalidCredentials']"
+        >
+          {{ password.errors?.["message"] }}</label
+        >
+        <button type="submit">Войти</button>
+      </form>
+    </div>
+  </div>
 </body>
-
-

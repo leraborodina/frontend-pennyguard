@@ -27,7 +27,7 @@ export class TransactionComponent implements OnInit {
   categoryId!: number;
   typeId!: number;
 
-  date: string = '';  
+  date: string = '';
   time: string = '';
 
   constructor(
@@ -37,35 +37,37 @@ export class TransactionComponent implements OnInit {
     private cookieService: CookieService,
     private route: ActivatedRoute,
     private router: Router,
-    private globalErrorHandlingService: GlobalErrorHandlerService
-  ) { }
-  
+    private globalErrorHandlingService: GlobalErrorHandlerService,
+  ) {}
+
   ngOnInit(): void {
     this.userData = this.userService.getUserData();
     this.getCategories();
     this.getTransactionTypes();
 
-    this.route.params.subscribe(params => {
+    this.route.params.subscribe((params) => {
       const id = params['id'];
       if (id) {
         this.getTransaction(id);
       }
     });
   }
-  
+
   getTransaction(id: number) {
     this.transactionService.getTransactionById(id).subscribe(
       (transaction: Transaction) => {
-        this.transaction = this.transactionService.mapTransactionFromBackend(transaction);
- 
-        console.log(this.transaction)
+        this.transaction =
+          this.transactionService.mapTransactionFromBackend(transaction);
+
+        console.log(this.transaction);
         this.purpose = this.transaction.purpose;
         this.amount = this.transaction.amount;
         this.regular = this.transaction.regular;
         this.categoryId = this.transaction.categoryId;
         this.typeId = this.transaction.typeId;
 
-        const [formattedDate, formattedTime] = this.transaction.createdAt.split(' ');
+        const [formattedDate, formattedTime] =
+          this.transaction.createdAt.split(' ');
 
         const [day, month, year] = formattedDate.split('.');
         const isoFormattedDate = `${year}-${month}-${day}`;
@@ -75,14 +77,12 @@ export class TransactionComponent implements OnInit {
       },
       (error) => {
         console.error('Error fetching transaction:', error);
-      }
+      },
     );
   }
-  
-  getTransactionTypes() {
-    const userEmail = this.userData?.email ?? this.cookieService.get('userEmail');
 
-    this.transactionService.getTransactionTypes(userEmail).subscribe(
+  getTransactionTypes() {
+    this.transactionService.getTransactionTypes().subscribe(
       (content: TransactionType[]) => {
         this.transactionTypes = content;
       },
@@ -103,7 +103,7 @@ export class TransactionComponent implements OnInit {
     );
   }
 
-  createOrUpdate(){
+  createOrUpdate() {
     if (!this.transaction.id) {
       this.createTransaction();
     } else {
@@ -115,7 +115,7 @@ export class TransactionComponent implements OnInit {
     // Combine date and time strings into a single Date object
     const dateTimeString = `${this.date}T${this.time}`;
     const formattedDateTime = new Date(dateTimeString);
-  
+
     // Create the transaction object
     const transaction: Transaction = {
       purpose: this.purpose,
@@ -123,9 +123,9 @@ export class TransactionComponent implements OnInit {
       createdAt: formattedDateTime.toISOString(), // Format date to ISO string
       regular: this.regular,
       categoryId: this.categoryId,
-      typeId: this.typeId
-    }
-  
+      typeId: this.typeId,
+    };
+
     // Call the service to create the transaction
     this.transactionService.createTransaction(transaction).subscribe(
       (response) => {
@@ -134,10 +134,9 @@ export class TransactionComponent implements OnInit {
       (error) => {
         console.error('Error creating transaction:', error);
         this.globalErrorHandlingService.handleError(error);
-      }
+      },
     );
   }
-
 
   updateTransaction() {
     console.log(this.transaction);
@@ -148,7 +147,7 @@ export class TransactionComponent implements OnInit {
       },
       (error) => {
         console.error('Error updating transaction:', error);
-      }
+      },
     );
   }
 

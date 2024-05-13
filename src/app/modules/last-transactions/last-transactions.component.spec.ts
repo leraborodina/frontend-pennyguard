@@ -8,10 +8,9 @@ describe('LastTransactionsComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [LastTransactionsComponent]
-    })
-    .compileComponents();
-    
+      declarations: [LastTransactionsComponent],
+    }).compileComponents();
+
     fixture = TestBed.createComponent(LastTransactionsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

@@ -1,129 +1,196 @@
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins&display=swap">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Jura:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link
+  rel="stylesheet"
+  href="https://fonts.googleapis.com/css2?family=Poppins&display=swap"
+/>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+  href="https://fonts.googleapis.com/css2?family=Jura:wght@300;400;500;600;700&display=swap"
+  rel="stylesheet"
+/>
 <div class="main">
-    <div class="grid-container">
-        <div class="text-container">
-            <h2>Следи за своими финансами вместе с Penny Guard</h2>
-            <p>Твой путь к финансовому благополучию начинается здесь.</p>
-            <div class="button-container">
-                <button *ngIf="!isLoggedIn()" routerLink="/login">Войти</button>
-                <button *ngIf="!isLoggedIn()" routerLink="/registration">Зарегистрироваться</button>
-            </div>
-        </div>
-        <div class="image-container">
-            <img src="https://i.ibb.co/p122Rb2/Group-1000002276.png"/>
-        </div>           
+  <div class="grid-container">
+    <div class="text-container">
+      <h2>Следи за своими финансами вместе с Penny Guard</h2>
+      <p>Твой путь к финансовому благополучию начинается здесь.</p>
+      <div class="button-container">
+        <button *ngIf="!isLoggedIn()" routerLink="/login">Войти</button>
+        <button *ngIf="!isLoggedIn()" routerLink="/registration">
+          Зарегистрироваться
+        </button>
+      </div>
     </div>
-    <div class="tiles-container">
-        <div class="tile">
-            <div class="tile-content">
-                <h3>Транзакции</h3>
-                <p>Записывайте каждую операцию в свой личный журнал, чтобы лучше понимать свое финансовое положение.</p>
-                <button (click)="scrollToElement('.d-transaction')">подробнее  &rarr;</button>
-            </div>
-            <div class="tile-image">
-                <img class="image" src="https://i.ibb.co/hBvZMQj/ed41642d18e94f2799434df6b313949f-png-tplv-6bxrjdptv7-image-Photoroom-png-Photoroom.png" alt="d-transactions">
-            </div>
-        </div>
-        <div class="tile">
-            <div class="tile-content">
-                <h3>Лимиты</h3>
-                <p>Установите для себя финансовые рамки, обходите стороной ненужные траты.</p>
-                <button (click)="scrollToElement('.d-limit')">подробнее  &rarr;</button>
-            </div>
-            <div class="tile-image">
-                <img class="image" src="https://i.ibb.co/chTMx59/99072452da914b05b6652d986fda951b-png-tplv-6bxrjdptv7-image-Photoroom-png-Photoroom.png" alt="d-limits">
-            </div>
-        </div>
-        <div class="tile">
-            <div class="tile-content">
-                <h3>Анализ</h3>
-                <p>Используйте анализ транзакций. Визуальное представление поможет оптимизировать бюджет.</p>
-                <button (click)="scrollToElement('.d-analysis')">подробнее  &rarr;</button>
-            </div>
-            <div class="tile-image">
-                <img src="https://i.ibb.co/603F74z/Group-1000002301.png" alt="d-analysis"/>
-            </div>
-        </div>
-        <div class="tile">
-            <div class="tile-content">
-                <h3>Цели</h3>
-                <p>
-                    Поставьте перед собой финансовые цели. 
-                    Регулярное накопление приведет вас к ним гораздо быстрее, чем вы думаете.</p>
-                <button (click)="scrollToElement('.d-goals')">подробнее &rarr;</button>
-            </div>
-            <div class="tile-image">
-                <img class="image" src="https://i.ibb.co/crLwqd7/2e347aabc7cb4f0387191700781e0f54-png-tplv-6bxrjdptv7-image-Photoroom-png-Photoroom.png" alt="d-goals">
-            </div>
-        </div>
+    <div class="image-container">
+      <img src="https://i.ibb.co/p122Rb2/Group-1000002276.png" />
     </div>
-    <div class="description">
-        <div class="d-transaction grid-container">
-            <div class="text-container">
-                <h2>Транзакции</h2>
-                <p>Твой путь к финансовому благополучию начинается здесь.
-                    Твой путь к финансовому благополучию начинается здесь.
-                    Твой путь к финансовому благополучию начинается здесь.
-                    Твой путь к финансовому благополучию начинается здесь.
-                </p>
-                <div class="button-container">
-                    <button *ngIf="!isLoggedIn()" (click)="navigate('/transaction-overview')">Перейти к транзакциям</button>
-                </div>
-            </div>
-            <div class="image-container">
-                <img src="https://i.ibb.co/hBvZMQj/ed41642d18e94f2799434df6b313949f-png-tplv-6bxrjdptv7-image-Photoroom-png-Photoroom.png" alt="d-transactions"/>
-            </div> 
+  </div>
+  <div class="tiles-container">
+    <div class="tile">
+      <div class="tile-content">
+        <h3>Транзакции</h3>
+        <p>
+          Записывайте каждую операцию в свой личный журнал, чтобы лучше понимать
+          свое финансовое положение.
+        </p>
+        <button (click)="scrollToElement('.d-transaction')">
+          подробнее &rarr;
+        </button>
+      </div>
+      <div class="tile-image">
+        <img
+          class="image"
+          src="https://i.ibb.co/hBvZMQj/ed41642d18e94f2799434df6b313949f-png-tplv-6bxrjdptv7-image-Photoroom-png-Photoroom.png"
+          alt="d-transactions"
+        />
+      </div>
+    </div>
+    <div class="tile">
+      <div class="tile-content">
+        <h3>Лимиты</h3>
+        <p>
+          Установите для себя финансовые рамки, обходите стороной ненужные
+          траты.
+        </p>
+        <button (click)="scrollToElement('.d-limit')">подробнее &rarr;</button>
+      </div>
+      <div class="tile-image">
+        <img
+          class="image"
+          src="https://i.ibb.co/chTMx59/99072452da914b05b6652d986fda951b-png-tplv-6bxrjdptv7-image-Photoroom-png-Photoroom.png"
+          alt="d-limits"
+        />
+      </div>
+    </div>
+    <div class="tile">
+      <div class="tile-content">
+        <h3>Анализ</h3>
+        <p>
+          Используйте анализ транзакций. Визуальное представление поможет
+          оптимизировать бюджет.
+        </p>
+        <button (click)="scrollToElement('.d-analysis')">
+          подробнее &rarr;
+        </button>
+      </div>
+      <div class="tile-image">
+        <img
+          src="https://i.ibb.co/603F74z/Group-1000002301.png"
+          alt="d-analysis"
+        />
+      </div>
+    </div>
+    <div class="tile">
+      <div class="tile-content">
+        <h3>Цели</h3>
+        <p>
+          Поставьте перед собой финансовые цели. Регулярное накопление приведет
+          вас к ним гораздо быстрее, чем вы думаете.
+        </p>
+        <button (click)="scrollToElement('.d-goals')">подробнее &rarr;</button>
+      </div>
+      <div class="tile-image">
+        <img
+          class="image"
+          src="https://i.ibb.co/crLwqd7/2e347aabc7cb4f0387191700781e0f54-png-tplv-6bxrjdptv7-image-Photoroom-png-Photoroom.png"
+          alt="d-goals"
+        />
+      </div>
+    </div>
+  </div>
+  <div class="description">
+    <div class="d-transaction grid-container">
+      <div class="text-container">
+        <h2>Транзакции</h2>
+        <p>
+          Твой путь к финансовому благополучию начинается здесь. Твой путь к
+          финансовому благополучию начинается здесь. Твой путь к финансовому
+          благополучию начинается здесь. Твой путь к финансовому благополучию
+          начинается здесь.
+        </p>
+        <div class="button-container">
+          <button
+            *ngIf="!isLoggedIn()"
+            (click)="navigate('/transaction-overview')"
+          >
+            Перейти к транзакциям
+          </button>
         </div>
-        <div class="d-limit grid-container">
-            <div class="image-container">
-                <img src="https://i.ibb.co/chTMx59/99072452da914b05b6652d986fda951b-png-tplv-6bxrjdptv7-image-Photoroom-png-Photoroom.png" alt="d-limits"/>
-            </div> 
-            <div class="text-container limit">
-                <h2>Лимиты</h2>
-                <p>Твой путь к финансовому благополучию начинается здесь.
-                    Твой путь к финансовому благополучию начинается здесь.
-                    Твой путь к финансовому благополучию начинается здесь.
-                    Твой путь к финансовому благополучию начинается здесь.
-                </p>
-                <div class="button-container limit">
-                    <button *ngIf="!isLoggedIn()" (click)="navigate('/limit-form')">Перейти к лимитам</button>
-                </div>
-            </div>
+      </div>
+      <div class="image-container">
+        <img
+          src="https://i.ibb.co/hBvZMQj/ed41642d18e94f2799434df6b313949f-png-tplv-6bxrjdptv7-image-Photoroom-png-Photoroom.png"
+          alt="d-transactions"
+        />
+      </div>
+    </div>
+    <div class="d-limit grid-container">
+      <div class="image-container">
+        <img
+          src="https://i.ibb.co/chTMx59/99072452da914b05b6652d986fda951b-png-tplv-6bxrjdptv7-image-Photoroom-png-Photoroom.png"
+          alt="d-limits"
+        />
+      </div>
+      <div class="text-container limit">
+        <h2>Лимиты</h2>
+        <p>
+          Твой путь к финансовому благополучию начинается здесь. Твой путь к
+          финансовому благополучию начинается здесь. Твой путь к финансовому
+          благополучию начинается здесь. Твой путь к финансовому благополучию
+          начинается здесь.
+        </p>
+        <div class="button-container limit">
+          <button *ngIf="!isLoggedIn()" (click)="navigate('/limit-form')">
+            Перейти к лимитам
+          </button>
         </div>
-        <div class="d-analysis grid-container">
-            <div class="text-container">
-                <h2>Анализ</h2>
-                <p>Твой путь к финансовому благополучию начинается здесь.
-                    Твой путь к финансовому благополучию начинается здесь.
-                    Твой путь к финансовому благополучию начинается здесь.
-                    Твой путь к финансовому благополучию начинается здесь.
-                </p>
-                <div class="button-container">
-                    <button *ngIf="!isLoggedIn()" (click)="navigate('/transaction-overview')">Перейти к анализу</button>
-                </div>
-            </div>
-            <div class="image-container">
-                <img src="https://i.ibb.co/603F74z/Group-1000002301.png" alt="d-analysis"/>
-            </div> 
+      </div>
+    </div>
+    <div class="d-analysis grid-container">
+      <div class="text-container">
+        <h2>Анализ</h2>
+        <p>
+          Твой путь к финансовому благополучию начинается здесь. Твой путь к
+          финансовому благополучию начинается здесь. Твой путь к финансовому
+          благополучию начинается здесь. Твой путь к финансовому благополучию
+          начинается здесь.
+        </p>
+        <div class="button-container">
+          <button
+            *ngIf="!isLoggedIn()"
+            (click)="navigate('/transaction-chart')"
+          >
+            Перейти к анализу
+          </button>
         </div>
-        <div class="d-goals grid-container">
-            <div class="image-container">
-                <img src="https://i.ibb.co/crLwqd7/2e347aabc7cb4f0387191700781e0f54-png-tplv-6bxrjdptv7-image-Photoroom-png-Photoroom.png" alt="d-goals"/>
-            </div> 
-            <div class="text-container limit">
-                <h2>Цели</h2>
-                <p>Твой путь к финансовому благополучию начинается здесь.
-                    Твой путь к финансовому благополучию начинается здесь.
-                    Твой путь к финансовому благополучию начинается здесь.
-                    Твой путь к финансовому благополучию начинается здесь.
-                </p>
-                <div class="button-container limit">
-                    <button *ngIf="!isLoggedIn()" (click)="navigate('/limit-form')">Перейти к целям</button>
-                </div>
-            </div>
+      </div>
+      <div class="image-container">
+        <img
+          src="https://i.ibb.co/603F74z/Group-1000002301.png"
+          alt="d-analysis"
+        />
+      </div>
+    </div>
+    <div class="d-goals grid-container">
+      <div class="image-container">
+        <img
+          src="https://i.ibb.co/crLwqd7/2e347aabc7cb4f0387191700781e0f54-png-tplv-6bxrjdptv7-image-Photoroom-png-Photoroom.png"
+          alt="d-goals"
+        />
+      </div>
+      <div class="text-container limit">
+        <h2>Цели</h2>
+        <p>
+          Твой путь к финансовому благополучию начинается здесь. Твой путь к
+          финансовому благополучию начинается здесь. Твой путь к финансовому
+          благополучию начинается здесь. Твой путь к финансовому благополучию
+          начинается здесь.
+        </p>
+        <div class="button-container limit">
+          <button *ngIf="!isLoggedIn()" (click)="navigate('/limit-form')">
+            Перейти к целям
+          </button>
         </div>
-    </div> 
+      </div>
+    </div>
+  </div>
 </div>

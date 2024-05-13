@@ -1,3 +1,27 @@
+<span>{{ getMonthName(displayedChartMonth) }}, {{ displayedChartYear }}</span>
 <div class="chart-container">
-    <canvas id="MyChart" class="chart">{{ chart }}</canvas>
+  <div
+    class="arrow-left"
+    (click)="previousMonth()"
+    [ngClass]="{ disabled: isPreviousDisabled() }"
+  >
+    <mat-icon>arrow_back_ios</mat-icon>
+  </div>
+  <div class="chart-wrapper">
+    <canvas
+      *ngIf="!showNoTransactionsMessage"
+      #chartCanvas
+      class="chart"
+    ></canvas>
+    <div *ngIf="showNoTransactionsMessage" class="no-transactions-message">
+      В этом месяце нет трат.
+    </div>
+  </div>
+  <div
+    class="arrow-right"
+    (click)="nextMonth()"
+    [ngClass]="{ disabled: isNextDisabled() }"
+  >
+    <mat-icon>arrow_forward_ios</mat-icon>
+  </div>
 </div>

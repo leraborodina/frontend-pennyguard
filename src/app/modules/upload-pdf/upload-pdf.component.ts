@@ -8,12 +8,16 @@ import { Transaction } from '../../shared/models/transaction.model';
 @Component({
   selector: 'app-upload-pdf',
   templateUrl: './upload-pdf.component.html',
-  styleUrl: './upload-pdf.component.scss'
+  styleUrl: './upload-pdf.component.scss',
 })
 export class UploadPdfComponent {
   selectedFile: File | null = null;
-  
-  constructor(private router: Router, private transactionService: TransactionService, private dialog: MatDialog) { }
+
+  constructor(
+    private router: Router,
+    private transactionService: TransactionService,
+    private dialog: MatDialog,
+  ) {}
 
   onDrop(event: DragEvent) {
     event.preventDefault();
@@ -47,34 +51,40 @@ export class UploadPdfComponent {
       }
     }
   }
-  
+
   uploadFile(): void {
     if (!this.selectedFile) {
       this.showErrorMessage('Please select a file to upload.');
       return;
     }
-  
+
     // Call a service method to upload the file
     this.transactionService.uploadPDF(this.selectedFile).subscribe(
       (response: any) => {
         if (response && response.transactions) {
           // Extract transactions from the response
-          const transactions: Transaction[] = response.transactions.map((transaction: any) => ({
-            id: transaction.id,
-            date: new Date(transaction.date[0], transaction.date[1] - 1, transaction.date[2]), // Adjust date format
-            categoryId: transaction.categoryId.toString(), // Assuming categoryId is related to category name
-            amount: transaction.amount,
-            purpose: transaction.purpose || '', // Handle null purpose
-            regular: transaction.regular,
-            transactionTypeId: transaction.transactionTypeId
-          }));
-  
+          const transactions: Transaction[] = response.transactions.map(
+            (transaction: any) => ({
+              id: transaction.id,
+              date: new Date(
+                transaction.date[0],
+                transaction.date[1] - 1,
+                transaction.date[2],
+              ), // Adjust date format
+              categoryId: transaction.categoryId.toString(), // Assuming categoryId is related to category name
+              amount: transaction.amount,
+              purpose: transaction.purpose || '', // Handle null purpose
+              regular: transaction.regular,
+              transactionTypeId: transaction.transactionTypeId,
+            }),
+          );
+
           // File uploaded successfully
           this.showSuccessMessage('File uploaded successfully.');
           // Open dialog to display parsed transactions
           const dialogRef = this.dialog.open(TransactionEditComponent, {
             width: '800px', // Adjust the width as needed
-            data: { transactions: transactions } // Pass parsed transactions to the dialog
+            data: { transactions: transactions }, // Pass parsed transactions to the dialog
           });
         } else {
           // No transactions found in response
@@ -84,10 +94,12 @@ export class UploadPdfComponent {
       },
       (error: any) => {
         console.error('Error uploading file:', error);
-        this.showErrorMessage('An error occurred while uploading the file. Please try again.');
-      }
+        this.showErrorMessage(
+          'An error occurred while uploading the file. Please try again.',
+        );
+      },
     );
-  }  
+  }
 
   private showErrorMessage(message: string): void {
     // Implement your error message display logic here

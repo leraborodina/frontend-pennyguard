@@ -2,10 +2,22 @@
   <h2>New Transaction</h2>
   <form (ngSubmit)="createOrUpdate()">
     <label for="purpose">Purpose:</label>
-    <input [(ngModel)]="purpose" type="text" id="purpose" name="purpose" required />
+    <input
+      [(ngModel)]="purpose"
+      type="text"
+      id="purpose"
+      name="purpose"
+      required
+    />
 
     <label for="amount">Amount:</label>
-    <input [(ngModel)]="amount" type="number" id="amount" name="amount" required />
+    <input
+      [(ngModel)]="amount"
+      type="number"
+      id="amount"
+      name="amount"
+      required
+    />
 
     <label for="date">Date:</label>
     <input [(ngModel)]="date" type="date" id="date" name="date" required />
@@ -17,13 +29,29 @@
     <input [(ngModel)]="regular" type="checkbox" id="regular" name="regular" />
 
     <label for="selectedCategoryId">Category:</label>
-    <select [(ngModel)]="categoryId" name="selectedCategoryId" (change)="onCategoryChange($event)" required>
-      <option *ngFor="let category of categories" [value]="category.id">{{ category.name }}</option>
+    <select
+      [(ngModel)]="categoryId"
+      name="selectedCategoryId"
+      (change)="onCategoryChange($event)"
+      required
+    >
+      <option *ngFor="let category of categories" [value]="category.id">
+        {{ category.name }}
+      </option>
     </select>
 
     <label for="selectedTypeId">Transaction Type:</label>
-    <select [(ngModel)]="typeId" name="selectedTypeId" (change)="onTransactionTypeChange($event)" required>
-      <option *ngFor="let transactionType of transactionTypes" [value]="transactionType.id">{{ transactionType.type }}
+    <select
+      [(ngModel)]="typeId"
+      name="selectedTypeId"
+      (change)="onTransactionTypeChange($event)"
+      required
+    >
+      <option
+        *ngFor="let transactionType of transactionTypes"
+        [value]="transactionType.id"
+      >
+        {{ transactionType.type }}
       </option>
     </select>
 

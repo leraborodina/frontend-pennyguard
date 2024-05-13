@@ -1,0 +1,11 @@
+.chart-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  max-width: 350px;
+}
+
+.disabled {
+  display: none;
+}

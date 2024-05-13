@@ -1,25 +1,29 @@
-<div fxLayout="column" fxLayoutAlign="center center" class="transaction-container">
-    <mat-card>
-        <mat-card-content>
-            <div *ngIf="transactions.length > 0">
-                <table class="responsive-table">
-                    <tbody *ngFor="let transaction of transactions; let i = index">
-                        <tr>
-                            <td rowspan="2">{{ transaction }}</td>
-                            <td>{{ transaction.categoryId || 'N/A' }}</td>
-                            <td rowspan="2" [style.color]="getAmountColorByTransactionType(transaction.typeId)">
-                                {{ getAmountWithSignAndColor(transaction.amount, transaction.typeId) || 'N/A' }}
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>{{ transaction.purpose || 'N/A' }}</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            <div *ngIf="transactions.length === 0" class="empty-list-message">
-                Нет транзакций.
-            </div>
-        </mat-card-content>
-    </mat-card>
+<div class="transaction-container">
+  <div *ngIf="transactions.length > 0" class="last-trans">
+    <table class="responsive-table">
+      <tbody *ngFor="let transaction of transactions; let i = index">
+        <tr>
+          <td rowspan="2">{{ transaction.createdAt }}</td>
+          <td>{{ transaction.categoryId || "N/A" }}</td>
+          <td
+            rowspan="2"
+            [style.color]="getAmountColorByTransactionType(transaction.typeId)"
+          >
+            {{
+              getAmountWithSignAndColor(
+                transaction.amount,
+                transaction.typeId
+              ) || "N/A"
+            }}
+          </td>
+        </tr>
+        <tr>
+          <td>{{ transaction.purpose || "N/A" }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div *ngIf="transactions.length === 0" class="empty-list-message">
+    Нет транзакций.
+  </div>
 </div>
