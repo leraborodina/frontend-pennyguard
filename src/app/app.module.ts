@@ -49,6 +49,9 @@ import { WebSocketService } from './core/websocket.service';
 import { NotificationService } from './shared/services/notification.service';
 import { PopupMessageComponent } from './modules/popup-message/popup-message.component';
 import { NotificationsOverviewComponent } from './modules/notifications-overview/notifications-overview.component';
+import { FinancialGoalFormComponent } from './modules/financial-goal-form/financial-goal-form.component';
+import { SavingsCalculatorComponent } from './modules/savings-calculator/savings-calculator.component';
+import { SavingsProgressComponent } from './modules/savings-progress/savings-progress.component';
 import { SocketIoConfig } from 'ngx-socket-io';
 import { BarchartComponent } from './modules/barchart/barchart.component';
 
@@ -78,6 +81,9 @@ const config: SocketIoConfig = { url: 'ws://localhost:8080', options: {} };
     PopupMessageComponent,
     NotificationsOverviewComponent,
     BarchartComponent,
+    FinancialGoalFormComponent,
+    SavingsCalculatorComponent,
+    SavingsProgressComponent
   ],
   imports: [
     BrowserModule,

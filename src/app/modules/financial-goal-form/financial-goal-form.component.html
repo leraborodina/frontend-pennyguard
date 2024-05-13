@@ -1,0 +1,32 @@
+<!-- financial-goal.component.html -->
+
+<div>
+  <h2>Create Financial Goal</h2>
+  <form (ngSubmit)="createFinancialGoal()">
+    <div>
+      <label for="name">Name:</label>
+      <input type="text" id="name" name="name" [(ngModel)]="financialGoal.name" required>
+    </div>
+    <div>
+      <label for="sum">Sum:</label>
+      <input type="number" id="sum" name="sum" [(ngModel)]="financialGoal.sum" required>
+    </div>
+    <div>
+      <label for="endDate">Number of Months:</label>
+      <input type="number" id="endDate" name="endDate" [(ngModel)]="financialGoal.endDate" required>
+    </div>
+    <button type="submit">Create</button>
+  </form>
+</div>
+
+
+<div>
+  <h2>Savings Calculator</h2>
+  <savings-calculator></savings-calculator>
+</div>
+
+
+<div>
+  <h2>Savings Progress</h2>
+  <savings-progress></savings-progress>
+</div>

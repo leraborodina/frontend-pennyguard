@@ -14,6 +14,7 @@ import { StartpageComponent } from './modules/startpage/startpage.component';
 import { DashboardComponent } from './modules/dashboard/dashboard.component';
 import { LimitOverviewComponent } from './modules/limit-overview/limit-overview.component';
 import { NotificationsOverviewComponent } from './modules/notifications-overview/notifications-overview.component';
+import { FinancialGoalFormComponent } from './modules/financial-goal-form/financial-goal-form.component';
 import { NotificationsComponent } from './modules/notifications/notifications.component';
 
 const routes: Routes = [
@@ -57,10 +58,16 @@ const routes: Routes = [
     canActivate: [AuthGuard],
   },
   {
+    path: 'financial-goal-form',
+    component: FinancialGoalFormComponent,
+    canActivate: [AuthGuard],
+  },
+  {
     path: 'dashboard',
     component: DashboardComponent,
     canActivate: [AuthGuard],
   },
+  { path: 'startpage', component: StartpageComponent },
   {
     path: 'limit-overview',
     component: LimitOverviewComponent,
@@ -77,4 +84,4 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

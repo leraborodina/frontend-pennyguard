@@ -149,6 +149,23 @@ export class TransactionService {
       );
   }
 
+  getUserBalanceAfterSettinigGoals(): Observable<number> {
+    const authToken = this.cookieService.get('authToken');
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: `${authToken}`
+    });
+
+    return this.http
+      .get<number>(`${this.transactionEndpoint}/user/incomes`, { headers })
+      .pipe(
+        catchError((error) => {
+          console.error('Error in transaction limit type request:', error);
+          return throwError(error);
+        })
+      );
+  }
+
   getTransactionById(id?: number): Observable<Transaction> {
     const authToken = this.cookieService.get('authToken');
     const headers = new HttpHeaders({

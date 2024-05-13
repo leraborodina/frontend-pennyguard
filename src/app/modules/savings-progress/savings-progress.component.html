@@ -1,0 +1,8 @@
+<div *ngFor="let goal of financialGoals">
+    <h3>{{ goal.name }}</h3>
+    <div class="progress">
+        <div class="progress-bar" role="progressbar" [style.width.%]="getPercentage(balance, getTotalGoal(goal.id))">
+            {{ getPercentage(balance, getTotalGoal(goal.id)) }}%
+        </div>
+    </div>
+</div>
