@@ -2,7 +2,14 @@
 
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable, BehaviorSubject, map, catchError, tap, throwError } from 'rxjs';
+import {
+  Observable,
+  BehaviorSubject,
+  map,
+  catchError,
+  tap,
+  throwError,
+} from 'rxjs';
 import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { TokenService } from './token.service';
 import { CookieService } from 'ngx-cookie-service';
@@ -26,23 +33,23 @@ export class AuthService {
 
   // BehaviorSubject to keep track of the authentication token
   private tokenSubject = new BehaviorSubject<string | null>(null);
-  
+
   private redirectUrl!: string;
-   
-   setRedirectUrl(url: string): void {
-     this.redirectUrl = url;
-   }
-   
-   getRedirectUrl(): string {
-     return this.redirectUrl || '/default-path';
-   }
+
+  setRedirectUrl(url: string): void {
+    this.redirectUrl = url;
+  }
+
+  getRedirectUrl(): string {
+    return this.redirectUrl || '/dashboard';
+  }
 
   constructor(
     private http: HttpClient,
     private router: Router,
     private tokenService: TokenService,
     private cookieService: CookieService,
-    private userService: UserService
+    private userService: UserService,
   ) {
     // Initialize authentication state based on token presence
     this.isUserAuthenticated.next(this.isAuthenticated());
@@ -55,61 +62,67 @@ export class AuthService {
     this.tokenSubject.next(storedToken);
   }
 
+  refreshToken(): Observable<any> {
+    const oldToken = this.getAuthToken()!;
+    const decodedToken: any = jwtDecode(oldToken);
+    const userId: string = decodedToken.sub;
 
-refreshToken(): Observable<any> {
-  const oldToken = this.getAuthToken()!;
-  const decodedToken: any = jwtDecode(oldToken);
-  const userId: string = decodedToken.sub;
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'X-UserId': userId,
+    });
 
-  const headers = new HttpHeaders({
-    'Content-Type': 'application/json',
-    'X-UserId': userId  
-  });
+    return this.http
+      .post<any>(`${this.authEndpoint}/refresh-token`, {}, { headers })
+      .pipe(
+        map((response: any) => {
+          this.setAuthToken(response.token);
+          return response;
+        }),
+        catchError((error) => {
+          console.error('Error in refresh token request:', error);
+          return throwError(error);
+        }),
+      );
+  }
 
-  return this.http.post<any>(
-    `${this.authEndpoint}/refresh-token`, {}, { headers }).pipe(
-      map((response: any) => {
-        this.setAuthToken(response.token);
-        return response; 
-      }),
-      catchError((error) => {
-        console.error('Error in refresh token request:', error);
-        return throwError(error);
-      })
-  );
-}
-
-  
-  login(email: string | null, password: string | null): Observable<LoginResponse> {
+  login(
+    email: string | null,
+    password: string | null,
+  ): Observable<LoginResponse> {
     const loginRequest = { email, password };
-    return this.http.post<LoginResponse>(`${this.authEndpoint}/login`, loginRequest, { observe: 'response' }).pipe(
-      map((response: HttpResponse<LoginResponse>) => {
-        // Check if the response body is present
-        if (response.body) {
-          // Extract user data from the response body
-          const userData: UserData = {
-            email: response.body.email,
-            firstname: response.body.firstname,
-            lastname: response.body.lastname
-          };
-
-          // Set the user data using UserDataService
-          this.userService.setUserData(userData);
-          
-          // Return the extracted user data
-          return response.body;
-        } else {
-          // Handle the case where the response body is empty
-          throw new Error('Empty response body');
-        }
-      }),
-      catchError((error: any) => {
-        // Handle HTTP errors
-        console.error('HTTP error:', error);
-        // Re-throw the error to propagate it downstream
-        throw error;
+    return this.http
+      .post<LoginResponse>(`${this.authEndpoint}/login`, loginRequest, {
+        observe: 'response',
       })
-    );
+      .pipe(
+        map((response: HttpResponse<LoginResponse>) => {
+          // Check if the response body is present
+          if (response.body) {
+            // Extract user data from the response body
+            const userData: UserData = {
+              email: response.body.email,
+              firstname: response.body.firstname,
+              lastname: response.body.lastname,
+            };
+
+            // Set the user data using UserDataService
+            this.userService.setUserData(userData);
+
+            // Return the extracted user data
+            return response.body;
+          } else {
+            // Handle the case where the response body is empty
+            throw new Error('Empty response body');
+          }
+        }),
+        catchError((error: any) => {
+          // Handle HTTP errors
+          console.error('HTTP error:', error);
+          // Re-throw the error to propagate it downstream
+          throw error;
+        }),
+      );
   }
 
   getUserDetails() {
@@ -178,4 +191,3 @@ refreshToken(): Observable<any> {
     localStorage.removeItem(this.ROUTING_KEY);
   }
 }
-

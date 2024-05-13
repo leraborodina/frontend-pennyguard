@@ -15,7 +15,7 @@
 /* Media query for small screens */
 @media screen and (max-width: 600px) {
   .dialog-container {
-      padding: 8px; /* Adjust padding for small screens */
+    padding: 8px; /* Adjust padding for small screens */
   }
 }
 
@@ -44,7 +44,7 @@
 /* Media query for small screens */
 @media screen and (max-width: 600px) {
   .dialog-container {
-      padding: 8px; /* Adjust padding for small screens */
+    padding: 8px; /* Adjust padding for small screens */
   }
 }
 
@@ -67,27 +67,27 @@
 .edit-mode input[type="number"],
 .edit-mode input[type="date"],
 .edit-mode select {
-    border: 1px solid #ccc; /* Example border style */
-    border-radius: 4px;
-    padding: 5px 10px;
+  border: 1px solid #ccc; /* Example border style */
+  border-radius: 4px;
+  padding: 5px 10px;
 }
 
 .edit-mode input[type="text"],
 .edit-mode input[type="number"] {
-    width: 100%;
+  width: 100%;
 }
 
 .edit-container {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 }
 
 .edit-input {
-    flex: 1;
+  flex: 1;
 }
 
 .editing {
-    background-color: #f5f5f5; /* Example background color */
+  background-color: #f5f5f5; /* Example background color */
 }
 
 .edit-input,

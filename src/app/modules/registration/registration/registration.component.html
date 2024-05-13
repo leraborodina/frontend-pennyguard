@@ -1,47 +1,102 @@
 <head>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" />
+  <link
+    rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Poppins&display=swap"
+  />
 </head>
 <body>
   <div class="wrapper">
     <div class="content">
       <h2>Добро пожаловать в Penny Guard</h2>
-      <p>Уже есть аккаунт? 
+      <p>
+        Уже есть аккаунт?
         <a (click)="redirectToLogin()" routerLink="/login">Войти</a>
       </p>
-        <form (ngSubmit)="registerUser()">
-          <label>Имя</label>
-          <input type="text" placeholder="Иван" [formControl]="firstname" required>
-          <label class="error-message" *ngIf="firstname.invalid && firstname.touched ">Введите имя</label>
+      <form (ngSubmit)="registerUser()">
+        <label>Имя</label>
+        <input
+          type="text"
+          placeholder="Иван"
+          [formControl]="firstname"
+          required
+        />
+        <label
+          class="error-message"
+          *ngIf="firstname.invalid && firstname.touched"
+          >Введите имя</label
+        >
 
-          <label>Фамилия</label>
-          <input type="text" placeholder="Иванов" [formControl]="lastname" required>
-          <label class="error-message" *ngIf="lastname.invalid && lastname.touched ">Введите фамилию</label>
+        <label>Фамилия</label>
+        <input
+          type="text"
+          placeholder="Иванов"
+          [formControl]="lastname"
+          required
+        />
+        <label
+          class="error-message"
+          *ngIf="lastname.invalid && lastname.touched"
+          >Введите фамилию</label
+        >
 
-          <label>Почта</label>
-          <input type="email" placeholder="email@example.com" [formControl]="email" required>
-          <label class="error-message" *ngIf="email.invalid && email.touched">Введите почту</label>
-          <label class="error-message" *ngIf="email.errors?.['email'] && email.touched">Неверный формат почты</label>
+        <label>Почта</label>
+        <input
+          type="email"
+          placeholder="email@example.com"
+          [formControl]="email"
+          required
+        />
+        <label class="error-message" *ngIf="email.invalid && email.touched"
+          >Введите почту</label
+        >
+        <label
+          class="error-message"
+          *ngIf="email.errors?.['email'] && email.touched"
+          >Неверный формат почты</label
+        >
 
-          <div class="password-container">
-            <label>Пароль</label>        
-            <a (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
-              <mat-icon>{{ hide ? 'visibility_off' : 'visibility' }}</mat-icon>
-            </a> 
-          </div>       
-            <input [type]="hide ? 'password' : 'text'" [formControl]="password" required/>
-            <label class="error-message" *ngIf="password.invalid && password.touched">Введите пароль</label>
-          
+        <div class="password-container">
+          <label>Пароль</label>
+          <a
+            (click)="hide = !hide"
+            [attr.aria-label]="'Hide password'"
+            [attr.aria-pressed]="hide"
+          >
+            <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
+          </a>
+        </div>
+        <input
+          [type]="hide ? 'password' : 'text'"
+          [formControl]="password"
+          required
+        />
+        <label
+          class="error-message"
+          *ngIf="password.invalid && password.touched"
+          >Введите пароль</label
+        >
 
-          <label>Повторите пароль</label>           
-          <input type="password" [formControl]="confirmedPassword" required>          
-          <label class="error-message" *ngIf="confirmedPassword.invalid && password.touched">Обязательное поле</label>
-          <label class="error-message" *ngIf="password.value !== confirmedPassword.value">Пароли не совпадают</label>
+        <label>Повторите пароль</label>
+        <input type="password" [formControl]="confirmedPassword" required />
+        <label
+          class="error-message"
+          *ngIf="confirmedPassword.invalid && password.touched"
+          >Обязательное поле</label
+        >
+        <label
+          class="error-message"
+          *ngIf="password.value !== confirmedPassword.value"
+          >Пароли не совпадают</label
+        >
 
-          <button type="submit">Создать аккаунт</button>
-          <label class="success-message" *ngIf="successMessage">{{ successMessage }}</label>
-          <label class="error-message" *ngIf="errorMessage">{{ errorMessage }}</label>
-        </form>
-      </div> 
+        <button type="submit">Создать аккаунт</button>
+        <label class="success-message" *ngIf="successMessage">{{
+          successMessage
+        }}</label>
+        <label class="error-message" *ngIf="errorMessage">{{
+          errorMessage
+        }}</label>
+      </form>
+    </div>
   </div>
 </body>
-  

@@ -8,10 +8,9 @@ describe('LimitOverviewComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [LimitOverviewComponent]
-    })
-    .compileComponents();
-    
+      declarations: [LimitOverviewComponent],
+    }).compileComponents();
+
     fixture = TestBed.createComponent(LimitOverviewComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

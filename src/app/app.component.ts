@@ -12,19 +12,21 @@ export class AppComponent implements OnInit {
   notification: string | null = null;
   notifications: string[] = []; // Array to hold notifications
 
-  constructor(private authService: AuthService, private webSocketService: WebSocketService) {}
+  constructor(
+    private authService: AuthService,
+    private webSocketService: WebSocketService,
+  ) {}
 
   ngOnInit() {
     this.isAuthenticated = this.authService.isAuthenticated();
 
     this.webSocketService.connect();
 
-    this.webSocketService.getMessages().subscribe(message => {
+    this.webSocketService.getMessages().subscribe((message) => {
       this.displayNotification(message);
     });
   }
 
-  
   // displayNotification(message: string) {
   //   // Set the received message as the notification
   //   this.notification = message;
@@ -39,7 +41,6 @@ export class AppComponent implements OnInit {
   //   // Clear the notification
   //   this.notification = null;
   // }
-
 
   displayNotification(message: string) {
     // Add the message to the notifications array
@@ -58,5 +59,4 @@ export class AppComponent implements OnInit {
       this.notifications.splice(index, 1);
     }
   }
-  
 }

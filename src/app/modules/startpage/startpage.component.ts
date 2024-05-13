@@ -5,12 +5,14 @@ import { Route, Router } from '@angular/router';
 @Component({
   selector: 'app-startpage',
   templateUrl: './startpage.component.html',
-  styleUrl: './startpage.component.scss'
+  styleUrl: './startpage.component.scss',
 })
 export class StartpageComponent {
-
-  constructor(private authService: AuthService, private el: ElementRef, private router: Router) {
-  }
+  constructor(
+    private authService: AuthService,
+    private el: ElementRef,
+    private router: Router,
+  ) {}
 
   isLoggedIn(): boolean {
     return this.authService.isAuthenticated();
@@ -21,11 +23,13 @@ export class StartpageComponent {
       this.router.navigate([targetRoute]);
     } else {
       this.authService.setRedirectUrl(targetRoute);
-      this.router.navigate(['/login']);  
+      this.router.navigate(['/login']);
     }
   }
 
   scrollToElement(targetElement: string): void {
-    this.el.nativeElement.querySelector(targetElement).scrollIntoView({ behavior: 'smooth' });
+    this.el.nativeElement
+      .querySelector(targetElement)
+      .scrollIntoView({ behavior: 'smooth' });
   }
 }

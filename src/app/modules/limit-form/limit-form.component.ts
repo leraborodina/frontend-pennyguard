@@ -7,18 +7,18 @@ import { CategoryService } from '../../services/category.service';
 @Component({
   selector: 'app-limit-form',
   templateUrl: './limit-form.component.html',
-  styleUrls: ['./limit-form.component.scss']
+  styleUrls: ['./limit-form.component.scss'],
 })
 export class LimitFormComponent implements OnInit {
   categories: Category[] = [];
   limit: Limit = {
-    amount: 0.00,
-    salaryDay: 1
+    amount: 0.0,
+    salaryDay: 1,
   };
 
   constructor(
     private limitService: LimitService,
-    private categoryService: CategoryService
+    private categoryService: CategoryService,
   ) {}
 
   ngOnInit(): void {
@@ -27,19 +27,19 @@ export class LimitFormComponent implements OnInit {
 
   getCategories(): void {
     this.categoryService.getCategories().subscribe(
-      (content: Category[]) => this.categories = content,
-      (error) => console.error('Error fetching categories:', error)
+      (content: Category[]) => (this.categories = content),
+      (error) => console.error('Error fetching categories:', error),
     );
   }
 
   onCategoryChange(event: any): void {
-    this.limit.categoryId = event.target.value; 
+    this.limit.categoryId = event.target.value;
   }
 
   createLimit(): void {
-    this.limitService.createLimit(this.limit).subscribe( 
+    this.limitService.createLimit(this.limit).subscribe(
       (response) => console.log(response),
-      (error) => console.error('Error creating limit:', error)
+      (error) => console.error('Error creating limit:', error),
     );
   }
 }

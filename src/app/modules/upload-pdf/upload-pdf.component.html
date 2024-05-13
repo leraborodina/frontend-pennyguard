@@ -1,9 +1,21 @@
 <div class="container">
-    <div class="upload-area" (drop)="onDrop($event)" (dragover)="onDragOver($event)">
-        <mat-icon>attach_file</mat-icon>
-        <p>Drop PDF files here</p>
-    </div>
+  <div
+    class="upload-area"
+    (drop)="onDrop($event)"
+    (dragover)="onDragOver($event)"
+  >
+    <mat-icon>attach_file</mat-icon>
+    <p>Drop PDF files here</p>
+  </div>
 
-    <input type="file" (change)="onFileSelected($event)" accept="application/pdf" style="display: none" #fileInput />
-    <button mat-raised-button color="primary" (click)="fileInput.click()">Choose Files</button>
+  <input
+    type="file"
+    (change)="onFileSelected($event)"
+    accept="application/pdf"
+    style="display: none"
+    #fileInput
+  />
+  <button mat-raised-button color="primary" (click)="fileInput.click()">
+    Choose Files
+  </button>
 </div>

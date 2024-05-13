@@ -22,7 +22,7 @@ describe('DashboardComponent', () => {
         MatGridListModule,
         MatIconModule,
         MatMenuModule,
-      ]
+      ],
     }).compileComponents();
   }));
 

@@ -2,17 +2,29 @@
   <div class="navbar-container">
     <div class="app-title">PennyGuard</div>
     <div class="navbar-items" [class.show-menu]="showMenu">
-      <button *ngIf="!isLoggedIn()" mat-button routerLink="/startpage">Главная</button>
-      <button *ngIf="!isLoggedIn()" mat-button routerLink="/login">Войти</button>
+      <button *ngIf="!isLoggedIn()" mat-button routerLink="/startpage">
+        Главная
+      </button>
+      <button *ngIf="!isLoggedIn()" mat-button routerLink="/login">
+        Войти
+      </button>
       <ng-container *ngIf="isLoggedIn()">
         <button mat-button routerLink="/dashboard">Dashboard</button>
         <div class="dropdown">
-          <button mat-button [matMenuTriggerFor]="transactionMenu">Транзакции</button>
+          <button mat-button [matMenuTriggerFor]="transactionMenu">
+            Транзакции
+          </button>
           <mat-menu #transactionMenu="matMenu">
             <button mat-menu-item routerLink="/transaction">Создать</button>
-            <button mat-menu-item routerLink="/upload">Загрузить из банка</button>
-            <button mat-menu-item routerLink="/transaction-overview">Транзакции</button>
-            <button mat-menu-item routerLink="/transaction-chart">Анализ</button>
+            <button mat-menu-item routerLink="/upload">
+              Загрузить из банка
+            </button>
+            <button mat-menu-item routerLink="/transaction-overview">
+              Транзакции
+            </button>
+            <button mat-menu-item routerLink="/transaction-chart">
+              Анализ
+            </button>
           </mat-menu>
         </div>
         <div class="dropdown">
@@ -24,7 +36,7 @@
         </div>
         <button mat-button routerLink="/notifications-overview">Напоминания</button>
         <button mat-button routerLink="/financial-goal-form">Цели</button>
-        <a mat-button (click)="logout()">Выход</a>
+        <a mat-button (click)="logout()">Выйти</a>
       </ng-container>
     </div>
     <button mat-icon-button class="menu-button" (click)="toggleMenu()">
@@ -32,37 +44,3 @@
     </button>
   </div>
 </mat-toolbar>
-
-
-<!-- <mat-toolbar color="primary">
-
-  <div class="left-content">
-    <span class="app-title">PennyGuard</span>
-    <ng-container *ngIf="isLoggedIn()">
-      <div class="dropdown">
-        <button mat-button [matMenuTriggerFor]="transactionMenu">Транзакции</button>
-        <mat-menu #transactionMenu="matMenu">
-          <button mat-menu-item routerLink="/transaction">Создать</button>
-          <button mat-menu-item routerLink="/upload">Загрузить из банка</button>
-          <button mat-menu-item routerLink="/transaction-overview">Транзакции</button>
-          <button mat-menu-item routerLink="/transaction-chart">Анализ</button>
-        </mat-menu>
-      </div>
-      <div class="dropdown">
-        <button mat-button [matMenuTriggerFor]="limitMenu">Лимиты</button>
-        <mat-menu #limitMenu="matMenu">
-          <button mat-menu-item routerLink="/limit-form">Создать</button>
-      </mat-menu>
-      </div>
-
-      <button mat-button>Напоминания</button>
-    </ng-container>
-  </div>
-  <div>
-    <ng-container *ngIf="isLoggedIn()">
-      <a (click)="logout()" class="user-greeting">
-        <span class="username">{{ getUserName() }}</span>
-      </a>
-    </ng-container>
-  </div>
-</mat-toolbar> -->

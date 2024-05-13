@@ -1,17 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { StartpageComponent } from './startpage.component';
+import { BarchartComponent } from './barchart.component';
 
-describe('StartpageComponent', () => {
-  let component: StartpageComponent;
-  let fixture: ComponentFixture<StartpageComponent>;
+describe('BarchartComponent', () => {
+  let component: BarchartComponent;
+  let fixture: ComponentFixture<BarchartComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [StartpageComponent],
+      declarations: [BarchartComponent],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(StartpageComponent);
+    fixture = TestBed.createComponent(BarchartComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

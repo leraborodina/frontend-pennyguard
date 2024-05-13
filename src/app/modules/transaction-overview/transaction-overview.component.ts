@@ -33,9 +33,15 @@ export class TransactionOverviewComponent implements OnInit {
   minDateControl = new FormControl();
   maxDateControl = new FormControl();
 
-  displayedColumns: string[] = ['date', 'description', 'category', 'amount', 'actions'];
+  displayedColumns: string[] = [
+    'date',
+    'description',
+    'category',
+    'amount',
+    'actions',
+  ];
   dataSource = new MatTableDataSource<Transaction>();
-  categories:  Category[] = [];
+  categories: Category[] = [];
   transactionTypes: TransactionType[] = [];
 
   constructor(
@@ -44,7 +50,7 @@ export class TransactionOverviewComponent implements OnInit {
     private authService: AuthService,
     private router: Router,
     private snackBar: MatSnackBar,
-    private userService: UserService
+    private userService: UserService,
   ) {}
 
   ngOnInit(): void {
@@ -61,20 +67,18 @@ export class TransactionOverviewComponent implements OnInit {
       },
       (error) => {
         this.handleError('Error fetching categories:', error);
-      }
+      },
     );
   }
 
   getTransactionTypes(): void {
-    const userEmail = this.userData?.email ?? '';
-
-    this.transactionService.getTransactionTypes(userEmail).subscribe(
+    this.transactionService.getTransactionTypes().subscribe(
       (content: TransactionType[]) => {
         this.transactionTypes = content;
       },
       (error) => {
         this.handleError('Error fetching transaction types:', error);
-      }
+      },
     );
   }
 
@@ -87,19 +91,20 @@ export class TransactionOverviewComponent implements OnInit {
   }
 
   getTransactions(): void {
-    this.subscription = this.transactionService.getTransactionsByUserId().subscribe({
-      next: (userTransactions: Transaction[]) => {
+    this.subscription = this.transactionService
+      .getTransactionsByUserId()
+      .subscribe({
+        next: (userTransactions: Transaction[]) => {
+          this.transactions = userTransactions.map((transaction) =>
+            this.transactionService.mapTransactionFromBackend(transaction),
+          );
 
-        this.transactions = userTransactions.map(transaction => 
-          this.transactionService.mapTransactionFromBackend(transaction)
-        );
-
-        this.updateDataSource(this.transactions);
-      },
-      error: (error) => {
-        this.handleError('Error fetching transactions:', error);
-      }
-    });
+          this.updateDataSource(this.transactions);
+        },
+        error: (error) => {
+          this.handleError('Error fetching transactions:', error);
+        },
+      });
   }
 
   updateDataSource(transactions: Transaction[]): void {
@@ -112,42 +117,43 @@ export class TransactionOverviewComponent implements OnInit {
 
     const searchValue = this.searchControl.value?.trim().toLowerCase();
     if (searchValue && searchValue !== '') {
-      filteredTransactions = filteredTransactions.filter(transaction =>
-        transaction.purpose.toLowerCase().includes(searchValue)
+      filteredTransactions = filteredTransactions.filter((transaction) =>
+        transaction.purpose.toLowerCase().includes(searchValue),
       );
     }
 
     const selectedCategory = this.categoriesControl.value;
     if (selectedCategory) {
-      filteredTransactions = filteredTransactions.filter(transaction =>
-        transaction.categoryId === selectedCategory
+      filteredTransactions = filteredTransactions.filter(
+        (transaction) => transaction.categoryId === selectedCategory,
       );
     }
 
     const selectedTransactionType = this.transactionTypeControl.value;
     if (selectedTransactionType) {
-      filteredTransactions = filteredTransactions.filter(transaction =>
-        transaction.typeId === selectedTransactionType
+      filteredTransactions = filteredTransactions.filter(
+        (transaction) => transaction.typeId === selectedTransactionType,
       );
     }
 
     const minAmount = Number(this.minAmountControl.value) || 0;
     const maxAmount = Number(this.maxAmountControl.value) || Number.MAX_VALUE;
-    
-    filteredTransactions = filteredTransactions.filter(transaction =>
-      transaction.amount >= minAmount && transaction.amount <= maxAmount
+
+    filteredTransactions = filteredTransactions.filter(
+      (transaction) =>
+        transaction.amount >= minAmount && transaction.amount <= maxAmount,
     );
 
     const minDate = this.minDateControl.value;
     const maxDate = this.maxDateControl.value || new Date();
     if (minDate) {
-      filteredTransactions = filteredTransactions.filter(transaction =>
-        new Date(transaction.createdAt) >= minDate
+      filteredTransactions = filteredTransactions.filter(
+        (transaction) => new Date(transaction.createdAt) >= minDate,
       );
     }
     if (maxDate) {
-      filteredTransactions = filteredTransactions.filter(transaction =>
-        new Date(transaction.createdAt) <= maxDate
+      filteredTransactions = filteredTransactions.filter(
+        (transaction) => new Date(transaction.createdAt) <= maxDate,
       );
     }
 
@@ -162,7 +168,7 @@ export class TransactionOverviewComponent implements OnInit {
       },
       (error) => {
         this.handleError('Error deleting transaction:', error);
-      }
+      },
     );
   }
 

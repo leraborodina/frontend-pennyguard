@@ -8,10 +8,9 @@ describe('TransactionEditComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [TransactionEditComponent]
-    })
-    .compileComponents();
-    
+      declarations: [TransactionEditComponent],
+    }).compileComponents();
+
     fixture = TestBed.createComponent(TransactionEditComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

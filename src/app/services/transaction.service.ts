@@ -17,23 +17,44 @@ export class TransactionService {
 
   constructor(
     private http: HttpClient,
-    private cookieService: CookieService
-  ) { }
+    private cookieService: CookieService,
+  ) {}
 
-  getTransactionTypes(email: string): Observable<TransactionType[]> {
+  getUserExpences(): Observable<Transaction[]> {
     const authToken = this.cookieService.get('authToken');
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
-      Authorization: `Bearer ${authToken}`
+      Authorization: `Bearer ${authToken}`,
     });
 
     return this.http
-      .get<TransactionType[]>(`${this.transactionEndpoint}/transactionTypes`, { headers })
+      .get<
+        Transaction[]
+      >(`${this.transactionEndpoint}/user/expences`, { headers })
+      .pipe(
+        catchError((error) => {
+          console.error('Error in transaction expences request: ', error);
+          return throwError(error);
+        }),
+      );
+  }
+
+  getTransactionTypes(): Observable<TransactionType[]> {
+    const authToken = this.cookieService.get('authToken');
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${authToken}`,
+    });
+
+    return this.http
+      .get<
+        TransactionType[]
+      >(`${this.transactionEndpoint}/transactionTypes`, { headers })
       .pipe(
         catchError((error) => {
           console.error('Error in transaction type request:', error);
           return throwError(error);
-        })
+        }),
       );
   }
 
@@ -41,7 +62,7 @@ export class TransactionService {
     const authToken = this.cookieService.get('authToken');
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
-      Authorization: `Bearer ${authToken}`
+      Authorization: `Bearer ${authToken}`,
     });
 
     return this.http
@@ -50,7 +71,7 @@ export class TransactionService {
         catchError((error) => {
           console.error('Error in transaction limit type request:', error);
           return throwError(error);
-        })
+        }),
       );
   }
 
@@ -58,7 +79,7 @@ export class TransactionService {
     const authToken = this.cookieService.get('authToken');
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
-      Authorization: `${authToken}`
+      Authorization: `${authToken}`,
     });
 
     return this.http
@@ -67,13 +88,13 @@ export class TransactionService {
         catchError((error) => {
           console.error('Error in transaction create request:', error);
           return throwError(error);
-        })
+        }),
       );
   }
 
   saveTransactions(transactions: Transaction[]): Observable<Transaction[]> {
     const requests: Observable<Transaction>[] = [];
-    transactions.forEach(transaction => {
+    transactions.forEach((transaction) => {
       if (transaction.id) {
         requests.push(this.updateTransaction(transaction, transaction.id));
       } else {
@@ -83,20 +104,25 @@ export class TransactionService {
     return forkJoin(requests);
   }
 
-  updateTransaction(transaction: Transaction, id?: number): Observable<Transaction> {
+  updateTransaction(
+    transaction: Transaction,
+    id?: number,
+  ): Observable<Transaction> {
     const authToken = this.cookieService.get('authToken');
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
-      Authorization: `${authToken}`
+      Authorization: `${authToken}`,
     });
 
     return this.http
-      .put<Transaction>(`${this.transactionEndpoint}/${id}`, transaction, { headers })
+      .put<Transaction>(`${this.transactionEndpoint}/${id}`, transaction, {
+        headers,
+      })
       .pipe(
         catchError((error) => {
           console.error('Error in transaction update request:', error);
           return throwError(error);
-        })
+        }),
       );
   }
 
@@ -104,19 +130,22 @@ export class TransactionService {
     const authToken = this.cookieService.get('authToken');
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
-      Authorization: `${authToken}`
+      Authorization: `${authToken}`,
     });
 
     return this.http
       .get<Transaction[]>(`${this.transactionEndpoint}/user/`, { headers })
       .pipe(
         map((transactions: Transaction[]) => {
-          return transactions.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+          return transactions.sort(
+            (a, b) =>
+              new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
+          );
         }),
         catchError((error) => {
           console.error('Error in transaction overview request:', error);
           return throwError(error);
-        })
+        }),
       );
   }
 
@@ -141,17 +170,19 @@ export class TransactionService {
     const authToken = this.cookieService.get('authToken');
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
-      Authorization: `${authToken}`
+      Authorization: `${authToken}`,
     });
 
-    return this.http.get<Transaction>(`${this.transactionEndpoint}/${id}`, { headers });
+    return this.http.get<Transaction>(`${this.transactionEndpoint}/${id}`, {
+      headers,
+    });
   }
 
   deleteTransactionById(id?: number): Observable<any> {
     const authToken = this.cookieService.get('authToken');
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
-      Authorization: `${authToken}`
+      Authorization: `${authToken}`,
     });
 
     return this.http.delete(`${this.transactionEndpoint}/${id}`, { headers });
@@ -160,18 +191,20 @@ export class TransactionService {
   uploadPDF(pdfFile: File): Observable<Transaction[]> {
     const authToken = this.cookieService.get('authToken');
     const headers = new HttpHeaders({
-      Authorization: `${authToken}`
+      Authorization: `${authToken}`,
     });
 
     const formData = new FormData();
     formData.append('pdfFile', pdfFile);
 
-    return this.http.post<any>(`${this.uploadEndpoint}/pdf`, formData, { headers }).pipe(
-      catchError((error) => {
-        console.error('Error uploading file:', error);
-        return throwError(error);
-      })
-    );
+    return this.http
+      .post<any>(`${this.uploadEndpoint}/pdf`, formData, { headers })
+      .pipe(
+        catchError((error) => {
+          console.error('Error uploading file:', error);
+          return throwError(error);
+        }),
+      );
   }
 
   mapTransactionFromBackend(transaction: any): Transaction {
@@ -188,8 +221,7 @@ export class TransactionService {
       createdAt: formattedCreatedAt,
       regular: transaction.regular,
       categoryId: transaction.categoryId,
-      typeId: transaction.typeId
+      typeId: transaction.typeId,
     };
   }
-
 }

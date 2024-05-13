@@ -7,7 +7,7 @@ import { UserData } from '../interfaces/userdata.interface';
 export class UserService {
   private readonly USER_DATA_KEY = 'user_data';
 
-  constructor() { }
+  constructor() {}
 
   setUserData(userData: UserData): void {
     localStorage.setItem(this.USER_DATA_KEY, JSON.stringify(userData));

@@ -62,7 +62,6 @@ $border-color: #ddd;
   }
 }
 
-
 // Error snackbar
 .error-snackbar {
   background-color: red;
@@ -108,7 +107,8 @@ $border-color: #ddd;
       min-width: 200px;
 
       // Adjust input and select styles
-      input.mat-input, mat-select {
+      input.mat-input,
+      mat-select {
         width: 100%;
       }
     }
@@ -127,7 +127,7 @@ $border-color: #ddd;
     .transaction-table-container {
       position: relative;
     }
-    
+
     .transaction-quantity {
       position: absolute;
       top: 0;
@@ -183,7 +183,6 @@ $border-color: #ddd;
     }
   }
 }
-
 
 // Button styles
 .mat-icon-button {

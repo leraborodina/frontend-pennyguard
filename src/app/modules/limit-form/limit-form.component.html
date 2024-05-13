@@ -5,11 +5,20 @@
     <input [(ngModel)]="limit.amount" type="number" id="amount" name="amount" />
 
     <label for="salaryDay">Выберите день зарплаты:</label>
-    <input [(ngModel)]="limit.salaryDay" type="number" id="salaryDay" name="salaryDay" min="1" max="31" />
+    <input
+      [(ngModel)]="limit.salaryDay"
+      type="number"
+      id="salaryDay"
+      name="salaryDay"
+      min="1"
+      max="31"
+    />
 
     <label for="category">Выберите категорию:</label>
     <select [(ngModel)]="limit.categoryId" name="selectedCategory">
-      <option *ngFor="let category of categories" [value]="category.id">{{ category.name }}</option>
+      <option *ngFor="let category of categories" [value]="category.id">
+        {{ category.name }}
+      </option>
     </select>
 
     <button type="submit">Сохранить</button>

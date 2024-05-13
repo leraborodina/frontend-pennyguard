@@ -8,8 +8,23 @@
   left: 15px;
   right: 15px;
   bottom: 15px;
+  background-color: #eeefee;
+  border-radius: 15px;
 }
 
-.dashboard-card-content {
+table {
+  width: 100%;
+}
+
+th,
+td {
   text-align: left;
+  padding: 10px;
+}
+
+@media screen and (max-width: 800px) {
+  .grid-container {
+    flex-direction: column;
+    min-width: 330px;
+  }
 }
