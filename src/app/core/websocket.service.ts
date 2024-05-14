@@ -15,7 +15,7 @@ export class WebSocketService {
     const socket = new SockJS('http://localhost:8080/ws');
     this.stompClient = Stomp.over(socket);
     this.stompClient.connect({}, () => {
-      this.stompClient.subscribe('/topic/messages', (message: any) => {
+      this.stompClient.subscribe('/notifications', (message: any) => {
         this.messagesSubject.next(message.body);
       });
     });

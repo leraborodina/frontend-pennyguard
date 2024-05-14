@@ -9,7 +9,7 @@ import { Category } from '../shared/models/category.model';
   providedIn: 'root',
 })
 export class CategoryService {
-  private readonly categoriesEndpoint = `${urls.baseUrl}/category`;
+  private readonly categoriesEndpoint = `${urls.baseUrl}/categories`;
 
   constructor(
     private http: HttpClient,
