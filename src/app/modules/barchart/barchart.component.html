@@ -1,3 +1,13 @@
+<!-- <div class="chart-container">
+  <canvas id="MyBarChart" class="chart">{{ barchart }}</canvas>
+</div> -->
+
+<div class="year-selector">
+  <button (click)="switchYear(displayedYear - 1)">Previous Year</button>
+  <span>{{ displayedYear }}</span>
+  <button (click)="switchYear(displayedYear + 1)">Next Year</button>
+</div>
+
 <div class="chart-container">
   <canvas id="MyBarChart" class="chart">{{ barchart }}</canvas>
 </div>

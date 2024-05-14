@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { UserData } from '../../shared/services/user.service';
 import { TransactionType } from '../../shared/models/transaction-type.model';
 import { Transaction } from '../../shared/models/transaction.model';
 import { TransactionService } from '../../services/transaction.service';
-import { CookieService } from 'ngx-cookie-service';
 import Chart from 'chart.js/auto';
+import { forkJoin, Observable } from 'rxjs';
+import { catchError } from 'rxjs/operators';
+import { UtilsService } from '../../shared/services/utils.service';
+import { is } from 'date-fns/locale';
 
 @Component({
   selector: 'app-barchart',
@@ -12,142 +14,135 @@ import Chart from 'chart.js/auto';
   styleUrls: ['./barchart.component.scss'],
 })
 export class BarchartComponent implements OnInit {
-  barchart: any;
-  userData: UserData | null = null;
+  barchart: Chart<"bar"> | undefined;
   transactionTypes: TransactionType[] = [];
   transactions: Transaction[] = [];
+  groupedTransactions: { [key: string]: { [key: string]: { income: number; expense: number } } } = {};
+  displayedYear: number = new Date().getFullYear();
+  isUpdate: boolean = false;
 
   constructor(
     private transactionService: TransactionService,
-    private cookieService: CookieService,
+    private utilsService: UtilsService,
   ) {}
 
   ngOnInit(): void {
-    this.getTransactionTypes();
-    this.getTransactions();
+    this.loadData();
   }
 
-  getTransactionTypes() {
-    this.transactionService.getTransactionTypes().subscribe(
-      (content: TransactionType[]) => {
-        this.transactionTypes = content;
-      },
-      (error) => {
-        console.error('Error fetching transaction types:', error);
-      },
-    );
+  loadData() {
+    forkJoin({
+      transactionTypes: this.getTransactionTypes(),
+      transactions: this.getTransactions()
+    }).pipe(
+      catchError(error => {
+        console.error('Error loading data:', error);
+        return [];
+      })
+    ).subscribe(({ transactionTypes, transactions }) => {
+      this.transactionTypes = transactionTypes;
+      this.transactions = transactions;
+      this.createChart();
+    });
   }
 
-  getTransactions() {
-    this.transactionService.getTransactionsByUserId().subscribe(
-      (transactions: Transaction[]) => {
-        this.transactions = transactions;
-        this.createChart();
-      },
-      (error) => {
-        console.error('Error fetching transactions:', error);
-      },
-    );
+  getTransactionTypes(): Observable<TransactionType[]> {
+    return this.transactionService.getTransactionTypes();
   }
 
-  groupTransactionsByYear() {
-    const currentYear = new Date().getFullYear();
-    const groupedTransactions: {
-      [key: string]: { [key: string]: { income: number; expense: number } };
-    } = {};
+  getTransactions(): Observable<Transaction[]> {
+    return this.transactionService.getTransactionsByUserId();
+  }
 
-    const incomeTypeIds = this.transactionTypes
-      .filter((type) => type.type === 'доходы')
-      .map((type) => type.id);
+  groupTransactionsByYear(transactionsForYear: Transaction[]) {
+    const groupedTransactions: { [key: string]: { [key: string]: { income: number; expense: number } } } = {};
 
-    this.transactions.forEach((transaction) => {
-      const date = new Date(parseInt(transaction.createdAt) * 1000);
-      const year = date.getFullYear().toString();
-      const monthName = this.getMonthName(date.getMonth());
+    const incomeTypeId = this.transactionTypes.filter((type) => type.type === 'доходы').map((type) => type.id);
 
-      if (year === currentYear.toString()) {
-        if (!groupedTransactions[year]) {
-          groupedTransactions[year] = {};
-        }
+    transactionsForYear.forEach((transaction) => {
+      const transactionsDate = new Date(parseInt(transaction.createdAt) * 1000);
+      const year = transactionsDate.getFullYear().toString();
 
-        if (!groupedTransactions[year][monthName]) {
-          groupedTransactions[year][monthName] = { income: 0, expense: 0 };
-        }
+      const monthName = this.getMonthName(transactionsDate.getMonth());
+      const isIncome = incomeTypeId.includes(transaction.typeId);
 
-        if (incomeTypeIds.includes(transaction.typeId)) {
-          groupedTransactions[year][monthName].income += transaction.amount;
-        } else {
-          groupedTransactions[year][monthName].expense += transaction.amount;
-        }
+      if (!groupedTransactions[year]) {
+        groupedTransactions[year] = {};
       }
+
+      if (!groupedTransactions[year][monthName]) {
+        groupedTransactions[year][monthName] = { income: 0, expense: 0 };
+      }
+
+      const monthData = groupedTransactions[year][monthName];
+      isIncome ? monthData.income += transaction.amount : monthData.expense += transaction.amount;
     });
     return groupedTransactions;
   }
 
   getMonthName(monthIndex: number) {
-    const monthNames = [
-      'Янв',
-      'Фев',
-      'Мар',
-      'Апр',
-      'Май',
-      'Июн',
-      'Июл',
-      'Авг',
-      'Сен',
-      'Окт',
-      'Ноя',
-      'Дек',
-    ];
-    return monthNames[monthIndex];
+    return this.utilsService.getMonthName(monthIndex);
   }
 
   createChart() {
-    const groupedTransactions = this.groupTransactionsByYear();
+    const groupedTransactions = this.isUpdate ? this.groupedTransactions : this.groupTransactionsByYear(this.transactions);
     const currentYear = new Date().getFullYear();
-    const months = [
-      'Янв',
-      'Фев',
-      'Мар',
-      'Апр',
-      'Май',
-      'Июн',
-      'Июл',
-      'Авг',
-      'Сен',
-      'Окт',
-      'Ноя',
-      'Дек',
-    ];
+    const months = this.utilsService.getMonthNames();
     const dataIncome: number[] = [];
     const dataExpense: number[] = [];
 
     months.forEach((month) => {
-      const transactionsForMonth =
-        groupedTransactions[currentYear.toString()][month];
-      dataIncome.push(transactionsForMonth?.income ?? 0);
-      dataExpense.push(transactionsForMonth?.expense ?? 0);
+      const monthData = groupedTransactions[currentYear.toString()][month];
+      dataIncome.push(monthData?.income ?? 0);
+      dataExpense.push(monthData?.expense ?? 0);
     });
+
+    if (this.barchart) {
+      if (this.barchart.data.datasets[0] && this.barchart.data.datasets[0].data) {
+        this.barchart.data.datasets[0].data = dataIncome;
+      }
+      if (this.barchart.data.datasets[1] && this.barchart.data.datasets[1].data) {
+        this.barchart.data.datasets[1].data = dataExpense;
+      }
+      this.barchart.update();
+      return;
+    }
 
     this.barchart = new Chart('MyBarChart', {
       type: 'bar',
       data: {
         labels: months,
         datasets: [
-          {
-            label: 'Доходы',
-            data: dataIncome,
-            backgroundColor: 'rgba(75, 192, 192, 0.2)',
-            borderColor: 'rgba(75, 192, 192, 1)',
-          },
-          {
-            label: 'Расходы',
-            data: dataExpense,
-            backgroundColor: 'rgba(255, 99, 132, 0.2)',
-            borderColor: 'rgba(255, 99, 132, 1)',
-          },
+          this.createDataSet('Доходы', dataIncome, 'rgba(75, 192, 192, 0.2)'),
+          this.createDataSet('Расходы', dataExpense, 'rgba(255, 99, 132, 0.2)')
         ],
       },
+    });
+  }
+
+  createDataSet(transactionType: string, totalAmounts: number[], backgroundColor: string){
+    return {
+      label: transactionType,
+      data: totalAmounts,
+      backgroundColor: backgroundColor
+    }
+  }
+
+  switchYear(year: number) {
+    this.displayedYear = year;
+    this.updateChart();
+  }
+  
+  updateChart() {
+    this.isUpdate = true;
+    this.getTransactions().subscribe((transactions: Transaction[]) => {
+      const transactionsForYear = transactions.filter(transaction => {
+        const transactionDate = new Date(parseInt(transaction.createdAt) * 1000);
+        return transactionDate.getFullYear() === this.displayedYear;
+      });
+
+      this.groupedTransactions = this.groupTransactionsByYear(transactionsForYear);
+      this.createChart();
     });
   }
 }
