@@ -1,0 +1,16 @@
+<div class="tiles-container">
+    <div class="tile" *ngFor="let card of cardData">
+        <div class="tile-content">
+            <div class="title">{{ card.title }}</div>
+            <div class="description">{{ card.description }}</div>
+            <div class="image-container">
+                <img class="image" [src]="card.imageUrl" [alt]="card.title" />
+            </div>
+            <div class="button-container">
+                <button (click)="navigate(card.buttonAction)">
+                    {{ card.buttonLabel }}
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

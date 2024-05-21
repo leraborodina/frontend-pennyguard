@@ -1,29 +1,23 @@
-<div class="transaction-container">
-  <div *ngIf="transactions.length > 0" class="last-trans">
-    <table class="responsive-table">
-      <tbody *ngFor="let transaction of transactions; let i = index">
-        <tr>
-          <td rowspan="2">{{ transaction.createdAt }}</td>
-          <td>{{ transaction.categoryId || "N/A" }}</td>
-          <td
-            rowspan="2"
-            [style.color]="getAmountColorByTransactionType(transaction.typeId)"
-          >
-            {{
-              getAmountWithSignAndColor(
-                transaction.amount,
-                transaction.typeId
-              ) || "N/A"
-            }}
-          </td>
-        </tr>
-        <tr>
-          <td>{{ transaction.purpose || "N/A" }}</td>
-        </tr>
-      </tbody>
-    </table>
+<!-- last-transactions.component.html -->
+
+<div class="card">
+  <div class="custom-card-header">
+    <h5>Последние транзакции</h5>
   </div>
-  <div *ngIf="transactions.length === 0" class="empty-list-message">
-    Нет транзакций.
+  <div class="card-body">
+    <div *ngIf="transactions.length === 0" class="no-transactions">
+      <p class="no-transactions-message">У вас еще нет транзакций.</p>
+      <button class="btn btn-create-transaction" (click)="navigateToCreateTransaction()">Создать транзакцию</button>
+    </div>
+    <div *ngIf="transactions.length > 0" class="transaction-list">
+      <div class="transaction" *ngFor="let transaction of transactions">
+        <p class="transaction-message">{{ transaction.purpose }}</p>
+        <p class="transaction-amount" [ngStyle]="{'color': getAmountColor(transaction)}">{{ transaction.amount | currency:'RUB ' }}</p>
+        <p class="transaction-date">{{ transaction.createdAt | date:'dd/MM/yyyy' }}</p>
+      </div>
+    </div>
+  </div>
+  <div class="card-footer">
+    <a class="btn btn-link" href="/transaction-overview" target="_blank">Транзакции</a>
   </div>
 </div>

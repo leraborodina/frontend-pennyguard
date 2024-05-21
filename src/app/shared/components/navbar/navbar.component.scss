@@ -1,0 +1,94 @@
+// Variables
+$navbar-bg-color: #e0e3e1;
+$navbar-padding: 5px; // Reduced padding
+$navbar-item-margin: 10px;
+
+// Mixin for media queries
+@mixin respond-to($breakpoint) {
+  @if $breakpoint ==small {
+    @media (min-width: 576px) {
+      @content;
+    }
+  }
+
+  @else if $breakpoint ==medium {
+    @media (min-width: 768px) {
+      @content;
+    }
+  }
+
+  @else if $breakpoint ==large {
+    @media (min-width: 992px) {
+      @content;
+    }
+  }
+
+  @else if $breakpoint ==xlarge {
+    @media (min-width: 1200px) {
+      @content;
+    }
+  }
+
+  @else if $breakpoint ==xxlarge {
+    @media (min-width: 1600px) {
+      @content;
+    }
+  }
+}
+
+.container {
+  padding: 5px;
+  margin: 5px;
+}
+
+.navbar {
+  margin: 0; // Remove any right margin
+  padding: 0; // Remove any right padding
+}
+
+.navbar-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 0 $navbar-padding;
+}
+
+.navbar-left-items {
+  display: flex;
+  align-items: center;
+}
+
+.navbar-right-items {
+  display: flex;
+  align-items: center;
+}
+
+.navbar-right-items>* {
+  margin-left: $navbar-item-margin;
+}
+
+.logout-item {
+  margin-left: auto; // Push "Выйти" to the far right
+  display: flex;
+  align-items: center;
+  margin-right: 0; // Remove any right margin
+  padding-right: 0; // Remove any right padding
+}
+
+@media (max-width: 600px) {
+  .navbar-right-items {
+    display: none;
+  }
+
+  .navbar-right-items.show-menu {
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: 56px;
+    left: 0;
+    right: 0;
+    background-color: rgb(126, 145, 205);
+    border-bottom: 1px solid #ccc;
+  }
+}

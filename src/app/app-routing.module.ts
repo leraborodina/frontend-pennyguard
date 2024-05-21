@@ -2,9 +2,9 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './modules/login/login/login.component';
 import { RegistrationComponent } from './modules/registration/registration/registration.component';
-import { AuthGuard } from './core/auth-guard';
+import { AuthGuard } from './core/guards/auth-guard';
 import { IncomesComponent } from './modules/incomes/incomes.component';
-import { TransactionComponent } from './modules/transaction/transaction.component';
+import { TransactionComponent } from './modules/transaction-form/transaction.component';
 import { TransactionOverviewComponent } from './modules/transaction-overview/transaction-overview.component';
 import { ExpensesComponent } from './modules/expenses/expenses.component';
 import { TransactionChartComponent } from './modules/transaction-chart/transaction-chart.component';
@@ -16,6 +16,7 @@ import { LimitOverviewComponent } from './modules/limit-overview/limit-overview.
 import { NotificationsOverviewComponent } from './modules/notifications-overview/notifications-overview.component';
 import { FinancialGoalFormComponent } from './modules/financial-goal-form/financial-goal-form.component';
 import { NotificationsComponent } from './modules/notifications/notifications.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -53,13 +54,13 @@ const routes: Routes = [
     canActivate: [AuthGuard],
   },
   {
-    path: 'notifications-overview',
-    component: NotificationsOverviewComponent,
+    path: 'financial-goal-form',
+    component: FinancialGoalFormComponent,
     canActivate: [AuthGuard],
   },
   {
-    path: 'financial-goal-form',
-    component: FinancialGoalFormComponent,
+    path: 'notifications-overview',
+    component: NotificationsOverviewComponent,
     canActivate: [AuthGuard],
   },
   {
@@ -73,7 +74,6 @@ const routes: Routes = [
     component: LimitOverviewComponent,
     canActivate: [AuthGuard],
   },
-  { path: 'startpage', component: StartpageComponent },
   // Redirect to login if the path is empty
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   // Handle unknown paths (e.g., show a 404 page)
@@ -81,7 +81,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes), ReactiveFormsModule],
   exports: [RouterModule],
 })
 export class AppRoutingModule { }

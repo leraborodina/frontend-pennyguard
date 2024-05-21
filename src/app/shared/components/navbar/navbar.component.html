@@ -1,0 +1,58 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container navbar-container">
+    <div class="navbar-left-items">
+      <a class="navbar-brand" href="startpage">PennyGuard</a>
+    </div>
+    <button class="navbar-toggler" type="button" (click)="toggleNavbar()">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" [ngClass]="{ 'show': !isNavbarCollapsed }">
+      <ul class="navbar-nav navbar-right-items">
+        <li class="nav-item" *ngIf="isLoggedIn(); else notLoggedInMenu">
+          <a class="nav-link" routerLink="/dashboard">Dashboard</a>
+        </li>
+        <ng-template #notLoggedInMenu>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/startpage">Главная</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/login">Войти</a>
+          </li>
+        </ng-template>
+        <li class="nav-item dropdown" *ngIf="isLoggedIn()">
+          <a class="nav-link dropdown-toggle" role="button" aria-haspopup="true" aria-expanded="false"
+            (click)="toggleDropdownMenu('transactions')">
+            Транзакции
+          </a>
+          <div class="dropdown-menu" [ngClass]="{ 'show': isDropdownMenuOpen['transactions'] }">
+            <a class="dropdown-item" routerLink="/transaction">Создать</a>
+            <a class="dropdown-item" routerLink="/upload">Загрузить из банка</a>
+            <a class="dropdown-item" routerLink="/transaction-overview">Транзакции</a>
+            <a class="dropdown-item" routerLink="/transaction-chart">Анализ</a>
+          </div>
+        </li>
+        <li class="nav-item dropdown" *ngIf="isLoggedIn()">
+          <a class="nav-link dropdown-toggle" role="button" aria-haspopup="true" aria-expanded="false"
+            (click)="toggleDropdownMenu('limits')">
+            Лимиты
+          </a>
+          <div class="dropdown-menu" [ngClass]="{ 'show': isDropdownMenuOpen['limits'] }">
+            <a class="dropdown-item" routerLink="/limit-form">Создать</a>
+            <a class="dropdown-item" routerLink="/limit-overview">Лимиты</a>
+          </div>
+        </li>
+        <li class="nav-item" *ngIf="isLoggedIn()">
+          <a class="nav-link" routerLink="/notifications-overview">Напоминания</a>
+        </li>
+        <li class="nav-item" *ngIf="isLoggedIn()">
+          <a class="nav-link" routerLink="/financial-goal-form">Цели</a>
+        </li>
+      </ul>
+      <ul class="navbar-nav ml-auto logout-item" *ngIf="isLoggedIn()">
+        <li class="nav-item">
+          <a class="nav-link" (click)="logout()">Выйти</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>

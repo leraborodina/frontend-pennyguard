@@ -6,12 +6,13 @@ import {
   OnInit,
   ViewChild,
 } from '@angular/core';
-import { TransactionService } from '../../services/transaction.service';
-import { CategoryService } from '../../services/category.service';
-import { Category } from '../../shared/models/category.model';
-import { Transaction } from '../../shared/models/transaction.model';
+
+import { CategoryService } from '../../core/services/category.service';
+import { Category } from '../../shared/interfaces/category.interface';
+import { Transaction } from '../../shared/interfaces/transaction.interface';
 import Chart from 'chart.js/auto';
-import { lastValueFrom } from 'rxjs';
+import { forkJoin, lastValueFrom, map } from 'rxjs';
+import { TransactionService } from '../../core/services/transaction.service';
 
 @Component({
   selector: 'app-chart',
@@ -33,7 +34,7 @@ export class ChartComponent implements OnInit, OnDestroy {
     private transactionService: TransactionService,
     private categoryService: CategoryService,
     private changeDetector: ChangeDetectorRef,
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     const currentDate = new Date();
@@ -57,25 +58,35 @@ export class ChartComponent implements OnInit, OnDestroy {
     }
   }
 
+
   async fetchData(): Promise<void> {
-    this.categories = await lastValueFrom(this.categoryService.getCategories());
-    this.transactions = await lastValueFrom(
-      this.transactionService.getUserExpences(),
+    const [categories, transactions] = await lastValueFrom(
+      forkJoin({
+        categories: this.categoryService.getCategories(),
+        transactions: this.transactionService.getUserExpences(),
+      }).pipe(
+        map(({ categories, transactions }) => [categories, transactions])
+      )
     );
 
-    this.transactions.sort((t1, t2) => {
-      return parseInt(t1.createdAt) - parseInt(t2.createdAt);
-    });
+    this.categories = categories;
 
-    this.minTransactionDate = new Date(
-      parseInt(this.transactions[0].createdAt) * 1000,
-    );
+    this.transactions = transactions;
+
+    // Finding the minimum date
+    const minDate = this.transactions.reduce((min, transaction) => {
+      return transaction.createdAt < min ? transaction.createdAt : min;
+    }, this.transactions[0]?.createdAt);
+
+    // Convert minDate to Date object if it's a string
+    this.minTransactionDate = new Date(minDate);
   }
 
-  isTransactionFromCurrentMonthAndYear(createdAt: string): boolean {
-    const transactionDate = new Date(parseInt(createdAt) * 1000);
-    const transactionMonth = transactionDate.getMonth() + 1;
-    const transactionYear = transactionDate.getFullYear();
+
+  isTransactionFromCurrentMonthAndYear(createdAt: Date): boolean {
+    const transactionMonth = createdAt.getMonth() + 1;
+    const transactionYear = createdAt.getFullYear();
+
     return (
       transactionMonth === this.displayedChartMonth &&
       transactionYear === this.displayedChartYear
@@ -84,61 +95,62 @@ export class ChartComponent implements OnInit, OnDestroy {
 
   createChart(): void {
     if (this.chart) {
-        this.chart.destroy();
+      this.chart.destroy();
     }
 
     const filteredCategories: string[] = [];
     const totalAmountsByCategory: number[] = [];
 
     this.categories.forEach(category => {
-        const filteredTransactions = this.transactions.filter(transaction =>
-            category.id === transaction.categoryId && this.isTransactionFromCurrentMonthAndYear(transaction.createdAt)
-        );
+      const filteredTransactions = this.transactions.filter(transaction =>
+        category.id === transaction.categoryId &&
+        this.isTransactionFromCurrentMonthAndYear(new Date(transaction.createdAt))
+      );
 
-        if (filteredTransactions.length > 0) {
-            const totalAmount = filteredTransactions.reduce((total, transaction) => total + transaction.amount, 0);
-            filteredCategories.push(category.name);
-            totalAmountsByCategory.push(totalAmount);
-        }
+      if (filteredTransactions.length > 0) {
+        const totalAmount = filteredTransactions.reduce((total, transaction) => total + transaction.amount, 0);
+        filteredCategories.push(category.name);
+        totalAmountsByCategory.push(totalAmount);
+      }
     });
 
     if (totalAmountsByCategory.length === 0) {
-        this.showNoTransactionsMessage = true;
-        return;
+      this.showNoTransactionsMessage = true;
+      return;
     } else {
-        this.showNoTransactionsMessage = false;
+      this.showNoTransactionsMessage = false;
     }
 
     this.changeDetector.detectChanges();
 
     const backgroundColors: string[] = [
-        '#B0BEA9',
-        '#91ACCA',
-        '#D2BBA0',
-        '#9F7E69',
-        '#F2EFC7',
-        '#B8B8FF',
-        '#8D98A7',
-        '#D0B6E2',
-        '#FFD700',
-        '#8A2BE2',
+      '#B0BEA9',
+      '#91ACCA',
+      '#D2BBA0',
+      '#9F7E69',
+      '#F2EFC7',
+      '#B8B8FF',
+      '#8D98A7',
+      '#D0B6E2',
+      '#FFD700',
+      '#8A2BE2',
     ];
 
     const ctx = this.chartCanvas.nativeElement.getContext('2d');
     this.chart = new Chart(ctx, {
-        type: 'doughnut',
-        data: {
-            labels: filteredCategories,
-            datasets: [{
-                data: totalAmountsByCategory,
-                backgroundColor: backgroundColors.slice(0, totalAmountsByCategory.length),
-            }],
-        },
-        options: {
-            aspectRatio: 1.2,
-        },
+      type: 'doughnut',
+      data: {
+        labels: filteredCategories,
+        datasets: [{
+          data: totalAmountsByCategory,
+          backgroundColor: backgroundColors.slice(0, totalAmountsByCategory.length),
+        }],
+      },
+      options: {
+        aspectRatio: 1.2,
+      },
     });
-}
+  }
 
   getMonthName(month: number): string {
     const months = [
@@ -161,7 +173,7 @@ export class ChartComponent implements OnInit, OnDestroy {
   async previousMonth(): Promise<void> {
     this.displayedChartMonth = this.displayedChartMonth === 1 ? 12 : this.displayedChartMonth - 1;
     this.displayedChartYear = this.displayedChartMonth === 1 ? this.displayedChartYear - 1 : this.displayedChartYear;
-    this.showChartOrMessage();  
+    this.showChartOrMessage();
   }
 
   async nextMonth(): Promise<void> {
@@ -170,7 +182,7 @@ export class ChartComponent implements OnInit, OnDestroy {
     this.showChartOrMessage();
   }
 
-  private async showChartOrMessage(){
+  private async showChartOrMessage() {
     await this.fetchData();
 
     if (this.areTransactionsAvailable(this.displayedChartMonth, this.displayedChartYear)) {
@@ -182,13 +194,14 @@ export class ChartComponent implements OnInit, OnDestroy {
 
   private areTransactionsAvailable(month: number, year: number): boolean {
     return this.transactions.some((transaction) => {
-      const transactionDate = new Date(parseInt(transaction.createdAt) * 1000);
+      const transactionDate = new Date(transaction.createdAt);
       return (
         transactionDate.getMonth() + 1 === month &&
         transactionDate.getFullYear() === year
       );
     });
   }
+
 
   isNextDisabled(): boolean {
     const currentDate = new Date();

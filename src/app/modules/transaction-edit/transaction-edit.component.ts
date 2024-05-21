@@ -2,9 +2,10 @@ import { Component, Inject, ViewChild } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
-import { TransactionService } from '../../services/transaction.service';
+ 
 import { Router } from '@angular/router';
-import { Transaction } from '../../shared/models/transaction.model';
+import { Transaction } from '../../shared/interfaces/transaction.interface';
+import { TransactionService } from '../../core/services/transaction.service';
 
 @Component({
   selector: 'app-transaction-edit',

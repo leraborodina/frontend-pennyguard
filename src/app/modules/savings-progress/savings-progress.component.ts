@@ -1,8 +1,9 @@
 import { Component, Input } from '@angular/core';
-import { FinancialGoalService } from '../../services/financial-goal.service';
-import { TransactionService } from '../../services/transaction.service';
+ 
 import { FinancialGoal } from '../../shared/interfaces/financial-goal.interface';
-import { Transaction } from '../../shared/models/transaction.model';
+import { FinancialGoalService } from '../../core/services/financial-goal.service';
+import { TransactionService } from '../../core/services/transaction.service';
+ 
 
 @Component({
   selector: 'savings-progress',

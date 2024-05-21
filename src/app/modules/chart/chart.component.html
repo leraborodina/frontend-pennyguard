@@ -1,27 +1,25 @@
-<span>{{ getMonthName(displayedChartMonth) }}, {{ displayedChartYear }}</span>
-<div class="chart-container">
-  <div
-    class="arrow-left"
-    (click)="previousMonth()"
-    [ngClass]="{ disabled: isPreviousDisabled() }"
-  >
-    <mat-icon>arrow_back_ios</mat-icon>
+<div class="custom-card">
+  <div class="custom-card-header">
+    <h5>Анализ</h5>
   </div>
-  <div class="chart-wrapper">
-    <canvas
-      *ngIf="!showNoTransactionsMessage"
-      #chartCanvas
-      class="chart"
-    ></canvas>
-    <div *ngIf="showNoTransactionsMessage" class="no-transactions-message">
-      В этом месяце нет трат.
+  <div class="custom-card-body">
+    <span>{{ getMonthName(displayedChartMonth) }}, {{ displayedChartYear }}</span>
+    <div class="chart-container">
+      <div class="arrow-left" (click)="previousMonth()" [class.disabled]="isPreviousDisabled()">
+        <i class="bi bi-arrow-left"></i>
+      </div>
+      <div class="chart-wrapper">
+        <canvas *ngIf="!showNoTransactionsMessage" #chartCanvas class="chart"></canvas>
+        <div *ngIf="showNoTransactionsMessage" class="no-transactions-message">
+          В этом месяце нет трат.
+        </div>
+      </div>
+      <div class="arrow-right" (click)="nextMonth()" [class.disabled]="isNextDisabled()">
+        <i class="bi bi-arrow-right"></i>
+      </div>
     </div>
   </div>
-  <div
-    class="arrow-right"
-    (click)="nextMonth()"
-    [ngClass]="{ disabled: isNextDisabled() }"
-  >
-    <mat-icon>arrow_forward_ios</mat-icon>
+  <div class="card-footer">
+    <a class="btn btn-link" href="/transaction-chart" target="_blank">Статистика</a>
   </div>
 </div>

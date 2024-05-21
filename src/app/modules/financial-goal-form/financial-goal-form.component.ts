@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FinancialGoal } from '../../shared/interfaces/financial-goal.interface';
-import { FinancialGoalService } from '../../services/financial-goal.service';
+import { FinancialGoalService } from '../../core/services/financial-goal.service';
 
 
 @Component({

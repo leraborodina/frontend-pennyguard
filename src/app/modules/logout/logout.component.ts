@@ -1,7 +1,7 @@
 // app.component.ts
 
 import { Component } from '@angular/core';
-import { AuthService } from '../../core/auth.service';
+import { AuthService } from '../../core/guards/auth.service';
 
 @Component({
   selector: 'app-logout',
@@ -9,7 +9,7 @@ import { AuthService } from '../../core/auth.service';
   styleUrls: ['./logout.component.scss'],
 })
 export class LogoutComponent {
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService) { }
 
   /**
    * Checks if the user is authenticated.

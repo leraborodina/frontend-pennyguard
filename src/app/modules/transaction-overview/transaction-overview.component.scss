@@ -1,212 +1,106 @@
-// Define common variables
-$padding: 10px;
-$font-size: 14px;
-$border-color: #ddd;
-
-// Table styles
-.table {
-  width: 100%;
+.filter-wrapper {
+  padding: 20px;
+  background-color: #f8f9fa;
+  /* Hintergrundfarbe des Containers */
+  border-radius: 10px;
+  /* Abgerundete Ecken für den Container */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  /* Schatten hinzufügen */
   margin-bottom: 20px;
-
-  thead th {
-    font-weight: bold;
-    text-align: center; // Align text horizontally in the center
-    border: none;
-    padding: $padding;
-    background: #ededed;
-    font-size: $font-size;
-    border-top: 1px solid $border-color;
-    vertical-align: middle; // Align text vertically in the middle
-
-    &:first-child {
-      border-radius: 20px 0 0 0;
-      border-left: 1px solid $border-color;
-    }
-
-    &:last-child {
-      border-radius: 0 20px 0 0;
-      border-right: 1px solid $border-color;
-    }
-  }
-
-  tbody td {
-    text-align: left;
-    border: none;
-    padding: $padding;
-    font-size: $font-size;
-    vertical-align: middle;
-
-    &:first-child {
-      border-left: 1px solid $border-color;
-    }
-
-    &:last-child {
-      border-right: 1px solid $border-color;
-    }
-  }
-
-  tbody tr:nth-child(even) {
-    background: #f8f8f8;
-  }
-
-  tbody tr:last-child td {
-    border-bottom: 1px solid $border-color;
-
-    &:first-child {
-      border-radius: 0 0 0 20px;
-    }
-
-    &:last-child {
-      border-radius: 0 0 20px 0;
-    }
-  }
+  /* Platz unterhalb des Containers */
 }
 
-// Error snackbar
-.error-snackbar {
-  background-color: red;
-  color: white;
-}
-
-// Info snackbar
-.info-snackbar {
-  background-color: rgb(94, 255, 0);
-  color: white;
-}
-
-// Mat table
-.mat-table-responsive {
-  overflow-x: auto;
-  max-width: 100%;
-}
-
-.mat-table {
-  width: 100%;
-}
-
-.mat-table th,
-.mat-table td {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-// Container styles
-.container {
-  margin: 20px;
-
-  // Filter container styles
-  .filter-container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    justify-content: space-between; // Align items evenly
-
-    .filter-field {
-      flex: 1;
-      min-width: 200px;
-
-      // Adjust input and select styles
-      input.mat-input,
-      mat-select {
-        width: 100%;
-      }
-    }
-  }
-
-  // Transaction container styles
-  .transaction-container {
-    margin-top: 20px; // Add margin to separate filter and transactions
-
-    .transaction-label {
-      font-size: 24px;
-      margin-bottom: 5px; /* Adjust as needed */
-      margin-left: 10px;
-    }
-
-    .transaction-table-container {
-      position: relative;
-    }
-
-    .transaction-quantity {
-      position: absolute;
-      top: 0;
-      right: 0;
-      margin-top: 20px; /* Adjust as needed */
-      margin-right: 20px; /* Adjust as needed */
-    }
-
-    .transaction-list {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-
-      .transaction-item {
-        display: flex;
-        align-items: center;
-        border: 1px solid #ccc;
-        padding: 10px;
-        border-radius: 5px;
-
-        .transaction-date {
-          flex: 2;
-          font-weight: bold;
-        }
-
-        .transaction-details {
-          flex: 3;
-          display: flex;
-          flex-direction: column;
-          gap: 5px;
-
-          .transaction-category {
-            font-weight: bold;
-          }
-
-          .transaction-comment {
-            color: #666;
-          }
-        }
-
-        .transaction-amount {
-          flex: 3;
-        }
-
-        .transaction-counter {
-          font-weight: bold;
-        }
-
-        .transaction-space {
-          width: 20px;
-        }
-      }
-    }
-  }
-}
-
-// Button styles
-.mat-icon-button {
-  margin: 0 5px;
-  padding: 5px;
-  min-width: 0;
-}
-
-.mat-icon {
-  font-size: 20px;
-}
-
-.action-buttons {
+.filter-container {
   display: flex;
-  justify-content: space-around;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
 
-  button {
-    visibility: visible;
+.filter-field {
+  flex-basis: calc(20% - 10px);
+  margin-bottom: 20px;
+  padding: 15px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.filter-field:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+@media (max-width: 768px) {
+  .filter-field {
+    flex-basis: calc(50% - 10px);
   }
+}
+
+@media (max-width: 576px) {
+  .filter-field {
+    flex-basis: 100%;
+  }
+}
+
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.transaction-container {
+  margin-top: 20px;
+}
+
+.card {
+  border: 1px solid rgba(0, 0, 0, 0.125);
+  border-radius: 0.25rem;
+}
+
+.card-header {
+  background-color: #f8f9fa;
+  padding: 0.75rem 1.25rem;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+}
+
+.card-body {
+  padding: 1.25rem;
+}
+
+.transaction-quantity {
+  margin-bottom: 10px;
 }
 
 .empty-list-message {
-  display: flex;
-  justify-content: center; /* Center horizontally */
-  align-items: center; /* Center vertically */
-  height: 100%; /* Make the div fill the entire height of the card content */
+  text-align: center;
+  margin-top: 20px;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table th,
+.table td {
+  padding: 0.75rem;
+  vertical-align: top;
+  border-top: 1px solid rgba(0, 0, 0, 0.125);
+}
+
+.table th {
+  vertical-align: bottom;
+  border-bottom: 2px solid rgba(0, 0, 0, 0.125);
+  text-align: left;
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.action-buttons button {
+  margin-right: 5px;
 }

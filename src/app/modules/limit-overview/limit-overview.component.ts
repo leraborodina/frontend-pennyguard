@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Limit } from '../../shared/models/limit.model';
+import { Limit } from '../../shared/interfaces/limit.interface';
 import { UserData } from '../../shared/services/user.service';
 import { Subscription } from 'rxjs';
 
@@ -15,5 +15,5 @@ export class LimitOverviewComponent implements OnInit {
   subscription: Subscription | undefined;
   errorMessage: string = '';
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 }

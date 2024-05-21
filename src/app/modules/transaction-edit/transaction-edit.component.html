@@ -12,7 +12,7 @@
         }"
       >
         <ng-container *ngIf="!transaction.editing; else editMode">
-          {{ transaction.date | date }}
+          {{ transaction.date }}
         </ng-container>
         <ng-template #editMode>
           <div class="edit-container">

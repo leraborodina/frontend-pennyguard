@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
-import { TransactionService } from '../../services/transaction.service';
+
 import { Router } from '@angular/router';
 import { TransactionEditComponent } from '../transaction-edit/transaction-edit.component';
 import { MatDialog } from '@angular/material/dialog';
-import { Transaction } from '../../shared/models/transaction.model';
+import { Transaction } from '../../shared/interfaces/transaction.interface';
+import { TransactionService } from '../../core/services/transaction.service';
 
 @Component({
   selector: 'app-upload-pdf',
@@ -17,7 +18,7 @@ export class UploadPdfComponent {
     private router: Router,
     private transactionService: TransactionService,
     private dialog: MatDialog,
-  ) {}
+  ) { }
 
   onDrop(event: DragEvent) {
     event.preventDefault();

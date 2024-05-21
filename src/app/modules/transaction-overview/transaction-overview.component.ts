@@ -1,211 +1,230 @@
-import { Component, OnInit } from '@angular/core';
-import { Transaction } from '../../shared/models/transaction.model';
-import { TransactionService } from '../../services/transaction.service';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { AuthService } from '../../core/auth.service';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Transaction } from '../../shared/interfaces/transaction.interface';
+import { AuthService } from '../../core/guards/auth.service';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { FormControl, Validators } from '@angular/forms';
-import { MatTableDataSource } from '@angular/material/table';
-import { Category } from '../../shared/models/category.model';
-import { UserData, UserService } from '../../shared/services/user.service';
-import { TransactionType } from '../../shared/models/transaction-type.model';
-import { CategoryService } from '../../services/category.service';
+import { Category } from '../../shared/interfaces/category.interface';
+import { TransactionType } from '../../shared/interfaces/transaction-type.interface';
+import { TransactionService } from '../../core/services/transaction.service';
+import { UtilsService } from '../../shared/services/utils.service';
+import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 
 @Component({
   selector: 'app-transaction-overview',
   templateUrl: './transaction-overview.component.html',
   styleUrls: ['./transaction-overview.component.scss'],
 })
-export class TransactionOverviewComponent implements OnInit {
+export class TransactionOverviewComponent implements OnInit, OnDestroy {
   transactions: Transaction[] = [];
   filteredTransactions: Transaction[] = [];
-  userData: UserData | null = null;
-  subscription: Subscription | undefined;
+  subscription: Subscription = new Subscription();
   errorMessage: string = '';
+  today: Date = new Date();
+  minAmount: number = 0;
+  maxAmount: number = 0;
 
-  // Form controls for filtering
-  searchControl = new FormControl('');
+  searchControl = new FormControl();
   categoriesControl = new FormControl();
   transactionTypeControl = new FormControl();
-  minAmountControl = new FormControl(Validators.min(0));
-  maxAmountControl = new FormControl();
+  minAmountControl = new FormControl(null, Validators.min(0));
+  maxAmountControl = new FormControl(null, Validators.min(0));
   minDateControl = new FormControl();
   maxDateControl = new FormControl();
 
-  displayedColumns: string[] = [
-    'date',
-    'description',
-    'category',
-    'amount',
-    'actions',
-  ];
-  dataSource = new MatTableDataSource<Transaction>();
   categories: Category[] = [];
   transactionTypes: TransactionType[] = [];
 
+  selectedCategory: number | null = null;
+  selectedTransactionType: number | null = null;
+  selectedMinAmount: number | null = null;
+  selectedMaxAmount: number | null = null;
+  selectedMinDate: Date | null = null;
+  selectedMaxDate: Date | null = null;
+  selectedQuery: string = '';
+
   constructor(
     private transactionService: TransactionService,
-    private categoryService: CategoryService,
     private authService: AuthService,
     private router: Router,
-    private snackBar: MatSnackBar,
-    private userService: UserService,
-  ) {}
+    private utilsService: UtilsService,
+  ) { }
 
   ngOnInit(): void {
-    this.userData = this.userService.getUserData();
-    this.getCategories();
-    this.getTransactionTypes();
+    this.loadCategories();
+    this.loadTransactionTypes();
     this.verifyTokenAndFetchTransactions();
+
+    this.subscribeToFilterChanges();
   }
 
-  getCategories(): void {
-    this.categoryService.getCategories().subscribe(
-      (content: Category[]) => {
-        this.categories = content;
-      },
-      (error) => {
-        this.handleError('Error fetching categories:', error);
-      },
-    );
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 
-  getTransactionTypes(): void {
-    this.transactionService.getTransactionTypes().subscribe(
-      (content: TransactionType[]) => {
-        this.transactionTypes = content;
+  loadCategories(): void {
+    this.subscription.add(this.utilsService.getCategories().subscribe(
+      (categories: Category[]) => {
+        this.categories = categories;
       },
-      (error) => {
-        this.handleError('Error fetching transaction types:', error);
+      (error) => this.handleError('Error fetching categories:', error),
+    ));
+  }
+
+  loadTransactionTypes(): void {
+    this.subscription.add(this.utilsService.getTransactionTypes().subscribe(
+      (transactionTypes: TransactionType[]) => {
+        this.transactionTypes = transactionTypes;
       },
-    );
+      (error) => this.handleError('Error fetching transaction types:', error),
+    ));
   }
 
   verifyTokenAndFetchTransactions(): void {
     if (this.authService.checkTokenExpiration()) {
-      this.getTransactions();
+      this.fetchTransactions();
     } else {
       this.router.navigate(['/login']);
     }
   }
 
-  getTransactions(): void {
-    this.subscription = this.transactionService
-      .getTransactionsByUserId()
-      .subscribe({
-        next: (userTransactions: Transaction[]) => {
-          this.transactions = userTransactions.map((transaction) =>
-            this.transactionService.mapTransactionFromBackend(transaction),
-          );
+  fetchTransactions(): void {
+    this.subscription.add(this.transactionService.getTransactionsByUserId().subscribe(
+      (userTransactions: Transaction[]) => {
+        this.transactions = userTransactions.map((transaction) =>
+          this.transactionService.mapTransactionFromBackend(transaction),
+        );
 
-          this.updateDataSource(this.transactions);
-        },
-        error: (error) => {
-          this.handleError('Error fetching transactions:', error);
-        },
-      });
+        this.filteredTransactions = userTransactions.map((transaction) =>
+          this.transactionService.mapTransactionFromBackend(transaction),
+        );
+
+        this.applyFilters();
+      },
+      (error) => this.handleError('Error fetching transactions:', error),
+    ));
   }
 
-  updateDataSource(transactions: Transaction[]): void {
-    this.dataSource.data = transactions;
-    this.filteredTransactions = transactions;
-  }
 
   applyFilters(): void {
-    let filteredTransactions = [...this.transactions];
+    let filteredTransactions = this.transactions;
 
-    const searchValue = this.searchControl.value?.trim().toLowerCase();
-    if (searchValue && searchValue !== '') {
-      filteredTransactions = filteredTransactions.filter((transaction) =>
+    const searchValue = this.selectedQuery.trim().toLowerCase();
+    if (searchValue) {
+      filteredTransactions = filteredTransactions.filter(transaction =>
         transaction.purpose.toLowerCase().includes(searchValue),
       );
     }
 
-    const selectedCategory = this.categoriesControl.value;
-    if (selectedCategory) {
-      filteredTransactions = filteredTransactions.filter(
-        (transaction) => transaction.categoryId === selectedCategory,
+    const selectedCategory = this.selectedCategory;
+    if (selectedCategory !== null && selectedCategory !== undefined) {
+      filteredTransactions = filteredTransactions.filter(transaction =>
+        transaction.categoryId == selectedCategory
       );
     }
 
-    const selectedTransactionType = this.transactionTypeControl.value;
-    if (selectedTransactionType) {
-      filteredTransactions = filteredTransactions.filter(
-        (transaction) => transaction.typeId === selectedTransactionType,
+    const selectedTransactionType = this.selectedTransactionType;
+    if (selectedTransactionType !== null && selectedTransactionType !== undefined) {
+      filteredTransactions = filteredTransactions.filter(transaction =>
+        transaction.typeId == selectedTransactionType
       );
     }
 
-    const minAmount = Number(this.minAmountControl.value) || 0;
-    const maxAmount = Number(this.maxAmountControl.value) || Number.MAX_VALUE;
+    const minAmount = this.selectedMinAmount;
+    const maxAmount = this.selectedMaxAmount;
+    if (minAmount !== null && minAmount !== undefined) {
+      filteredTransactions = filteredTransactions.filter(transaction =>
+        transaction.amount >= minAmount,
+      );
+    }
+    if (maxAmount !== null && maxAmount !== undefined) {
+      filteredTransactions = filteredTransactions.filter(transaction =>
+        transaction.amount <= maxAmount,
+      );
+    }
 
-    filteredTransactions = filteredTransactions.filter(
-      (transaction) =>
-        transaction.amount >= minAmount && transaction.amount <= maxAmount,
-    );
 
-    const minDate = this.minDateControl.value;
-    const maxDate = this.maxDateControl.value || new Date();
+    const minDate = this.selectedMinDate;
+    const maxDate = this.selectedMaxDate;
     if (minDate) {
-      filteredTransactions = filteredTransactions.filter(
-        (transaction) => new Date(transaction.createdAt) >= minDate,
+      filteredTransactions = filteredTransactions.filter(transaction =>
+        new Date(transaction.createdAt) >= new Date(minDate)
       );
     }
     if (maxDate) {
-      filteredTransactions = filteredTransactions.filter(
-        (transaction) => new Date(transaction.createdAt) <= maxDate,
+      filteredTransactions = filteredTransactions.filter(transaction =>
+        new Date(transaction.createdAt) <= new Date(maxDate)
       );
     }
 
-    this.updateDataSource(filteredTransactions);
+    this.filteredTransactions = filteredTransactions;
   }
 
   deleteTransaction(id?: number): void {
-    this.transactionService.deleteTransactionById(id).subscribe(
+    this.subscription.add(this.transactionService.deleteTransactionById(id).subscribe(
       () => {
-        this.showSuccessMessage('Transaction deleted successfully.');
-        this.getTransactions();
+        this.fetchTransactions();
       },
-      (error) => {
-        this.handleError('Error deleting transaction:', error);
-      },
-    );
+      (error) => this.handleError('Fehler beim Löschen der Transaktion:', error),
+    ));
   }
 
   editTransaction(id?: number): void {
     this.router.navigate(['/transaction', id]);
   }
 
-  handleError(message: string, error: any): void {
-    console.error(message, error);
-    this.showErrorMessage('An error occurred. Please try again later.');
-  }
-
-  showErrorMessage(message: string): void {
-    this.snackBar.open(message, 'Close', {
-      duration: 5000,
-      panelClass: ['error-snackbar'],
-    });
-  }
-
-  showSuccessMessage(message: string): void {
-    this.snackBar.open(message, 'Close', {
-      duration: 5000,
-      panelClass: ['success-snackbar'],
-    });
+  getAmountWithSignAndColor(amount: number, transactionTypeId: number): string {
+    const transactionType = this.transactionTypes.find(type => type.id === transactionTypeId);
+    if (transactionType) {
+      const typeName = transactionType.type.toLowerCase();
+      const sign = typeName === 'доходы' ? '+' : '-';
+      const absAmount = Math.abs(amount);
+      return `${sign}${absAmount} ₽`;
+    } else {
+      // Fallback: Wenn der Transaktionstyp nicht gefunden wird, verwenden wir standardmäßig das Minuszeichen
+      const absAmount = Math.abs(amount);
+      return `-${absAmount} ₽`;
+    }
   }
 
   getAmountColorByTransactionType(transactionTypeId: number): string {
-    return transactionTypeId === 1 ? 'red' : 'green';
+    const transactionType = this.transactionTypes.find(type => type.id === transactionTypeId);
+    if (transactionType) {
+      const typeName = transactionType.type.toLowerCase();
+      return typeName === 'доходы' ? 'green' : 'red';
+    } else {
+      return 'red';
+    }
   }
 
-  getAmountWithSignAndColor(amount: number, transactionTypeId: number): string {
-    const sign = transactionTypeId === 1 ? '-' : '+';
-    const absAmount = Math.abs(amount);
-    return `${sign}${absAmount}₽`;
+  getCategoryName(categoryId: number): string {
+    return this.utilsService.getCategoryNameById(categoryId);
   }
 
-  getRowNumber(index: number): number {
-    return index + 1;
+
+  subscribeToFilterChanges(): void {
+    this.searchControl.valueChanges.pipe(
+      debounceTime(300),
+      distinctUntilChanged()
+    ).subscribe(() => this.applyFilters());
+
+    this.categoriesControl.valueChanges.subscribe(() => this.applyFilters());
+
+    this.transactionTypeControl.valueChanges.subscribe(() => this.applyFilters());
+
+    this.minAmountControl.valueChanges.subscribe(() => this.applyFilters());
+
+    this.maxAmountControl.valueChanges.subscribe(() => this.applyFilters());
+
+    this.minDateControl.valueChanges.subscribe(() => this.applyFilters());
+
+    this.maxDateControl.valueChanges.subscribe(() => this.applyFilters());
+  }
+
+
+  handleError(message: string, error: any): void {
+    console.error(message, error);
+    // Handle error display as needed
   }
 }
+

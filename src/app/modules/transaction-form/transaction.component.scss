@@ -1,0 +1,72 @@
+.transaction-container {
+  max-width: 400px;
+  margin: 20px auto;
+  padding: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+
+  h2 {
+    text-align: center;
+    color: #333;
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 20px;
+
+      label {
+        margin-bottom: 8px;
+        color: #555;
+      }
+
+      input[type="text"],
+      input[type="number"],
+      input[type="date"],
+      select,
+      button {
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        font-size: 16px;
+        margin-top: 4px;
+        /* Add some spacing between input elements */
+      }
+
+      input[type="checkbox"] {
+        width: 20px;
+        height: 20px;
+        margin-top: 4px;
+        /* Add some spacing between input elements */
+      }
+
+      .error-message {
+        color: red;
+        font-size: 14px;
+      }
+    }
+
+    .button-container {
+      display: flex;
+      justify-content: center;
+    }
+
+    .custom-button {
+      background-color: #666;
+      color: #fff;
+      padding: 10px 30px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+  }
+
+  @media screen and (max-width: 480px) {
+    max-width: 100%;
+  }
+}

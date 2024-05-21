@@ -3,10 +3,7 @@
 
 <ng-container *ngFor="let notification of notifications; let i = index">
   <div class="notification-popup" [style.--popup-index]="i">
-    <app-notifications
-      [message]="notification"
-      (dismiss)="dismissNotification(notification)"
-    ></app-notifications>
+    <app-notifications [message]="notification" (dismiss)="dismissNotification(notification)"></app-notifications>
   </div>
 </ng-container>
 

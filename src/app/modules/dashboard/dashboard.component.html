@@ -1,76 +1,19 @@
-<div class="grid-container">
-  <h1 class="mat-h1">Dashboard</h1>
-  <mat-grid-list [cols]="gridColumns" rowHeight="155px">
-    <mat-grid-tile
-      *ngFor="let card of cards"
-      [colspan]="card.cols"
-      [rowspan]="card.rows"
-    >
-      <mat-card class="dashboard-card">
-        <mat-card-header>
-          <mat-card-title>
-            {{ card.title }}
-          </mat-card-title>
-        </mat-card-header>
-        <mat-card-content class="dashboard-card-content">
-          <div>
-            <app-last-transactions
-              *ngIf="card.title === 'Последние транзакции'"
-            ></app-last-transactions>
-            <app-chart *ngIf="card.id === 'chart'"></app-chart>
-            <div class="incomes-table" *ngIf="card.id === 'incomes'">
-              <table>
-                <tr>
-                  <td>Доходы</td>
-                  <td></td>
-                  <td></td>
-                </tr>
-                <tr>
-                  <td>{{ currentMonthName }}</td>
-                  <td>{{ currentIncomes }} &#8381;</td>
-                  <td
-                    [style.color]="
-                      getColor(incomesPercent, expensesPercent).incomesColor
-                    "
-                  >
-                    <ng-container *ngIf="incomesPercent > 0"
-                      >+{{ incomesPercent }}&#37;</ng-container
-                    >
-                    <ng-container *ngIf="incomesPercent < 0"
-                      >{{ incomesPercent }}&#37;</ng-container
-                    >
-                  </td>
-                </tr>
-              </table>
-            </div>
-            <div class="expenses-table" *ngIf="card.id === 'expenses'">
-              <table>
-                <tr>
-                  <td>Расходы</td>
-                  <td></td>
-                  <td></td>
-                </tr>
-                <tr>
-                  <td>{{ currentMonthName }}</td>
-                  <td>{{ currentExpenses }} &#8381;</td>
-                  <td
-                    [style.color]="
-                      getColor(incomesPercent, expensesPercent).expensesColor
-                    "
-                  >
-                    <ng-container *ngIf="expensesPercent > 0"
-                      >+{{ expensesPercent }}&#37;</ng-container
-                    >
-                    <ng-container *ngIf="expensesPercent < 0"
-                      >{{ expensesPercent }}&#37;</ng-container
-                    >
-                  </td>
-                </tr>
-              </table>
-            </div>
-          </div>
-        </mat-card-content>
-      </mat-card>
-    </mat-grid-tile>
-  </mat-grid-list>
+<div class="dashboard-container">
+  <div class="dashboard-content">
+    <h1 class="dashboard-title">Dashboard</h1>
+
+    <div class="dashboard-items">
+      <div class="row single-item">
+        <app-finance-card></app-finance-card>
+      </div>
+      <div class="row double-item">
+        <app-financial-goal-card></app-financial-goal-card>
+        <app-category-limits></app-category-limits>
+      </div>
+      <div class="row double-item">
+        <app-last-transactions></app-last-transactions>
+        <app-chart></app-chart>
+      </div>
+    </div>
+  </div>
 </div>

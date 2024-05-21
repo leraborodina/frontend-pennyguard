@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Category } from '../../shared/models/category.model';
-import { LimitService } from '../../services/limit.service';
-import { Limit } from '../../shared/models/limit.model'; // Import Limit interface
-import { CategoryService } from '../../services/category.service';
+import { Category } from '../../shared/interfaces/category.interface';
+import { LimitService } from '../../core/services/category-limit.service';
+import { Limit } from '../../shared/interfaces/limit.interface'; // Import Limit interface
+import { CategoryService } from '../../core/services/category.service';
 
 @Component({
   selector: 'app-limit-form',
@@ -19,7 +19,7 @@ export class LimitFormComponent implements OnInit {
   constructor(
     private limitService: LimitService,
     private categoryService: CategoryService,
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.getCategories();

@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { BreakpointObserver } from '@angular/cdk/layout';
-import { Category } from '../../shared/models/category.model';
-import { TransactionService } from '../../services/transaction.service';
-import { Transaction } from '../../shared/models/transaction.model';
-import { CategoryService } from '../../services/category.service';
+import { Category } from '../../shared/interfaces/category.interface';
+ 
+import { Transaction } from '../../shared/interfaces/transaction.interface';
+import { CategoryService } from '../../core/services/category.service';
+import { TransactionService } from '../../core/services/transaction.service';
 
 @Component({
   selector: 'app-transaction-chart',
@@ -27,7 +28,7 @@ export class TransactionChartComponent implements OnInit {
     private transactionService: TransactionService,
     private categoryService: CategoryService,
     private breakpointObserver: BreakpointObserver,
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.getCategories();

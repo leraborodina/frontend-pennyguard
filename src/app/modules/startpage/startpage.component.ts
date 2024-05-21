@@ -1,18 +1,25 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
-import { AuthService } from '../../core/auth.service';
-import { Route, Router } from '@angular/router';
+import { Component, ElementRef, OnInit } from '@angular/core';
+import { AuthService } from '../../core/guards/auth.service';
+import { Router } from '@angular/router';
+import { CardData, cardData } from '../card/card-data';
 
 @Component({
   selector: 'app-startpage',
   templateUrl: './startpage.component.html',
-  styleUrl: './startpage.component.scss',
+  styleUrls: ['./startpage.component.scss']
 })
-export class StartpageComponent {
+export class StartpageComponent implements OnInit {
+  cardData: CardData[] = [];
+
   constructor(
     private authService: AuthService,
     private el: ElementRef,
     private router: Router,
-  ) {}
+  ) { }
+
+  ngOnInit(): void {
+    this.cardData = cardData;
+  }
 
   isLoggedIn(): boolean {
     return this.authService.isAuthenticated();

@@ -1,12 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { TransactionType } from '../../shared/models/transaction-type.model';
-import { Transaction } from '../../shared/models/transaction.model';
-import { TransactionService } from '../../services/transaction.service';
+
+import { Transaction } from '../../shared/interfaces/transaction.interface';
+
 import Chart from 'chart.js/auto';
 import { forkJoin, Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { UtilsService } from '../../shared/services/utils.service';
-import { is } from 'date-fns/locale';
+import { TransactionType } from '../../shared/interfaces/transaction-type.interface';
+import { TransactionService } from '../../core/services/transaction.service';
+
 
 @Component({
   selector: 'app-barchart',
@@ -24,7 +26,7 @@ export class BarchartComponent implements OnInit {
   constructor(
     private transactionService: TransactionService,
     private utilsService: UtilsService,
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.loadData();
@@ -60,10 +62,9 @@ export class BarchartComponent implements OnInit {
     const incomeTypeId = this.transactionTypes.filter((type) => type.type === 'доходы').map((type) => type.id);
 
     transactionsForYear.forEach((transaction) => {
-      const transactionsDate = new Date(parseInt(transaction.createdAt) * 1000);
-      const year = transactionsDate.getFullYear().toString();
-
-      const monthName = this.getMonthName(transactionsDate.getMonth());
+      const transactionDate = new Date(transaction.createdAt);
+      const year = transactionDate.getFullYear().toString();
+      const monthName = this.getMonthName(transactionDate.getMonth());
       const isIncome = incomeTypeId.includes(transaction.typeId);
 
       if (!groupedTransactions[year]) {
@@ -120,7 +121,7 @@ export class BarchartComponent implements OnInit {
     });
   }
 
-  createDataSet(transactionType: string, totalAmounts: number[], backgroundColor: string){
+  createDataSet(transactionType: string, totalAmounts: number[], backgroundColor: string) {
     return {
       label: transactionType,
       data: totalAmounts,
@@ -132,12 +133,12 @@ export class BarchartComponent implements OnInit {
     this.displayedYear = year;
     this.updateChart();
   }
-  
+
   updateChart() {
     this.isUpdate = true;
     this.getTransactions().subscribe((transactions: Transaction[]) => {
       const transactionsForYear = transactions.filter(transaction => {
-        const transactionDate = new Date(parseInt(transaction.createdAt) * 1000);
+        const transactionDate = new Date(transaction.createdAt);
         return transactionDate.getFullYear() === this.displayedYear;
       });
 

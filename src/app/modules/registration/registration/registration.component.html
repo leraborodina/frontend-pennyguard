@@ -1,102 +1,69 @@
-<head>
-  <link
-    rel="stylesheet"
-    href="https://fonts.googleapis.com/css2?family=Poppins&display=swap"
-  />
-</head>
-<body>
-  <div class="wrapper">
-    <div class="content">
-      <h2>Добро пожаловать в Penny Guard</h2>
-      <p>
-        Уже есть аккаунт?
-        <a (click)="redirectToLogin()" routerLink="/login">Войти</a>
-      </p>
-      <form (ngSubmit)="registerUser()">
-        <label>Имя</label>
-        <input
-          type="text"
-          placeholder="Иван"
-          [formControl]="firstname"
-          required
-        />
-        <label
-          class="error-message"
-          *ngIf="firstname.invalid && firstname.touched"
-          >Введите имя</label
-        >
+<div class="container">
+  <header>
+    <h2>Добро пожаловать в Penny Guard</h2>
+  </header>
 
-        <label>Фамилия</label>
-        <input
-          type="text"
-          placeholder="Иванов"
-          [formControl]="lastname"
-          required
-        />
-        <label
-          class="error-message"
-          *ngIf="lastname.invalid && lastname.touched"
-          >Введите фамилию</label
-        >
-
-        <label>Почта</label>
-        <input
-          type="email"
-          placeholder="email@example.com"
-          [formControl]="email"
-          required
-        />
-        <label class="error-message" *ngIf="email.invalid && email.touched"
-          >Введите почту</label
-        >
-        <label
-          class="error-message"
-          *ngIf="email.errors?.['email'] && email.touched"
-          >Неверный формат почты</label
-        >
-
-        <div class="password-container">
-          <label>Пароль</label>
-          <a
-            (click)="hide = !hide"
-            [attr.aria-label]="'Hide password'"
-            [attr.aria-pressed]="hide"
-          >
-            <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
-          </a>
-        </div>
-        <input
-          [type]="hide ? 'password' : 'text'"
-          [formControl]="password"
-          required
-        />
-        <label
-          class="error-message"
-          *ngIf="password.invalid && password.touched"
-          >Введите пароль</label
-        >
-
-        <label>Повторите пароль</label>
-        <input type="password" [formControl]="confirmedPassword" required />
-        <label
-          class="error-message"
-          *ngIf="confirmedPassword.invalid && password.touched"
-          >Обязательное поле</label
-        >
-        <label
-          class="error-message"
-          *ngIf="password.value !== confirmedPassword.value"
-          >Пароли не совпадают</label
-        >
-
-        <button type="submit">Создать аккаунт</button>
-        <label class="success-message" *ngIf="successMessage">{{
-          successMessage
-        }}</label>
-        <label class="error-message" *ngIf="errorMessage">{{
-          errorMessage
-        }}</label>
-      </form>
-    </div>
+  <div *ngIf="successMessage" class="success-message">
+    {{ successMessage }}
   </div>
-</body>
+
+  <form [formGroup]="registrationForm" (ngSubmit)="onSubmit()" class="registration-form" novalidate>
+
+    <div class="form-group">
+      <label for="firstname">Имя</label>
+      <input type="text" id="firstname" formControlName="firstname" placeholder="Введите ваше имя">
+      <div *ngIf="isFieldInvalid('firstname')" class="error-message" id="firstnameHelp">
+        <div *ngIf="registrationForm.get('firstname')?.errors?.['required']">Обязательное поле</div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="lastname">Фамилия</label>
+      <input type="text" id="lastname" formControlName="lastname" placeholder="Введите вашу фамилию">
+      <div *ngIf="isFieldInvalid('lastname')" class="error-message" id="lastnameHelp">
+        <div *ngIf="registrationForm.get('lastname')?.errors?.['required']">Обязательное поле</div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="email">Почта</label>
+      <input type="email" id="email" formControlName="email" placeholder="Введите вашу почту">
+      <div *ngIf="isFieldInvalid('email')" class="error-message" id="emailHelp">
+        <div *ngIf="registrationForm.get('email')?.errors?.['required']">Обязательное поле</div>
+        <div *ngIf="registrationForm.get('email')?.errors?.['email']">Неверный формат почты</div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="password">Пароль</label>
+      <div class="password-container">
+        <input [type]="showPassword ? 'text' : 'password'" id="password" formControlName="password"
+          placeholder="Введите ваш пароль">
+        <i class="toggle-password" (click)="togglePasswordVisibility()"
+          [ngClass]="showPassword ? 'fa fa-eye' : 'fa fa-eye-slash'"></i>
+      </div>
+      <div *ngIf="isFieldInvalid('password')" class="error-message" id="passwordHelp">
+        <div *ngIf="registrationForm.get('password')?.errors?.['required']">Обязательное поле</div>
+        <div *ngIf="registrationForm.get('password')?.errors?.['minlength']">Минимальная длина пароля - 6 символов</div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="confirmedPassword">Повторите пароль</label>
+      <input type="password" id="confirmedPassword" formControlName="confirmedPassword"
+        placeholder="Повторите ваш пароль">
+      <div *ngIf="isFieldInvalid('confirmedPassword')" class="error-message" id="confirmedPasswordHelp">
+        <div *ngIf="registrationForm.get('confirmedPassword')?.errors?.['required']">Обязательное поле</div>
+        <div *ngIf="registrationForm.get('password')?.value !== registrationForm.get('confirmedPassword')?.value">Пароли
+          не совпадают</div>
+      </div>
+    </div>
+
+    <button type="submit" [disabled]="registrationForm.invalid">Зарегистрироваться</button>
+
+    <div class="login-link">
+      <p>Уже есть аккаунт?</p>
+      <a routerLink="/login">Войти</a>
+    </div>
+  </form>
+</div>

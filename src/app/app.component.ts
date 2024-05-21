@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from './core/auth.service';
-import { WebSocketService } from './core/websocket.service';
+import { AuthService } from './core/guards/auth.service';
+import { WebSocketService } from './core/services/websocket.service';
 
 @Component({
   selector: 'app-root',
@@ -15,7 +15,7 @@ export class AppComponent implements OnInit {
   constructor(
     private authService: AuthService,
     private webSocketService: WebSocketService,
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.isAuthenticated = this.authService.isAuthenticated();

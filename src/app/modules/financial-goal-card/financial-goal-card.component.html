@@ -1,0 +1,21 @@
+<div class="card">
+    <div class="custom-card-header">
+        <h5>Финансовые цели на сбережения</h5>
+    </div>
+    <div class="card-body">
+        <div *ngIf="goals.length === 0" class="no-goals">
+            <p class="no-goals-message">У вас еще нет финансовых целей.</p>
+            <button class="btn btn-create-goal" (click)="navigateToCreateGoal()">Создать цель</button>
+        </div>
+        <div *ngIf="goals.length > 0" class="goal-list">
+            <div class="goal" *ngFor="let goal of goals">
+                <p class="goal-name">{{ goal.name }}</p>
+                <p class="goal-amount">{{ goal.sum | currency:'RUB ':'symbol' }}</p>
+                <p class="goal-end-date">{{ goal.endDate | date:'dd/MM/yyyy' }}</p>
+            </div>
+        </div>
+    </div>
+    <div class="card-footer">
+        <a class="btn btn-link" href="/financial-goal-form" target="_blank">Все цели</a>
+    </div>
+</div>

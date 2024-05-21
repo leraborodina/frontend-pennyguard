@@ -1,87 +1,70 @@
 import { Component, OnInit } from '@angular/core';
-import { Transaction } from '../../shared/models/transaction.model';
-import { UserData } from '../../shared/services/user.service';
-import { Subscription } from 'rxjs';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { TransactionService } from '../../services/transaction.service';
+import { Router } from '@angular/router';
+import { Transaction } from '../../shared/interfaces/transaction.interface';
+import { TransactionService } from '../../core/services/transaction.service';
+import { TransactionType } from '../../shared/interfaces/transaction-type.interface';
 
 @Component({
   selector: 'app-last-transactions',
   templateUrl: './last-transactions.component.html',
-  styleUrl: './last-transactions.component.scss',
+  styleUrls: ['./last-transactions.component.scss'],
 })
 export class LastTransactionsComponent implements OnInit {
   transactions: Transaction[] = [];
+  transactionTypes: TransactionType[] = [];
 
-  userData: UserData | null = null;
-  subscription: Subscription | undefined;
   errorMessage: string = '';
-  rowCounter: number = 0;
 
   constructor(
     private transactionService: TransactionService,
-    private snackBar: MatSnackBar,
-  ) {}
+    private router: Router
+  ) { }
 
   ngOnInit(): void {
+    this.getTransactionTypes();
     this.getTransactions();
   }
 
+  getTransactionTypes() {
+    this.transactionService.getTransactionTypes().subscribe(
+      (types: TransactionType[]) => {
+        this.transactionTypes = types;
+      },
+      (error) => {
+        console.error('Error fetching transaction types:', error);
+        this.setErrorMessages(error);
+      }
+    );
+  }
+
   getTransactions() {
-    this.subscription = this.transactionService
-      .getTransactionsByUserId()
-      .subscribe({
-        next: (userTransactions: Transaction[]) => {
-          const lastTransations = userTransactions.slice(0, 5);
-          this.transactions = lastTransations.map((transaction) =>
-            this.transactionService.mapTransactionFromBackend(transaction),
-          );
-        },
-        error: (error) => {
-          console.error('Error fetching transactions:', error);
-          this.setErrorMessages(error);
-        },
-      });
-  }
-
-  setErrorMessages(error: any): void {
-    switch (error?.status) {
-      case 404:
-        this.errorMessage =
-          'Resource not found. Please check your request and try again.';
-        break;
-      case 401:
-        this.errorMessage = 'Unauthorized. Please login again to continue.';
-        break;
-      case 500:
-        this.errorMessage = 'Internal server error. Please try again later.';
-        break;
-      default:
-        this.errorMessage = 'An error occurred. Please try again later.';
-        break;
-    }
-
-    this.showErrorMessage(this.errorMessage);
-  }
-
-  showErrorMessage(message: string): void {
-    this.snackBar.open(message, 'Close', {
-      duration: 5000,
-      panelClass: ['error-snackbar'],
+    this.transactionService.getTransactionsByUserId().subscribe({
+      next: (userTransactions: Transaction[]) => {
+        this.transactions = userTransactions.slice(0, 3);
+      },
+      error: (error) => {
+        console.error('Error fetching transactions:', error);
+        this.setErrorMessages(error);
+      },
     });
   }
 
-  getAmountColorByTransactionType(transactionTypeId: number): string {
-    return transactionTypeId == 1 ? 'red' : 'green';
+  getAmountColor(transaction: Transaction): string {
+    const type = this.transactionTypes.find(
+      (type) => type.id === transaction.typeId
+    );
+    return type?.type === 'доходы' ? 'green' : 'red';
   }
 
-  getAmountWithSignAndColor(amount: number, transactionTypeId: number): string {
-    const sign = transactionTypeId == 1 ? '-' : '+';
-    const absAmount = Math.abs(amount);
-    return `${sign}${absAmount}₽`;
+  setErrorMessages(error: any): void {
+    this.errorMessage = 'Fehler beim Abrufen der Daten';
   }
 
-  getRowNumber(index: number): number {
-    return index + 1;
+  navigateToCreateTransaction(): void {
+    this.router.navigate(['/create-transaction']);
+  }
+
+  getCategoryName(categoryId: number): string {
+    return 'Kategorienname';
   }
 }
