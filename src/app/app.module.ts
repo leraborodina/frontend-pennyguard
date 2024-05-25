@@ -59,6 +59,8 @@ import { DropdownToggleDirective } from './shared/directives/dropdown-toggle.dir
 import { FinanceCardComponent } from './modules/finance-card/finance-card.component';
 import { CategoryLimitsComponent } from './modules/category-limits/category-limits.component';
 import { FinancialGoalCardComponent } from './modules/financial-goal-card/financial-goal-card.component';
+import { FinancialGoalOverviewComponent } from './modules/financial-goal-overview/financial-goal-overview.component';
+import { MessageComponent } from './modules/message/message.component';
 
 const config: SocketIoConfig = { url: 'ws://localhost:8080', options: {} };
 
@@ -93,7 +95,9 @@ const config: SocketIoConfig = { url: 'ws://localhost:8080', options: {} };
     DropdownToggleDirective,
     FinanceCardComponent,
     CategoryLimitsComponent,
-    FinancialGoalCardComponent
+    FinancialGoalCardComponent,
+    FinancialGoalOverviewComponent,
+    MessageComponent
   ],
   imports: [
     BrowserModule,

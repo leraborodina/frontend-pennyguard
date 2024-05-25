@@ -1,0 +1,115 @@
+// Variables
+$primary-color: #263238; // Dark blue-gray
+$secondary-color: #78909C; // Light blue-gray
+$accent-color: #ECEFF1; // Light gray
+$font-family: 'Arial', sans-serif;
+
+// Base Styles
+.limit-overview {
+    max-width: 1200px;
+    margin: 50px auto;
+    background-color: $accent-color;
+    border-radius: 8px;
+    padding: 30px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    font-family: $font-family;
+
+    h2 {
+        color: $primary-color;
+        font-size: 24px;
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .card {
+        background-color: #fff;
+        border: none;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        margin-bottom: 20px;
+
+        .card-header {
+            background-color: $primary-color;
+            color: #fff;
+            font-weight: bold;
+            border-top-left-radius: 8px;
+            border-top-right-radius: 8px;
+        }
+
+        .card-body {
+            padding: 20px;
+
+            .card-text {
+                color: $primary-color;
+                font-size: 16px;
+                margin-bottom: 10px;
+            }
+        }
+
+        .card-footer {
+            background-color: $accent-color;
+            border-bottom-left-radius: 8px;
+            border-bottom-right-radius: 8px;
+            padding: 10px;
+            text-align: right;
+
+            .btn {
+                width: 100px;
+                margin-left: 10px;
+                font-size: 14px;
+                padding: 10px;
+                border-radius: 4px;
+                transition: background-color 0.3s ease;
+
+                &.btn-warning {
+                    background-color: $secondary-color;
+                    border: none;
+                    color: #fff;
+
+                    &:hover {
+                        background-color: darken($secondary-color, 10%);
+                    }
+                }
+
+                &.btn-danger {
+                    background-color: #e74c3c;
+                    border: none;
+                    color: #fff;
+
+                    &:hover {
+                        background-color: darken(#e74c3c, 10%);
+                    }
+                }
+
+                &.btn-success {
+                    background-color: $primary-color;
+                    border: none;
+                    color: #fff;
+
+                    &:hover {
+                        background-color: darken($primary-color, 10%);
+                    }
+                }
+            }
+        }
+    }
+
+    .create-limit-btn {
+        display: block;
+        width: 100%;
+        padding: 12px;
+        background-color: $primary-color;
+        color: #fff;
+        font-size: 18px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        text-align: center;
+        margin-top: 20px;
+        transition: background-color 0.3s ease;
+
+        &:hover {
+            background-color: darken($primary-color, 10%);
+        }
+    }
+}

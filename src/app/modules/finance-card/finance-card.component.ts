@@ -32,9 +32,6 @@ export class FinanceCardComponent implements OnInit {
     this.income = 0;
     this.expense = 0;
 
-    console.log(this.selectedMonth)
-    console.log(this.selectedYear)
-
     const { startDate, endDate } = this.getMonthDateRange(this.selectedYear, this.selectedMonth);
 
     forkJoin({
@@ -44,9 +41,6 @@ export class FinanceCardComponent implements OnInit {
       ({ transactionTypes, transactions }) => {
         transactions.forEach(transaction => {
           const transactionDate = this.parseDate(transaction.createdAt);
-
-          console.log(this.utilsService.formatStringToLocalDateTimeString(transaction.createdAt))
-          console.log(transactionDate)
 
           if (transactionDate && transactionDate >= startDate && transactionDate <= endDate) {
             this.updateIncomeAndExpense(transaction, transactionTypes);

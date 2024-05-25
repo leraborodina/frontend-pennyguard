@@ -1,1 +1,22 @@
-<p>limit-overview works!</p>
+<!-- src/app/components/limit-overview/limit-overview.component.html -->
+<div class="limit-overview">
+    <h2>Обзор лимитов</h2>
+    <div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
+    <div class="row">
+        <div class="col-md-4" *ngFor="let limit of limits">
+            <div class="card mb-4">
+                <div class="card-header">
+                    {{ getCategoryName(limit.categoryId) }}
+                </div>
+                <div class="card-body">
+                    <p class="card-text">Сумма: {{ limit.amount | currency:'RUB ':'symbol' }}</p>
+                    <p class="card-text">День начала: {{ limit.salaryDay }}</p>
+                </div>
+                <div class="card-footer">
+                    <button class="btn btn-warning" type="submit" (click)="updateLimit(limit.id)">Обновить</button>
+                    <button class="btn btn-danger" type="submit" (click)="deleteLimit(limit.id)">Удалить</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

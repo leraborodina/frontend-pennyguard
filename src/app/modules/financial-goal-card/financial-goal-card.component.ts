@@ -34,7 +34,7 @@ export class FinancialGoalCardComponent implements OnInit {
   }
 
   navigateToCreateGoal(): void {
-    this.router.navigate(['/create-financial-goal']);
+    this.router.navigate(['/app-financial-goal-overview']);
   }
 
   setErrorMessages(error: any): void {

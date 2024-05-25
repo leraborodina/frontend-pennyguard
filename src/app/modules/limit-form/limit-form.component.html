@@ -1,26 +1,35 @@
 <div class="limit-container">
-  <h2>Лимит</h2>
-  <form (ngSubmit)="createLimit()">
-    <label for="amount">Введите сумму лимита</label>
-    <input [(ngModel)]="limit.amount" type="number" id="amount" name="amount" />
+  <h2>{{ limit ? 'Обновить лимит' : 'Новый лимит' }}</h2>
+  <form [formGroup]="limitForm" (ngSubmit)="createOrUpdate()">
+    <div class="form-group">
+      <label for="amount">Сумма:</label>
+      <input formControlName="amount" type="number" id="amount" required placeholder="Введите сумму лимита" min="0.01">
+      <div *ngIf="isFieldInvalid('amount')" class="error-message">Обязательное поле</div>
+      <div *ngIf="limitForm.get('amount')?.errors?.['min']" class="error-message">Сумма должна быть больше 0</div>
+    </div>
 
-    <label for="salaryDay">Выберите день начала рассчета:</label>
-    <input
-      [(ngModel)]="limit.salaryDay"
-      type="number"
-      id="salaryDay"
-      name="salaryDay"
-      min="1"
-      max="31"
-    />
+    <div class="form-group">
+      <label for="salaryDay">День зарплаты:</label>
+      <input formControlName="salaryDay" type="number" id="salaryDay" required placeholder="Введите день зарплаты (1-31)">
+      <div *ngIf="isFieldInvalid('salaryDay')" class="error-message">Обязательное поле</div>
+      <div *ngIf="limitForm.get('salaryDay')?.errors?.['min'] || limitForm.get('salaryDay')?.errors?.['max']" class="error-message">Введите число от 1 до 31</div>
+    </div>
 
-    <label for="category">Выберите категорию:</label>
-    <select [(ngModel)]="limit.categoryId" name="selectedCategory">
-      <option *ngFor="let category of categories" [value]="category.id">
-        {{ category.name }}
-      </option>
-    </select>
+    <div class="form-group">
+      <label for="categoryId">Категория:</label>
+      <select formControlName="categoryId" required>
+        <option value="0" disabled selected>Выберите категорию</option>
+        <option *ngFor="let category of categories$ | async" [value]="category.id">
+          {{ category.name }}
+        </option>
+      </select>
+      <div *ngIf="isFieldInvalid('categoryId')" class="error-message">
+        Выберите категорию
+      </div>
+    </div>
 
-    <button type="submit">Сохранить</button>
+    <div class="button-container">
+      <button class="custom-button" type="submit">{{ limit ? 'Обновить' : 'Создать' }}</button>
+    </div>
   </form>
 </div>

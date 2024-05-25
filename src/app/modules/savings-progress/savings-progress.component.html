@@ -1,8 +1,11 @@
+<div *ngIf="financialGoals.length === 0">
+    <p>Финансовые цели не найдены. Добавьте финансовую цель, чтобы начать отслеживание прогресса.</p>
+</div>
 <div *ngFor="let goal of financialGoals">
     <h3>{{ goal.name }}</h3>
     <div class="progress">
-        <div class="progress-bar" role="progressbar" [style.width.%]="getPercentage(balance, getTotalGoal(goal.id))">
-            {{ getPercentage(balance, getTotalGoal(goal.id)) }}%
+        <div class="progress-bar" role="progressbar" [style.width.%]="calculateProgressPercentage(goal)">
+            {{ calculateProgressPercentage(goal) }}%
         </div>
     </div>
 </div>

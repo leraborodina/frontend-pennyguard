@@ -1,32 +1,34 @@
-<!-- financial-goal.component.html -->
-
-<div>
-  <h2>Create Financial Goal</h2>
-  <form (ngSubmit)="createFinancialGoal()">
-    <div>
-      <label for="name">Name:</label>
+<div class="savings-calculator">
+  <h2>Создать Финансовую Цель</h2>
+  <form (ngSubmit)="createFinancialGoal()" #financialGoalForm="ngForm">
+    <div class="form-group">
+      <label for="name">Название:</label>
       <input type="text" id="name" name="name" [(ngModel)]="financialGoal.name" required>
+      <div
+        *ngIf="financialGoalForm.controls['name'].invalid && (financialGoalForm.controls['name'].dirty || financialGoalForm.controls['name'].touched)"
+        class="error">
+        Название обязательно для заполнения.
+      </div>
     </div>
-    <div>
-      <label for="sum">Sum:</label>
-      <input type="number" id="sum" name="sum" [(ngModel)]="financialGoal.sum" required>
+    <div class="form-group">
+      <label for="sum">Сумма:</label>
+      <input type="number" id="sum" name="sum" [(ngModel)]="financialGoal.sum" required min="0.01">
+      <div
+        *ngIf="financialGoalForm.controls['sum'].invalid && (financialGoalForm.controls['sum'].dirty || financialGoalForm.controls['sum'].touched)"
+        class="error">
+        Сумма обязательна для заполнения и должна быть больше 0.
+      </div>
     </div>
-    <div>
-      <label for="endDate">Number of Months:</label>
-      <input type="number" id="endDate" name="endDate" [(ngModel)]="financialGoal.endDate" required>
+    <div class="form-group">
+      <label for="endDate">Количество месяцев:</label>
+      <input type="number" id="endDate" name="endDate" [(ngModel)]="financialGoal.endDate" required min="1">
+      <div
+        *ngIf="financialGoalForm.controls['endDate'].invalid && (financialGoalForm.controls['endDate'].dirty || financialGoalForm.controls['endDate'].touched)"
+        class="error">
+        Количество месяцев обязательно для заполнения и должно быть больше 0.
+      </div>
     </div>
-    <button type="submit">Create</button>
+    <button type="submit">Создать</button>
   </form>
-</div>
-
-
-<div>
-  <h2>Savings Calculator</h2>
-  <savings-calculator></savings-calculator>
-</div>
-
-
-<div>
-  <h2>Savings Progress</h2>
-  <savings-progress></savings-progress>
+  <app-message [message]="message" [messageType]="messageType"></app-message>
 </div>

@@ -8,18 +8,15 @@ import { Component } from '@angular/core';
   styleUrls: ['./savings-calculator.component.scss']
 })
 export class SavingsCalculatorComponent {
-  futureValue: number = 0;
-  numberOfMonths: number = 0;
-  monthlySavings: number = 0;
-  minMonths: number = 2;
+  savingsSum: number | null = null;
+  months: number | null = null;
+  monthlyRate: number | null = null;
 
-  calculateMonthlySavings(): void {
-    if (this.isValidInput()) {
-      this.monthlySavings = this.futureValue / this.numberOfMonths;
+  calculateMonthlyRate() {
+    if (this.savingsSum !== null && this.months !== null && this.months > 0) {
+      this.monthlyRate = this.savingsSum / this.months;
+    } else {
+      this.monthlyRate = null;
     }
-  }
-
-  isValidInput(): boolean {
-    return this.futureValue > 0 && this.numberOfMonths >= this.minMonths;
   }
 }

@@ -17,6 +17,7 @@ import { NotificationsOverviewComponent } from './modules/notifications-overview
 import { FinancialGoalFormComponent } from './modules/financial-goal-form/financial-goal-form.component';
 import { NotificationsComponent } from './modules/notifications/notifications.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { FinancialGoalOverviewComponent } from './modules/financial-goal-overview/financial-goal-overview.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -54,6 +55,11 @@ const routes: Routes = [
     canActivate: [AuthGuard],
   },
   {
+    path: 'limit-form/:id',
+    component: LimitFormComponent,
+    canActivate: [AuthGuard],
+  },
+  {
     path: 'financial-goal-form',
     component: FinancialGoalFormComponent,
     canActivate: [AuthGuard],
@@ -61,6 +67,11 @@ const routes: Routes = [
   {
     path: 'notifications-overview',
     component: NotificationsOverviewComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'financial-goal-overview',
+    component: FinancialGoalOverviewComponent,
     canActivate: [AuthGuard],
   },
   {

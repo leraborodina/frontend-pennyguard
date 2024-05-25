@@ -1,0 +1,19 @@
+.message-container {
+    border-radius: 4px;
+    margin: 10px;
+    width: calc(100% - 20px);
+    box-sizing: border-box;
+    text-align: center;
+}
+
+.error {
+    color: #D32F2F
+}
+
+.warning {
+    color: #F57C00;
+}
+
+.success {
+    color: #388E3C;
+}
