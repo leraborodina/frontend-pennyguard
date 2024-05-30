@@ -112,45 +112,46 @@ export class TransactionOverviewComponent implements OnInit, OnDestroy {
     const searchValue = this.selectedQuery.trim().toLowerCase();
     if (searchValue) {
       filteredTransactions = filteredTransactions.filter(transaction =>
-        transaction.purpose.toLowerCase().includes(searchValue),
+        transaction.purpose.toLowerCase().includes(searchValue)
       );
     }
 
     const selectedCategory = this.selectedCategory;
-    if (selectedCategory !== null && selectedCategory !== undefined) {
+    if (selectedCategory !== null) {
       filteredTransactions = filteredTransactions.filter(transaction =>
         transaction.categoryId == selectedCategory
       );
     }
 
     const selectedTransactionType = this.selectedTransactionType;
-    if (selectedTransactionType !== null && selectedTransactionType !== undefined) {
+    if (selectedTransactionType !== null) {
       filteredTransactions = filteredTransactions.filter(transaction =>
         transaction.typeId == selectedTransactionType
       );
     }
 
     const minAmount = this.selectedMinAmount;
-    const maxAmount = this.selectedMaxAmount;
-    if (minAmount !== null && minAmount !== undefined) {
+    if (minAmount !== null) {
       filteredTransactions = filteredTransactions.filter(transaction =>
-        transaction.amount >= minAmount,
-      );
-    }
-    if (maxAmount !== null && maxAmount !== undefined) {
-      filteredTransactions = filteredTransactions.filter(transaction =>
-        transaction.amount <= maxAmount,
+        transaction.amount >= minAmount
       );
     }
 
+    const maxAmount = this.selectedMaxAmount;
+    if (maxAmount !== null) {
+      filteredTransactions = filteredTransactions.filter(transaction =>
+        transaction.amount <= maxAmount
+      );
+    }
 
     const minDate = this.selectedMinDate;
-    const maxDate = this.selectedMaxDate;
     if (minDate) {
       filteredTransactions = filteredTransactions.filter(transaction =>
         new Date(transaction.createdAt) >= new Date(minDate)
       );
     }
+
+    const maxDate = this.selectedMaxDate;
     if (maxDate) {
       filteredTransactions = filteredTransactions.filter(transaction =>
         new Date(transaction.createdAt) <= new Date(maxDate)
@@ -159,6 +160,7 @@ export class TransactionOverviewComponent implements OnInit, OnDestroy {
 
     this.filteredTransactions = filteredTransactions;
   }
+
 
   deleteTransaction(id?: number): void {
     this.subscription.add(this.transactionService.deleteTransactionById(id).subscribe(

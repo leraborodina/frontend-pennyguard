@@ -47,6 +47,12 @@
         <li class="nav-item" *ngIf="isLoggedIn()">
           <a class="nav-link" routerLink="/financial-goal-overview">Цели</a>
         </li>
+        <li class="nav-item" *ngIf="isLoggedIn()">
+          <a class="nav-link" routerLink="/category-form">Категории создать</a>
+        </li>
+        <li class="nav-item" *ngIf="isLoggedIn()">
+          <a class="nav-link" routerLink="/category-overview">Категории</a>
+        </li>
       </ul>
       <ul class="navbar-nav ml-auto logout-item" *ngIf="isLoggedIn()">
         <li class="nav-item">

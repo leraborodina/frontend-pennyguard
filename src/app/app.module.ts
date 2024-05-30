@@ -61,6 +61,8 @@ import { CategoryLimitsComponent } from './modules/category-limits/category-limi
 import { FinancialGoalCardComponent } from './modules/financial-goal-card/financial-goal-card.component';
 import { FinancialGoalOverviewComponent } from './modules/financial-goal-overview/financial-goal-overview.component';
 import { MessageComponent } from './modules/message/message.component';
+import { CategoryFormComponent } from './modules/category-form/category-form.component';
+import { CategoryOverviewComponent } from './modules/category-overview/category-overview.component';
 
 const config: SocketIoConfig = { url: 'ws://localhost:8080', options: {} };
 
@@ -97,7 +99,9 @@ const config: SocketIoConfig = { url: 'ws://localhost:8080', options: {} };
     CategoryLimitsComponent,
     FinancialGoalCardComponent,
     FinancialGoalOverviewComponent,
-    MessageComponent
+    MessageComponent,
+    CategoryFormComponent,
+    CategoryOverviewComponent
   ],
   imports: [
     BrowserModule,

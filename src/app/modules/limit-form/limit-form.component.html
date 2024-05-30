@@ -9,8 +9,8 @@
     </div>
 
     <div class="form-group">
-      <label for="salaryDay">День зарплаты:</label>
-      <input formControlName="salaryDay" type="number" id="salaryDay" required placeholder="Введите день зарплаты (1-31)">
+      <label for="salaryDay">Начало отсчета:</label>
+      <input formControlName="salaryDay" type="number" id="salaryDay" required placeholder="Введите день начала отсчета (1-31)">
       <div *ngIf="isFieldInvalid('salaryDay')" class="error-message">Обязательное поле</div>
       <div *ngIf="limitForm.get('salaryDay')?.errors?.['min'] || limitForm.get('salaryDay')?.errors?.['max']" class="error-message">Введите число от 1 до 31</div>
     </div>
@@ -23,9 +23,7 @@
           {{ category.name }}
         </option>
       </select>
-      <div *ngIf="isFieldInvalid('categoryId')" class="error-message">
-        Выберите категорию
-      </div>
+      <div *ngIf="isFieldInvalid('categoryId')" class="error-message">Выберите категорию</div>
     </div>
 
     <div class="button-container">

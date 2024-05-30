@@ -34,7 +34,7 @@ export class SavingsProgressComponent implements OnInit {
 
   calculateProgressPercentage(goal: FinancialGoal): number {
     const totalGoal = this.getTotalGoal(goal.id);
-    if (totalGoal === 0) {
+    if (totalGoal === 0 || this.balance <= 0) {
       return 0;
     }
     return Math.min((this.balance / totalGoal) * 100, 100);

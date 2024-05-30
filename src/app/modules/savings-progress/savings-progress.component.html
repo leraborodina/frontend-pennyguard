@@ -3,9 +3,12 @@
 </div>
 <div *ngFor="let goal of financialGoals">
     <h3>{{ goal.name }}</h3>
-    <div class="progress">
+    <div class="progress" *ngIf="calculateProgressPercentage(goal) > 0">
         <div class="progress-bar" role="progressbar" [style.width.%]="calculateProgressPercentage(goal)">
             {{ calculateProgressPercentage(goal) }}%
         </div>
+    </div>
+    <div *ngIf="calculateProgressPercentage(goal) === 0">
+        <p>0%</p>
     </div>
 </div>

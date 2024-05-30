@@ -18,6 +18,8 @@ import { FinancialGoalFormComponent } from './modules/financial-goal-form/financ
 import { NotificationsComponent } from './modules/notifications/notifications.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FinancialGoalOverviewComponent } from './modules/financial-goal-overview/financial-goal-overview.component';
+import { CategoryFormComponent } from './modules/category-form/category-form.component';
+import { CategoryOverviewComponent } from './modules/category-overview/category-overview.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -47,6 +49,21 @@ const routes: Routes = [
   {
     path: 'upload',
     component: UploadPdfComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'category-form',
+    component: CategoryFormComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'category-overview',
+    component: CategoryOverviewComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'category-form/:id',
+    component: CategoryFormComponent,
     canActivate: [AuthGuard],
   },
   {

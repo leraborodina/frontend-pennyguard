@@ -14,7 +14,7 @@
     <div class="col-md-6">
       <div class="form-group">
         <select id="categories" class="form-control" [(ngModel)]="selectedCategory" (change)="applyFilters()">
-          <option [value]="null" selected>Выбрать категорию</option>
+          <option [ngValue]="null" selected>Выбрать категорию</option>
           <option *ngFor="let category of categories" [value]="category.id">{{ category.name }}</option>
         </select>
       </div>
@@ -23,7 +23,7 @@
       <div class="form-group">
         <select id="transactionType" class="form-control" [(ngModel)]="selectedTransactionType"
           (change)="applyFilters()">
-          <option [value]="null" selected>Выбрать тип транзакции</option>
+          <option [ngValue]="null" selected>Выбрать тип транзакции</option>
           <option *ngFor="let type of transactionTypes" [value]="type.id">{{ type.type }}</option>
         </select>
       </div>

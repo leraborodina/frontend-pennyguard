@@ -20,6 +20,7 @@ export class TransactionComponent implements OnInit {
   transactionTypes$!: Observable<TransactionType[]>;
   transaction?: Transaction;
   maxDate: string = '';
+  maxTime: string = '';
 
   constructor(
     private fb: FormBuilder,
@@ -32,12 +33,14 @@ export class TransactionComponent implements OnInit {
       purpose: ['', Validators.required],
       amount: ['', [Validators.required, this.validateAmount]],
       createdAt: ['', [Validators.required, this.validateDate]],
+      createdAtTime: ['', [Validators.required]],
       regular: [false],
       categoryId: [0, Validators.required],
       typeId: [0, Validators.required],
     });
 
     this.setMaxDate();
+    this.setMaxTime();
   }
 
   ngOnInit(): void {
@@ -54,10 +57,12 @@ export class TransactionComponent implements OnInit {
       })
     ).subscribe(transaction => {
       this.transaction = transaction;
+      const [date, time] = transaction.createdAt.split('T');
       this.transactionForm.patchValue({
         purpose: this.transaction.purpose,
         amount: this.transaction.amount,
-        createdAt: transaction.createdAt.split('T')[0],
+        createdAt: date,
+        createdAtTime: time.slice(0, 5),
         regular: this.transaction.regular,
         categoryId: this.transaction.categoryId,
         typeId: this.transaction.typeId
@@ -79,7 +84,7 @@ export class TransactionComponent implements OnInit {
 
   createTransaction() {
     const formData = this.transactionForm.value;
-    const formattedDateTime = this.formatDateTime(formData.createdAt);
+    const formattedDateTime = this.formatDateTime(formData.createdAt, formData.createdAtTime);
 
     const transaction: Transaction = {
       purpose: formData.purpose,
@@ -103,7 +108,7 @@ export class TransactionComponent implements OnInit {
 
   updateTransaction() {
     const formData = this.transactionForm.value;
-    const formattedDateTime = this.formatDateTime(formData.createdAt);
+    const formattedDateTime = this.formatDateTime(formData.createdAt, formData.createdAtTime);
 
     const transaction: Transaction = {
       ...this.transaction,
@@ -170,15 +175,8 @@ export class TransactionComponent implements OnInit {
     return null;
   }
 
-  private formatDateTime(date: string): string {
-    const d = new Date(date);
-    const year = d.getFullYear();
-    const month = ('0' + (d.getMonth() + 1)).slice(-2);
-    const day = ('0' + d.getDate()).slice(-2);
-    const hours = ('0' + d.getHours()).slice(-2);
-    const minutes = ('0' + d.getMinutes()).slice(-2);
-    const seconds = ('0' + d.getSeconds()).slice(-2);
-    return `${year}-${month}-${day}T${hours}:${minutes}:${seconds}`;
+  private formatDateTime(date: string, time: string): string {
+    return `${date}T${time}:00`;
   }
 
   private setMaxDate(): void {
@@ -187,5 +185,33 @@ export class TransactionComponent implements OnInit {
     const month = ('0' + (today.getMonth() + 1)).slice(-2);
     const day = ('0' + today.getDate()).slice(-2);
     this.maxDate = `${year}-${month}-${day}`;
+  }
+
+  setMaxTime(): void {
+    const control = this.transactionForm.get('createdAt');
+    const selectedDate = new Date(control?.value);
+    const today = new Date();
+
+    if (selectedDate.toDateString() === today.toDateString()) {
+      const hours = ('0' + today.getHours()).slice(-2);
+      const minutes = ('0' + today.getMinutes()).slice(-2);
+      this.maxTime = `${hours}:${minutes}`;
+    } else {
+      this.maxTime = '23:59';
+    }
+  }
+
+  isFutureTime(): boolean {
+    const controlDate = this.transactionForm.get('createdAt');
+    const controlTime = this.transactionForm.get('createdAtTime');
+    const selectedDate = new Date(controlDate?.value);
+    const today = new Date();
+
+    if (selectedDate.toDateString() === today.toDateString()) {
+      const selectedTime = controlTime?.value;
+      const currentTime = `${('0' + today.getHours()).slice(-2)}:${('0' + today.getMinutes()).slice(-2)}`;
+      return selectedTime > currentTime;
+    }
+    return false;
   }
 }

@@ -3,24 +3,34 @@
   <form [formGroup]="transactionForm" (ngSubmit)="createOrUpdate()">
     <div class="form-group">
       <label for="purpose" aria-labelledby="purpose-label">Цель:</label>
-      <input formControlName="purpose" type="text" id="purpose" required placeholder="Введите цель транзакции" aria-labelledby="purpose-label">
+      <input formControlName="purpose" type="text" id="purpose" required placeholder="Введите цель транзакции"
+        aria-labelledby="purpose-label">
       <div *ngIf="isFieldInvalid('purpose')" class="error-message">Обязательное поле</div>
     </div>
 
     <div class="form-group">
       <label for="amount" aria-labelledby="amount-label">Сумма:</label>
-      <input formControlName="amount" type="number" id="amount" required placeholder="Введите сумму транзакции" min="0.01" aria-labelledby="amount-label">
+      <input formControlName="amount" type="number" id="amount" required placeholder="Введите сумму транзакции"
+        min="0.01" aria-labelledby="amount-label">
       <div *ngIf="isFieldInvalid('amount')" class="error-message">Обязательное поле</div>
-      <div *ngIf="transactionForm.get('amount')?.errors?.['min']" class="error-message">Сумма должна быть больше 0</div>
+      <div *ngIf="transactionForm.get('amount')?.errors?.['invalidAmount']" class="error-message">Неверная сумма</div>
     </div>
 
     <div class="form-group">
       <label for="createdAt" aria-labelledby="date-label">Дата:</label>
-      <input formControlName="createdAt" type="date" id="createdAt" required placeholder="Выберите дату транзакции" [max]="maxDate" aria-labelledby="date-label">
+      <input formControlName="createdAt" type="date" id="createdAt" required placeholder="Выберите дату" [max]="maxDate" aria-labelledby="date-label" (change)="setMaxTime()">
       <div *ngIf="isFieldInvalid('createdAt')" class="error-message">Обязательное поле</div>
       <div *ngIf="transactionForm.get('createdAt')?.errors?.['invalidDate']" class="error-message">Неверная дата</div>
       <div *ngIf="isFutureDate()" class="error-message">Дата не может быть в будущем</div>
     </div>
+    
+    <div class="form-group">
+      <label for="createdAtTime" aria-labelledby="time-label">Время:</label>
+      <input formControlName="createdAtTime" type="time" id="createdAtTime" required placeholder="Выберите время" [max]="maxTime" aria-labelledby="time-label">
+      <div *ngIf="isFieldInvalid('createdAtTime')" class="error-message">Обязательное поле</div>
+      <div *ngIf="isFutureTime()" class="error-message">Время не может быть в будущем</div>
+    </div>
+    
 
     <div class="form-group">
       <label for="regular">Регулярная транзакция:</label>

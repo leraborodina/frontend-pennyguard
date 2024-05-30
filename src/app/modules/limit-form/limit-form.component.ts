@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Observable, switchMap } from 'rxjs';
 import { Category } from '../../shared/interfaces/category.interface';
 import { Limit } from '../../shared/interfaces/limit.interface';
@@ -14,10 +14,8 @@ import { LimitService } from '../../core/services/category-limit.service';
 })
 export class LimitFormComponent implements OnInit {
   limitForm: FormGroup;
-
   categories$!: Observable<Category[]>;
   limit?: Limit;
-  maxDate: string = '';
 
   constructor(
     private fb: FormBuilder,
@@ -31,8 +29,6 @@ export class LimitFormComponent implements OnInit {
       salaryDay: ['', [Validators.required, Validators.min(1), Validators.max(31)]],
       categoryId: [0, Validators.required],
     });
-
-    this.setMaxDate();
   }
 
   ngOnInit(): void {
@@ -70,7 +66,6 @@ export class LimitFormComponent implements OnInit {
 
   createLimit() {
     const formData = this.limitForm.value;
-
     const limit: Limit = {
       amount: formData.amount,
       salaryDay: formData.salaryDay,
@@ -78,11 +73,11 @@ export class LimitFormComponent implements OnInit {
     };
 
     this.limitService.createLimit(limit).subscribe(
-      (response) => {
+      response => {
         console.log(response);
         this.router.navigate(['/limit-overview']);
       },
-      (error) => {
+      error => {
         console.error('Error creating limit:', error);
       },
     );
@@ -90,17 +85,16 @@ export class LimitFormComponent implements OnInit {
 
   updateLimit() {
     const formData = this.limitForm.value;
-
     const limit: Limit = {
       ...this.limit,
       ...formData,
     };
 
     this.limitService.updateLimit(limit).subscribe(
-      (response) => {
+      response => {
         this.router.navigate(['/limit-overview']);
       },
-      (error) => {
+      error => {
         console.error('Error updating limit:', error);
       },
     );
@@ -109,18 +103,5 @@ export class LimitFormComponent implements OnInit {
   isFieldInvalid(field: string): boolean {
     const control = this.limitForm.get(field);
     return !!control && (control.invalid && (control.dirty || control.touched));
-  }
-
-  isRequired(field: string): boolean {
-    const control = this.limitForm.get(field);
-    return !!control && !!control.errors?.['required'];
-  }
-
-  private setMaxDate(): void {
-    const today = new Date();
-    const year = today.getFullYear();
-    const month = ('0' + (today.getMonth() + 1)).slice(-2);
-    const day = ('0' + today.getDate()).slice(-2);
-    this.maxDate = `${year}-${month}-${day}`;
   }
 }

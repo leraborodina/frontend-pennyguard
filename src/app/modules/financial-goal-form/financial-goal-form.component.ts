@@ -12,7 +12,8 @@ export class FinancialGoalFormComponent {
     id: 0,
     name: '',
     sum: 0,
-    endDate: 0
+    startDate: '',
+    endDate: ''
   };
 
   message: string | null = null;
