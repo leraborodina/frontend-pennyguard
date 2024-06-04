@@ -1,60 +1,62 @@
 .custom-card {
-  border: 1px solid #ccc;
-  /* Rahmen um die Karte */
-  border-radius: 8px;
-  /* Abrundung der Ecken */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  /* Schatten für die Karte */
-  padding: 20px;
-  /* Innenabstand der Karte */
-  width: 300px;
-  /* Breite der Karte */
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  margin: 20px;
+  max-width: 600px;
+  margin: auto;
 }
 
 .custom-card-header {
-  /* Hintergrundfarbe des Headers */
-  border-bottom: 1px solid #ccc;
-  /* Untere Trennlinie des Headers */
-  padding: 10px 0;
-  /* Innenabstand des Headers */
+  padding: 10px;
+  background-color: #f0f0f0;
   text-align: center;
-  /* Zentrieren des Textes */
+  border-bottom: 1px solid #ccc;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
 }
 
 .custom-card-body {
-  margin-top: 20px;
-  /* Abstand zum Header */
+  padding: 20px;
+  background-color: #ffff;
 }
 
 .chart-container {
   text-align: center;
-  /* Zentrieren des Inhalts */
 }
 
 .label-date-arrows {
   display: flex;
   justify-content: space-between;
-  /* Platzierung der Pfeile */
   align-items: center;
-  /* Zentrieren des Datums */
   margin-bottom: 10px;
-  /* Abstand zwischen dem Datum und dem Inhalt */
 }
 
 .arrow-left,
 .arrow-right {
   cursor: pointer;
-  /* Zeiger anzeigen, wenn auf die Pfeile gezeigt wird */
 }
 
 .chart-wrapper {
   margin-top: 20px;
-  /* Abstand zum Datum */
 }
 
 .card-footer {
-  text-align: center;
-  /* Zentrieren des Textes im Footer */
-  margin-top: 20px;
-  /* Abstand zum Inhalt */
+  background-color: #fff;
+  padding: 10px;
+  border-top: 1px solid #ccc;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+
+  a.btn-link {
+    color: #777777;
+    text-decoration: none;
+    font-size: 16px;
+    cursor: pointer;
+    transition: color 0.3s ease;
+
+    &:hover {
+      color: #777777;
+      text-decoration: underline;
+    }
+  }
 }

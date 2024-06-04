@@ -1,129 +1,128 @@
 .card {
-    border-radius: 10px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-    margin: 20px;
-    max-width: 600px;
-    margin: auto;
-  
-    .custom-card-header {
-      padding: 10px;
-      background-color: #f0f0f0;
-      text-align: center;
-      border-bottom: 1px solid #ccc;
-      border-top-left-radius: 8px;
-      border-top-right-radius: 8px;
-    }
-  
-    .card-body {
-      .no-limits {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        height: 200px;
-  
-        .no-limits-message {
-          margin-bottom: 15px;
-          font-size: 16px;
-          color: #555;
-          text-align: center;
-        }
-  
-        .btn-create-limit {
-          background-color: #666; 
-          color: white;
-          padding: 10px 20px;
-          border: none;
-          border-radius: 5px;
-          cursor: pointer;
-          transition: background-color 0.3s ease ;
-  
-          &:hover {
-            background-color: #666;
-          }
-        }
-      }
-  
-      .category-limit-list {
-        display: flex;
-        flex-direction: column;
-  
-        .category-limit {
-          border-bottom: 1px solid #ccc;
-          padding: 5px;
-          margin: 5px;
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-  
-          .category-name {
-            flex: 2;
-            text-align: left;
-            margin: 10px;
-          }
-  
-          .limit-amount {
-            flex: 2;
-            text-align: right;
-            margin: 10px;
-          }
-  
-          .limit-date {
-            flex: 2;
-            text-align: right;
-            color: #666;
-            margin: 10px;
-          }
-        }
-      }
-    }
-  
-    .card-footer {
-      background-color: #fff;
-      padding: 10px;
-      border-top: 1px solid #ccc;
-      border-bottom-left-radius: 10px;
-      border-bottom-right-radius: 10px;
-  
-      a.btn-link {
-        color: #777777;
-        text-decoration: none;
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  margin: 20px;
+  max-width: 600px;
+  margin: auto;
+
+  .custom-card-header {
+    padding: 10px;
+    background-color: #f0f0f0;
+    text-align: center;
+    border-bottom: 1px solid #ccc;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+  }
+
+  .card-body {
+    .no-limits {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 200px;
+
+      .no-limits-message {
+        margin-bottom: 15px;
         font-size: 16px;
+        color: #555;
+        text-align: center;
+      }
+
+      .btn-create-limit {
+        background-color: #666;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
         cursor: pointer;
-        transition: color 0.3s ease;
-  
+        transition: background-color 0.3s ease;
+
         &:hover {
-          color: #777777;
-          text-decoration: underline;
+          background-color: #666;
         }
       }
     }
-  
-    @media only screen and (max-width: 768px) {
-      .card-body {
-        .category-limit-list {
-          .category-limit {
-            flex-direction: column;
-  
-            .category-name {
-              flex: auto;
-              margin-right: 0;
-              margin-bottom: 5px;
-            }
-  
-            .limit-amount {
-              flex: auto;
-              text-align: left;
-            }
-  
-            .limit-date {
-              flex: auto;
-              text-align: left;
-              font-size: 0.8em;
-            }
+
+    .category-limit-list {
+      display: flex;
+      flex-direction: column;
+
+      .category-limit {
+        border-bottom: 1px solid #ccc;
+        padding: 5px;
+        margin: 5px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        .category-name {
+          flex: 2;
+          text-align: left;
+          margin: 10px;
+        }
+
+        .limit-amount {
+          flex: 2;
+          text-align: right;
+          margin: 10px;
+        }
+
+        .limit-date {
+          flex: 2;
+          text-align: right;
+          color: #666;
+          margin: 10px;
+        }
+      }
+    }
+  }
+
+  .card-footer {
+    background-color: #fff;
+    padding: 10px;
+    border-top: 1px solid #ccc;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+
+    a.btn-link {
+      color: #777777;
+      text-decoration: none;
+      font-size: 16px;
+      cursor: pointer;
+      transition: color 0.3s ease;
+
+      &:hover {
+        color: #777777;
+        text-decoration: underline;
+      }
+    }
+  }
+
+  @media only screen and (max-width: 768px) {
+    .card-body {
+      .category-limit-list {
+        .category-limit {
+          flex-direction: column;
+
+          .category-name {
+            flex: auto;
+            margin-right: 0;
+            margin-bottom: 5px;
+          }
+
+          .limit-amount {
+            flex: auto;
+            text-align: left;
+          }
+
+          .limit-date {
+            flex: auto;
+            text-align: left;
+            font-size: 0.8em;
           }
         }
       }
     }
   }
-  
+}
