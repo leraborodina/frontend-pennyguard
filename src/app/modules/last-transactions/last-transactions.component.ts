@@ -57,14 +57,14 @@ export class LastTransactionsComponent implements OnInit {
   }
 
   setErrorMessages(error: any): void {
-    this.errorMessage = 'Fehler beim Abrufen der Daten';
+    this.errorMessage = 'Ошибка получения данных';
   }
 
   navigateToCreateTransaction(): void {
     this.router.navigate(['/create-transaction']);
   }
 
-  getCategoryName(categoryId: number): string {
-    return 'Kategorienname';
+  navigateToTransactions(): void {
+    this.router.navigate(['/transaction-overview']);
   }
 }

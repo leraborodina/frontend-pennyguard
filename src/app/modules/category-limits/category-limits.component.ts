@@ -56,6 +56,10 @@ export class CategoryLimitsComponent implements OnInit {
     this.router.navigate(['/limit-form']);
   }
 
+  navigateTLimits(): void {
+    this.router.navigate(['/limit-overview']);
+  }
+
   setErrorMessages(error: any): void {
     this.errorMessage = 'Fehler beim Abrufen der Daten';
   }

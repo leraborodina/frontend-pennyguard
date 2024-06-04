@@ -13,6 +13,7 @@ import { CategoryService } from '../../core/services/category.service';
 import { TransactionService } from '../../core/services/transaction.service';
 import { Category } from '../../shared/interfaces/category.interface';
 import { Transaction } from '../../shared/interfaces/transaction.interface';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-chart',
@@ -34,6 +35,7 @@ export class ChartComponent implements OnInit, OnDestroy {
     private transactionService: TransactionService,
     private categoryService: CategoryService,
     private changeDetector: ChangeDetectorRef,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -195,5 +197,9 @@ export class ChartComponent implements OnInit, OnDestroy {
       this.displayedChartMonth === this.minTransactionDate.getMonth() + 1 &&
       this.displayedChartYear === this.minTransactionDate.getFullYear()
     );
+  }
+
+  navigateToCharts() {
+    this.router.navigate(['/app-transaction-analysis']);
   }
 }

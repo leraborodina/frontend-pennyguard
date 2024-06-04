@@ -80,8 +80,6 @@ export class FinanceCardComponent implements OnInit {
     return lastDays[month]; // Retrieve the last day from the array
   }
 
-
-
   parseDate(dateString: string): Date | null {
     const parsedDate = new Date(dateString);
     return isNaN(parsedDate.getTime()) ? null : parsedDate;

@@ -34,10 +34,14 @@ export class FinancialGoalCardComponent implements OnInit {
   }
 
   navigateToCreateGoal(): void {
+    this.router.navigate(['/financial-goal-form']);
+  }
+
+  navigateToGoals(): void {
     this.router.navigate(['/app-financial-goal-overview']);
   }
 
   setErrorMessages(error: any): void {
-    this.errorMessage = 'Fehler beim Abrufen der Daten';
+    this.errorMessage = 'Ошибка получения данных';
   }
 }

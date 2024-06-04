@@ -15,7 +15,6 @@ import { DashboardComponent } from './modules/dashboard/dashboard.component';
 import { LimitOverviewComponent } from './modules/limit-overview/limit-overview.component';
 import { NotificationsOverviewComponent } from './modules/notifications-overview/notifications-overview.component';
 import { FinancialGoalFormComponent } from './modules/financial-goal-form/financial-goal-form.component';
-import { NotificationsComponent } from './modules/notifications/notifications.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FinancialGoalOverviewComponent } from './modules/financial-goal-overview/financial-goal-overview.component';
 import { CategoryFormComponent } from './modules/category-form/category-form.component';
@@ -46,6 +45,11 @@ const routes: Routes = [
   {
     path: 'transaction-chart',
     component: TransactionChartComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'app-financial-goal-overview',
+    component: FinancialGoalOverviewComponent,
     canActivate: [AuthGuard],
   },
   {
