@@ -7,15 +7,16 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 20px;
+  padding: 10px;
 
-  header {
-    margin-bottom: 20px;
+  .label-container {
+    margin: 10px;
   }
 
   .registration-form {
-    @include form-container; // Apply form-container mixin
-    background-color: #F0F0F0; // Change background color
+    @include form-container;
+    text-align: left;
+    background-color: #ffff;
 
     .form-group {
       margin-top: var(--padding);
@@ -27,37 +28,36 @@
       }
 
       input {
-        @include input-styles; // Include input styles from shared-styles.scss
+        @include input-styles;
       }
 
       .password-container {
         position: relative;
         width: 100%;
+      }
 
-        input {
-          width: 100%;
-          padding-right: 30px;
-        }
+      .password-container input {
+        width: 100%;
+        padding-right: 30px;
+      }
 
-        .toggle-password {
-          position: absolute;
-          right: 10px;
-          top: 50%;
-          transform: translateY(-50%);
-          cursor: pointer;
-          color: #aaa;
+      .password-container .toggle-password {
+        position: absolute;
+        right: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        cursor: pointer;
+        color: #aaa;
+      }
 
-          &:hover {
-            color: #000;
-          }
-        }
+      .password-container .toggle-password:hover {
+        color: #000;
       }
     }
 
     button {
-      @include primary-button; // Apply primary button styles from shared-styles.scss
-      width: 100%;
-      margin-top: 10px;
+      @include primary-button;
+      padding: 10px;
       font-size: 1rem;
     }
 
@@ -67,11 +67,6 @@
 
       p {
         margin-bottom: 5px;
-      }
-
-      a {
-        color: var(--primary-color);
-        text-decoration: none;
       }
     }
   }

@@ -10,17 +10,17 @@
   padding: 20px;
 }
 
-.login-form {
-  @include form-container; // Apply form-container mixin
-  text-align: left; // Align form content to the left
-  background-color: #F0F0F0; // Change background color
+.label-container {
+  margin: 10px;
+}
 
-  header {
-    margin-bottom: 20px;
-  }
+.login-form {
+  @include form-container;
+  text-align: left;
+  background-color: #ffff;
 
   .form-group {
-    margin-top: var(--padding);
+    margin: var(--padding);
 
     label {
       display: block;
@@ -29,7 +29,7 @@
     }
 
     input {
-      @include input-styles; // Include input styles from shared-styles.scss
+      @include input-styles;
     }
 
     .password-container {
@@ -57,9 +57,8 @@
   }
 
   button {
-    @include primary-button; // Apply primary button styles from shared-styles.scss
-    width: 100%;
-    margin-top: 10px;
+    @include primary-button;
+    padding: 10px;
     font-size: 1rem;
   }
 

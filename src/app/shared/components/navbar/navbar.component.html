@@ -24,23 +24,23 @@
         </a>
         <div class="dropdown-menu" aria-labelledby="transactionsDropdown">
           <a class="dropdown-item link" routerLink="/transaction">Создать</a>
-          <a class="dropdown-item link" routerLink="/upload">Загрузить из банка</a>
-          <a class="dropdown-item link" routerLink="/transaction-overview">Транзакции</a>
+          <!-- <a class="dropdown-item link" routerLink="/upload">Загрузить из банка</a> -->
+          <a class="dropdown-item link" routerLink="/transaction-overview">Обзор</a>
           <a class="dropdown-item link" routerLink="/app-transaction-analysis">Анализ</a>
         </div>
       </li>
-      <li class="nav-item" *ngIf="isLoggedIn()">
+      <!-- <li class="nav-item" *ngIf="isLoggedIn()">
         <a class="nav-link link" routerLink="/notifications-overview">Напоминания</a>
-      </li>
+      </li> -->
       <li class="nav-item dropdown" *ngIf="isLoggedIn()">
         <a class="nav-link dropdown-toggle link" href="#" id="goalsDropdown" role="button" data-toggle="dropdown"
           aria-haspopup="true" aria-expanded="false">
           Цели
         </a>
         <div class="dropdown-menu" aria-labelledby="goalsDropdown">
-          <a class="dropdown-item link" routerLink="/savings-calculator">Калькулятор накоплений</a>
           <a class="dropdown-item link" routerLink="/create-goal">Создать</a>
           <a class="dropdown-item link" routerLink="/financial-goal-overview">Обзор</a>
+          <a class="dropdown-item link" routerLink="/savings-calculator">Калькулятор накоплений</a>
         </div>
       </li>
       <li class="nav-item dropdown" *ngIf="isLoggedIn()">

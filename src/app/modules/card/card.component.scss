@@ -5,7 +5,6 @@
     flex-wrap: wrap;
     gap: 20px;
     padding: 20px;
-    width: 100%;
 }
 
 .tile {
@@ -13,7 +12,7 @@
     max-width: 100%;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     border-radius: 25px;
-    background-color: #f6fff9;
+    background-color: #ffff;
 }
 
 .tile-content {
@@ -22,7 +21,10 @@
     gap: 10px;
     padding: 20px;
     height: 100%;
-    /* Ensure tile-content takes full height */
+}
+
+.title {
+    font-size: bold;
 }
 
 .content {
@@ -74,7 +76,7 @@
 
 @media (min-width: 900px) {
     .tile {
-        flex-basis: calc(33.33% - 20px);
-        max-width: calc(33.33% - 20px);
+        flex-basis: calc(50% - 20px);
+        max-width: calc(50% - 20px);
     }
 }

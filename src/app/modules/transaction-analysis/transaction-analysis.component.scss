@@ -1,0 +1,60 @@
+// Import the shared styles SCSS file
+@import '../../../styles/shared-styles.scss';
+
+.transaction-analysis-container {
+    @include container-styles;
+    display: flex;
+    flex-direction: column; // Stack charts vertically
+    align-items: center; // Center horizontally
+    gap: 20px;
+    max-width: 1200px; // Set maximum width
+    margin: 20px auto; // Center the container horizontally on the page
+}
+
+.transaction-analysis-container>* {
+    width: 100%; // Ensure charts fill the width
+    max-width: calc(100% - 40px); // Adjust for gap
+    position: relative;
+}
+
+.transaction-analysis-container>.long-container {
+    flex-grow: 0;
+    max-height: none;
+}
+
+.transaction-analysis-container>app-chart {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.transaction-analysis-container>app-chart:last-child {
+    max-width: calc(100% - 20px); // Adjust the width for the last chart
+    display: flex;
+    justify-content: center; // Center horizontally
+}
+
+/* Media queries for responsive layouts */
+@include respond-to(small) {
+    .transaction-analysis-container>* {
+        max-width: calc(100% - 40px);
+    }
+}
+
+@include respond-to(medium) {
+    .transaction-analysis-container>* {
+        max-width: calc(100% - 40px);
+    }
+}
+
+@include respond-to(large) {
+    .transaction-analysis-container>* {
+        max-width: calc(100% - 40px);
+    }
+}
+
+@include respond-to(xlarge) {
+    .transaction-analysis-container>* {
+        max-width: calc(100% - 40px);
+    }
+}

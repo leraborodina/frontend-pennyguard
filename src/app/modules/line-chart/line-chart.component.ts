@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { Transaction } from '../../shared/interfaces/transaction.interface';
 import Chart from 'chart.js/auto';
 import { forkJoin, Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { UtilsService } from '../../shared/services/utils.service';
 import { TransactionType } from '../../shared/interfaces/transaction-type.interface';
 import { TransactionService } from '../../core/services/transaction.service';
+import { Transaction } from '../../shared/interfaces/transaction.interface';
 
 @Component({
   selector: 'app-line-chart',
@@ -57,17 +57,15 @@ export class LineChartComponent implements OnInit {
   groupTransactionsByYear(transactions: Transaction[]) {
     const groupedTransactions: { [key: string]: { [key: string]: { income: number; expense: number } } } = {};
 
-    const incomeTypeId = this.transactionTypes.filter((type) => type.type === 'доходы').map((type) => type.id);
+    const incomeTypeIds = this.transactionTypes.filter((type) => type.type === 'доходы').map((type) => type.id);
 
     transactions.forEach((transaction) => {
       const transactionDate = new Date(transaction.createdAt);
       const year = transactionDate.getFullYear().toString();
-      const monthName = this.getMonthName(transactionDate.getMonth());
-      const isIncome = incomeTypeId.includes(transaction.typeId);
+      const monthName = this.utilsService.getMonthName(transactionDate.getMonth());
+      const isIncome = incomeTypeIds.includes(transaction.typeId);
 
-      if (!groupedTransactions[year]) {
-        groupedTransactions[year] = {};
-      }
+      groupedTransactions[year] = groupedTransactions[year] || {};
 
       if (!groupedTransactions[year][monthName]) {
         groupedTransactions[year][monthName] = { income: 0, expense: 0 };
@@ -77,24 +75,7 @@ export class LineChartComponent implements OnInit {
       isIncome ? monthData.income += transaction.amount : monthData.expense += transaction.amount;
     });
 
-    // Ensure every month is initialized for every year
-    const allYears = [...new Set(transactions.map(transaction => new Date(transaction.createdAt).getFullYear()))];
-    allYears.forEach(year => {
-      if (!groupedTransactions[year]) {
-        groupedTransactions[year] = {};
-      }
-      this.utilsService.getMonthNames().forEach(month => {
-        if (!groupedTransactions[year][month]) {
-          groupedTransactions[year][month] = { income: 0, expense: 0 };
-        }
-      });
-    });
-
     return groupedTransactions;
-  }
-
-  getMonthName(monthIndex: number) {
-    return this.utilsService.getMonthName(monthIndex);
   }
 
   createChart() {

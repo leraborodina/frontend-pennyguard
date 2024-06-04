@@ -1,6 +1,9 @@
   <!-- transaction form html -->
-<div class="transaction-container">
-  <h2 class="transaction-title">{{ transaction ? 'Обновить транзакцию' : 'Новая транзакция' }}</h2>
+<div class="container">
+  <div class="label-container">
+    <h2>{{ transaction ? 'Обновить транзакцию' : 'Новая транзакция' }}</h2>
+  </div>
+
   <form [formGroup]="transactionForm" (ngSubmit)="createOrUpdate()">
     <div class="form-group">
       <label for="purpose" aria-labelledby="purpose-label">Цель:</label>
@@ -64,8 +67,8 @@
       </div>
     </div>
 
-    <div class="button-container">
-      <button class="custom-button" type="submit">{{ transaction ? 'Обновить' : 'Создать' }}</button>
-    </div>
+  
+      <button class="primary-button" type="submit">{{ transaction ? 'Обновить' : 'Создать' }}</button>
+
   </form>
 </div>
