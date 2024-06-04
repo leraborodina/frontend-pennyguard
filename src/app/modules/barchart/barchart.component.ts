@@ -1,14 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-
 import { Transaction } from '../../shared/interfaces/transaction.interface';
-
 import Chart from 'chart.js/auto';
 import { forkJoin, Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { UtilsService } from '../../shared/services/utils.service';
 import { TransactionType } from '../../shared/interfaces/transaction-type.interface';
 import { TransactionService } from '../../core/services/transaction.service';
-
 
 @Component({
   selector: 'app-barchart',
@@ -22,6 +19,7 @@ export class BarchartComponent implements OnInit {
   groupedTransactions: { [key: string]: { [key: string]: { income: number; expense: number } } } = {};
   displayedYear: number = new Date().getFullYear();
   isUpdate: boolean = false;
+  showNoTransactionsMessage: boolean = false;
 
   constructor(
     private transactionService: TransactionService,
@@ -119,6 +117,8 @@ export class BarchartComponent implements OnInit {
         ],
       },
     });
+
+    this.showNoTransactionsMessage = this.isEmptyData();
   }
 
   createDataSet(transactionType: string, totalAmounts: number[], backgroundColor: string) {
@@ -136,6 +136,7 @@ export class BarchartComponent implements OnInit {
 
   updateChart() {
     this.isUpdate = true;
+    this.destroyChart();
     this.getTransactions().subscribe((transactions: Transaction[]) => {
       const transactionsForYear = transactions.filter(transaction => {
         const transactionDate = new Date(transaction.createdAt);
@@ -146,4 +147,28 @@ export class BarchartComponent implements OnInit {
       this.createChart();
     });
   }
+
+  destroyChart() {
+    if (this.barchart) {
+      this.barchart.destroy();
+      this.barchart = undefined;
+    }
+  }
+
+  isEmptyData(): boolean {
+    let isEmpty = true;
+    const currentYear = new Date().getFullYear();
+    const months = this.utilsService.getMonthNames();
+    const groupedTransactions = this.groupTransactionsByYear(this.transactions);
+
+    months.forEach((month) => {
+      const monthData = groupedTransactions[currentYear.toString()][month];
+      if (monthData && (monthData.income !== 0 || monthData.expense !== 0)) {
+        isEmpty = false;
+      }
+    });
+
+    return isEmpty;
+  }
+
 }

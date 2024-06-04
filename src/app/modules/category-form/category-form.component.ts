@@ -94,14 +94,14 @@ export class CategoryFormComponent implements OnInit {
       const category: Category = this.categoryForm.value;
       console.log(category);
       this.categoryService.createCategory(category).subscribe(
-        () => this.router.navigate(['/categories']),
+        () => this.router.navigate(['/category-overview']),
         (error) => {
           console.log(error.status == 409)
-          if (error.status == 409) { // HTTP 409: Conflict - Duplicate key violation
+          if (error.status == 409) {
             this.errorMessage = 'Категория уже существует.';
-          } else if (error.status == 400) { // HTTP 400: Bad Request
-            this.errorMessage = error.error; // Display the specific error message
-          } else if (error.status == 500) { // HTTP 500: Internal Server Error
+          } else if (error.status == 400) {
+            this.errorMessage = error.error;
+          } else if (error.status == 500) {
             this.errorMessage = 'Внутренняя ошибка сервера';
           } else {
             console.error('Ошибка при создании категории:', error);

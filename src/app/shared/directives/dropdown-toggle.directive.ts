@@ -1,27 +1,23 @@
-import { Directive, HostListener, ElementRef, Renderer2 } from '@angular/core';
+import { Directive, HostListener, ElementRef, Renderer2, Input } from '@angular/core';
+import { NavbarComponent } from '../components/navbar/navbar.component';
+ 
 
 @Directive({
     selector: '[appDropdownToggle]'
 })
 export class DropdownToggleDirective {
+    @Input() menuName!: string;
 
-    constructor(private el: ElementRef, private renderer: Renderer2) { }
+    constructor(
+        private el: ElementRef,
+        private renderer: Renderer2,
+        private navbarComponent: NavbarComponent
+    ) { }
 
     @HostListener('click', ['$event'])
     onClick(event: Event) {
-        const dropdownMenu = this.el.nativeElement.nextElementSibling;
-        const isMenuOpen = dropdownMenu.classList.contains('show');
-
-        // Toggle the 'show' class on the dropdown menu
-        if (isMenuOpen) {
-            this.renderer.removeClass(dropdownMenu, 'show');
-        } else {
-            this.renderer.addClass(dropdownMenu, 'show');
-        }
-
-        // Prevent the default action of the click event
+        this.navbarComponent.toggleDropdownMenu(this.menuName);
         event.preventDefault();
         event.stopPropagation();
     }
-
 }

@@ -1,7 +1,8 @@
-/* General styles */
+@import '../../../styles/shared-styles.scss';
+
 .main {
   font-family: "Inter", sans-serif;
-  background-color: #e0e3e1;
+  background-color: #FDF2E9;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -9,8 +10,73 @@
   padding: 20px;
 }
 
-/* Grid container */
 .grid-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  padding: 20px;
+  width: 100%;
+
+  .text-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: 20px;
+    flex: 1 1 45%;
+
+    &.limit {
+      text-align: right;
+      padding-right: 10%;
+      padding-left: 0%;
+    }
+
+    @include respond-to(small) {
+      align-items: center;
+      text-align: center;
+      padding: 10px;
+    }
+  }
+
+  .image-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 1 1 45%;
+  }
+
+  img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 5%;
+  }
+
+  h2 {
+    font-size: 2rem;
+
+    @include respond-to(small) {
+      font-size: 1.5rem;
+    }
+  }
+
+  p {
+    font-family: "Jura", sans-serif;
+    font-size: 1rem;
+
+    @include respond-to(small) {
+      font-size: 0.875rem;
+    }
+  }
+
+  .button-container {
+    display: flex;
+    gap: 1rem;
+  }
+}
+
+.tiles-container {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -19,82 +85,17 @@
   width: 100%;
 }
 
-/* Text container */
-.text-container {
+.grid-item {
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: flex-start;
-  gap: 1rem;
+  gap: 20px;
+  width: 100%;
   padding: 20px;
-  flex: 1 1 45%;
 }
 
-.limit {
-  text-align: right;
-  padding-right: 10%;
-  padding-left: 0%;
-}
-
-/* Buttons */
-button {
-  background-color: #333333;
-  padding: 10px;
-  color: #e0e3e1;
-  border-radius: 12px;
-  min-width: fit-content;
-  font-family: "Inter", sans-serif;
-}
-
-/* Image container */
-.image-container {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex: 1 1 45%;
-}
-
-img {
-  max-width: 100%;
-  height: auto;
-  border-radius: 5%;
-}
-
-/* Headings */
-h2 {
-  font-size: 2rem;
-}
-
-/* Paragraphs */
-p {
-  font-family: "Jura", sans-serif;
-  font-size: 1rem;
-}
-
-/* Button container */
-.button-container {
-  display: flex;
-  gap: 1rem;
-}
-
-/* Media queries */
 @media (max-width: 600px) {
-  .text-container {
-    align-items: center;
-    text-align: center;
-    padding: 10px;
-  }
-
   .image-container {
     order: -1;
-  }
-
-  h2 {
-    font-size: 1.5rem;
-  }
-
-  p {
-    font-size: 0.875rem;
   }
 
   button {

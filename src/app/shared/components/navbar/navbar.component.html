@@ -1,64 +1,65 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <div class="container navbar-container">
-    <div class="navbar-left-items">
-      <a class="navbar-brand" href="startpage">PennyGuard</a>
-    </div>
-    <button class="navbar-toggler" type="button" (click)="toggleNavbar()">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" [ngClass]="{ 'show': !isNavbarCollapsed }">
-      <ul class="navbar-nav navbar-right-items">
-        <li class="nav-item" *ngIf="isLoggedIn(); else notLoggedInMenu">
-          <a class="nav-link" routerLink="/dashboard">Dashboard</a>
-        </li>
-        <ng-template #notLoggedInMenu>
-          <li class="nav-item">
-            <a class="nav-link" routerLink="/startpage">Главная</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" routerLink="/login">Войти</a>
-          </li>
-        </ng-template>
-        <li class="nav-item dropdown" *ngIf="isLoggedIn()">
-          <a class="nav-link dropdown-toggle" role="button" aria-haspopup="true" aria-expanded="false"
-            (click)="toggleDropdownMenu('transactions')">
-            Транзакции
-          </a>
-          <div class="dropdown-menu" [ngClass]="{ 'show': isDropdownMenuOpen['transactions'] }">
-            <a class="dropdown-item" routerLink="/transaction">Создать</a>
-            <a class="dropdown-item" routerLink="/upload">Загрузить из банка</a>
-            <a class="dropdown-item" routerLink="/transaction-overview">Транзакции</a>
-            <a class="dropdown-item" routerLink="/transaction-chart">Анализ</a>
-          </div>
-        </li>
-        <li class="nav-item dropdown" *ngIf="isLoggedIn()">
-          <a class="nav-link dropdown-toggle" role="button" aria-haspopup="true" aria-expanded="false"
-            (click)="toggleDropdownMenu('limits')">
-            Лимиты
-          </a>
-          <div class="dropdown-menu" [ngClass]="{ 'show': isDropdownMenuOpen['limits'] }">
-            <a class="dropdown-item" routerLink="/limit-form">Создать</a>
-            <a class="dropdown-item" routerLink="/limit-overview">Лимиты</a>
-          </div>
-        </li>
-        <li class="nav-item" *ngIf="isLoggedIn()">
-          <a class="nav-link" routerLink="/notifications-overview">Напоминания</a>
-        </li>
-        <li class="nav-item" *ngIf="isLoggedIn()">
-          <a class="nav-link" routerLink="/financial-goal-overview">Цели</a>
-        </li>
-        <li class="nav-item" *ngIf="isLoggedIn()">
-          <a class="nav-link" routerLink="/category-form">Категории создать</a>
-        </li>
-        <li class="nav-item" *ngIf="isLoggedIn()">
-          <a class="nav-link" routerLink="/category-overview">Категории</a>
-        </li>
-      </ul>
-      <ul class="navbar-nav ml-auto logout-item" *ngIf="isLoggedIn()">
+<nav class="navbar navbar-expand-lg">
+  <a class="navbar-brand link penny-guard-label" routerLink="startpage">PennyGuard</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
+    aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNavDropdown">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item" *ngIf="isLoggedIn(); else notLoggedInMenu">
+        <a class="nav-link link" routerLink="/dashboard">Dashboard</a>
+      </li>
+      <ng-template #notLoggedInMenu>
         <li class="nav-item">
-          <a class="nav-link" (click)="logout()">Выйти</a>
+          <a class="nav-link link" routerLink="/startpage">Главная</a>
         </li>
-      </ul>
-    </div>
+        <li class="nav-item">
+          <a class="nav-link link" routerLink="/login">Войти</a>
+        </li>
+      </ng-template>
+      <li class="nav-item dropdown" *ngIf="isLoggedIn()">
+        <a class="nav-link dropdown-toggle link" href="#" id="transactionsDropdown" role="button" data-toggle="dropdown"
+          aria-haspopup="true" aria-expanded="false">
+          Транзакции
+        </a>
+        <div class="dropdown-menu" aria-labelledby="transactionsDropdown">
+          <a class="dropdown-item link" routerLink="/transaction">Создать</a>
+          <a class="dropdown-item link" routerLink="/upload">Загрузить из банка</a>
+          <a class="dropdown-item link" routerLink="/transaction-overview">Транзакции</a>
+          <a class="dropdown-item link" routerLink="/app-transaction-analysis">Анализ</a>
+        </div>
+      </li>
+      <li class="nav-item" *ngIf="isLoggedIn()">
+        <a class="nav-link link" routerLink="/notifications-overview">Напоминания</a>
+      </li>
+      <li class="nav-item dropdown" *ngIf="isLoggedIn()">
+        <a class="nav-link dropdown-toggle link" href="#" id="goalsDropdown" role="button" data-toggle="dropdown"
+          aria-haspopup="true" aria-expanded="false">
+          Цели
+        </a>
+        <div class="dropdown-menu" aria-labelledby="goalsDropdown">
+          <a class="dropdown-item link" routerLink="/savings-calculator">Калькулятор накоплений</a>
+          <a class="dropdown-item link" routerLink="/create-goal">Создать</a>
+          <a class="dropdown-item link" routerLink="/financial-goal-overview">Обзор</a>
+        </div>
+      </li>
+      <li class="nav-item dropdown" *ngIf="isLoggedIn()">
+        <a class="nav-link dropdown-toggle link" href="#" id="categoriesDropdown" role="button" data-toggle="dropdown"
+          aria-haspopup="true" aria-expanded="false">
+          Категории
+        </a>
+        <div class="dropdown-menu" aria-labelledby="categoriesDropdown">
+          <a class="dropdown-item link" routerLink="/category-form">Создать</a>
+          <a class="dropdown-item link" routerLink="/category-overview">Обзор</a>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div class="ml-auto">
+    <ul class="navbar-nav">
+      <li class="nav-item" *ngIf="isLoggedIn()">
+        <a class="nav-link link" (click)="logout()">Выйти</a>
+      </li>
+    </ul>
   </div>
 </nav>

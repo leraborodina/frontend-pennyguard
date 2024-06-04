@@ -26,7 +26,7 @@ export class LimitFormComponent implements OnInit {
   ) {
     this.limitForm = this.fb.group({
       amount: ['', [Validators.required, Validators.min(0.01)]],
-      salaryDay: ['', [Validators.required, Validators.min(1), Validators.max(31)]],
+      createdAt: ['', [Validators.required, Validators.min(1), Validators.max(31)]],
       categoryId: [0, Validators.required],
     });
   }
@@ -46,7 +46,7 @@ export class LimitFormComponent implements OnInit {
       this.limit = limit;
       this.limitForm.patchValue({
         amount: this.limit?.amount,
-        salaryDay: this.limit?.salaryDay,
+        createdAt: this.limit?.startDay,
         categoryId: this.limit?.categoryId,
       });
     });
@@ -68,7 +68,7 @@ export class LimitFormComponent implements OnInit {
     const formData = this.limitForm.value;
     const limit: Limit = {
       amount: formData.amount,
-      salaryDay: formData.salaryDay,
+      startDay: formData.createdAt,
       categoryId: formData.categoryId,
     };
 

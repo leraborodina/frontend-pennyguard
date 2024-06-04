@@ -1,5 +1,6 @@
+  <!-- transaction form html -->
 <div class="transaction-container">
-  <h2>{{ transaction ? 'Обновить транзакцию' : 'Новая транзакция' }}</h2>
+  <h2 class="transaction-title">{{ transaction ? 'Обновить транзакцию' : 'Новая транзакция' }}</h2>
   <form [formGroup]="transactionForm" (ngSubmit)="createOrUpdate()">
     <div class="form-group">
       <label for="purpose" aria-labelledby="purpose-label">Цель:</label>

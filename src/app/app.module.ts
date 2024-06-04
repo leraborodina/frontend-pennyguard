@@ -63,6 +63,7 @@ import { FinancialGoalOverviewComponent } from './modules/financial-goal-overvie
 import { MessageComponent } from './modules/message/message.component';
 import { CategoryFormComponent } from './modules/category-form/category-form.component';
 import { CategoryOverviewComponent } from './modules/category-overview/category-overview.component';
+import { TransactionAnalysisComponent } from './modules/transaction-analysis/transaction-analysis.component';
 
 const config: SocketIoConfig = { url: 'ws://localhost:8080', options: {} };
 
@@ -101,7 +102,8 @@ const config: SocketIoConfig = { url: 'ws://localhost:8080', options: {} };
     FinancialGoalOverviewComponent,
     MessageComponent,
     CategoryFormComponent,
-    CategoryOverviewComponent
+    CategoryOverviewComponent,
+    TransactionAnalysisComponent
   ],
   imports: [
     BrowserModule,
@@ -150,5 +152,6 @@ const config: SocketIoConfig = { url: 'ws://localhost:8080', options: {} };
     { provide: ErrorHandler, useClass: GlobalErrorHandlerService },
   ],
   bootstrap: [AppComponent],
+
 })
 export class AppModule { }

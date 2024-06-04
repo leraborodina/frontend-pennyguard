@@ -29,7 +29,7 @@ export class RegistrationComponent {
   }
 
   onSubmit(): void {
-    if (this.registrationForm.valid) {
+    if (this.registrationForm.valid && this.passwordsMatch()) {
       const userData = {
         firstname: this.registrationForm.get('firstname')?.value,
         lastname: this.registrationForm.get('lastname')?.value,
@@ -64,9 +64,15 @@ export class RegistrationComponent {
 
   handleError(error: HttpErrorResponse): void {
     if (error.status === 400) {
-      this.errorMessage = error.error.message || 'Ошибка в запросе. Попробуйте снова.';
+      this.errorMessage = error.error;
     } else {
       this.errorMessage = 'Произошла непредвиденная ошибка. Пожалуйста, попробуйте позже.';
     }
+  }
+
+  passwordsMatch(): boolean {
+    const password = this.registrationForm.get('password')?.value;
+    const confirmedPassword = this.registrationForm.get('confirmedPassword')?.value;
+    return password === confirmedPassword;
   }
 }

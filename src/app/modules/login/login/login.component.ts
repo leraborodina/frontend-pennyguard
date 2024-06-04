@@ -13,6 +13,7 @@ import { throwError } from 'rxjs';
 export class LoginComponent implements OnInit {
   loginForm!: FormGroup;
   showPassword: boolean = false;
+  backendErrorMessage: string | null = null;
 
   constructor(
     private authService: AuthService,
@@ -79,12 +80,14 @@ export class LoginComponent implements OnInit {
   }
 
   private handleSuccessfulLogin(token: string): void {
+    this.backendErrorMessage = null;
     this.authService.setAuthToken(token);
     const redirectUrl = this.authService.getRedirectUrl();
     this.router.navigate([redirectUrl]);
   }
 
   private handleLoginError(error: any): void {
+    this.backendErrorMessage = error.error|| 'Ошибка входа. Попробуйте еще раз.';
     console.error('Login error:', error);
   }
 }

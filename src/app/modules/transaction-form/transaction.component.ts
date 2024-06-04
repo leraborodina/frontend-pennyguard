@@ -101,7 +101,7 @@ export class TransactionComponent implements OnInit {
         this.router.navigate(['/transaction-overview']);
       },
       (error) => {
-        console.error('Error creating transaction:', error);
+        console.error('Ошибка при создании транзакции:', error);
       },
     );
   }
@@ -117,11 +117,11 @@ export class TransactionComponent implements OnInit {
     };
 
     this.transactionService.updateTransaction(transaction, transaction.id).subscribe(
-      (response) => {
+      () => {
         this.router.navigate(['/transaction-overview']);
       },
       (error) => {
-        console.error('Error updating transaction:', error);
+        console.error('Ошибка при обновлении транзакции:', error);
       },
     );
   }

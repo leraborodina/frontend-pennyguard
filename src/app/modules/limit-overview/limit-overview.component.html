@@ -1,20 +1,40 @@
 <!-- src/app/components/limit-overview/limit-overview.component.html -->
-<div class="limit-overview">
-    <h2>Обзор лимитов</h2>
-    <div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
-    <div class="row">
-        <div class="col-md-4" *ngFor="let limit of limits">
-            <div class="card mb-4">
-                <div class="card-header">
-                    {{ getCategoryName(limit.categoryId) }}
+<div class="container">
+    <div class="transaction-container">
+        <div class="card">
+            <div class="card-header">
+                Лимиты
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Название категории</th>
+                                <th>Сумма</th>
+                                <th>День отсчета</th>
+                                <th>Действия</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let limit of limits">
+                                <td>{{ getCategoryName(limit.categoryId) }}</td>
+                                <td>{{ limit.amount | currency:'RUB ':'symbol' }}</td>
+                                <td>{{ limit.startDay }}</td>
+                                <td>
+                                    <div class="btn-group" role="group" aria-label="Действия с лимитом">
+                                        <button type="button" class="btn btn-pastel-green"
+                                            (click)="updateLimit(limit.id)">Обновить</button>
+                                        <button type="button" class="btn btn-pastel-yellow"
+                                            (click)="deleteLimit(limit.id)">Удалить</button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
-                <div class="card-body">
-                    <p class="card-text">Сумма: {{ limit.amount | currency:'RUB ':'symbol' }}</p>
-                    <p class="card-text">День начала: {{ limit.salaryDay }}</p>
-                </div>
-                <div class="card-footer">
-                    <button class="btn btn-warning" type="submit" (click)="updateLimit(limit.id)">Обновить</button>
-                    <button class="btn btn-danger" type="submit" (click)="deleteLimit(limit.id)">Удалить</button>
+                <div *ngIf="limits.length === 0" class="empty-list-message">
+                    Нет доступных лимитов.
                 </div>
             </div>
         </div>

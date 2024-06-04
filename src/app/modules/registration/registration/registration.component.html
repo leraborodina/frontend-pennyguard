@@ -1,10 +1,18 @@
 <div class="container">
   <header>
-    <h2>Добро пожаловать в Penny Guard</h2>
+    <h2>Регистрация</h2>
   </header>
 
-  <div *ngIf="successMessage" class="success-message">
+  <div *ngIf="successMessage" class="alert alert-success" role="alert">
     {{ successMessage }}
+  </div>
+
+  <div *ngIf="errorMessage" class="alert alert-danger" role="alert">
+    {{ errorMessage }}
+  </div>
+
+  <div *ngIf="!passwordsMatch()" class="error-message">
+    Пароли не совпадают
   </div>
 
   <form [formGroup]="registrationForm" (ngSubmit)="onSubmit()" class="registration-form" novalidate>
@@ -54,16 +62,14 @@
         placeholder="Повторите ваш пароль">
       <div *ngIf="isFieldInvalid('confirmedPassword')" class="error-message" id="confirmedPasswordHelp">
         <div *ngIf="registrationForm.get('confirmedPassword')?.errors?.['required']">Обязательное поле</div>
-        <div *ngIf="registrationForm.get('password')?.value !== registrationForm.get('confirmedPassword')?.value">Пароли
-          не совпадают</div>
       </div>
     </div>
 
-    <button type="submit" [disabled]="registrationForm.invalid">Зарегистрироваться</button>
+    <button type="submit" [disabled]="registrationForm.invalid" class="primary-button">Зарегистрироваться</button>
 
     <div class="login-link">
       <p>Уже есть аккаунт?</p>
-      <a routerLink="/login">Войти</a>
+      <a routerLink="/login" class="link">Войти</a>
     </div>
   </form>
 </div>

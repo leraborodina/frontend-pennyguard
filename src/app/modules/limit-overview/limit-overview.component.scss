@@ -1,115 +1,93 @@
-// Variables
+/* Variables */
 $primary-color: #263238; // Dark blue-gray
-$secondary-color: #78909C; // Light blue-gray
 $accent-color: #ECEFF1; // Light gray
 $font-family: 'Arial', sans-serif;
+$pastel-green: #77dd77;
+/* Pastel green */
+$pastel-yellow: #ffdfba;
+/* Pastel yellow */
 
-// Base Styles
-.limit-overview {
-    max-width: 1200px;
-    margin: 50px auto;
-    background-color: $accent-color;
-    border-radius: 8px;
-    padding: 30px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    font-family: $font-family;
+/* Base Styles */
+.container {
+    padding: 20px;
+}
 
-    h2 {
-        color: $primary-color;
-        font-size: 24px;
-        text-align: center;
-        margin-bottom: 20px;
-    }
+.transaction-container {
+    margin-top: 20px;
+}
 
-    .card {
-        background-color: #fff;
+.card {
+    border: 1px solid rgba(0, 0, 0, 0.125);
+    border-radius: 0.25rem;
+}
+
+.card-header {
+    background-color: #f8f9fa;
+    padding: 0.75rem 1.25rem;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+}
+
+.card-body {
+    padding: 1.25rem;
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.table th,
+.table td {
+    padding: 0.75rem;
+    vertical-align: top;
+    border-top: 1px solid rgba(0, 0, 0, 0.125);
+}
+
+.table th {
+    vertical-align: bottom;
+    border-bottom: 2px solid rgba(0, 0, 0, 0.125);
+    text-align: left;
+    color: $primary-color;
+}
+
+.table tbody tr:nth-of-type(odd) {
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+.empty-list-message {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.btn-group {
+    display: flex;
+}
+
+.btn {
+    width: 100px;
+    margin-right: 5px;
+    font-size: 14px;
+    padding: 10px;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+
+    &.btn-pastel-green {
+        background-color: $pastel-green;
         border: none;
-        border-radius: 8px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        margin-bottom: 20px;
-
-        .card-header {
-            background-color: $primary-color;
-            color: #fff;
-            font-weight: bold;
-            border-top-left-radius: 8px;
-            border-top-right-radius: 8px;
-        }
-
-        .card-body {
-            padding: 20px;
-
-            .card-text {
-                color: $primary-color;
-                font-size: 16px;
-                margin-bottom: 10px;
-            }
-        }
-
-        .card-footer {
-            background-color: $accent-color;
-            border-bottom-left-radius: 8px;
-            border-bottom-right-radius: 8px;
-            padding: 10px;
-            text-align: right;
-
-            .btn {
-                width: 100px;
-                margin-left: 10px;
-                font-size: 14px;
-                padding: 10px;
-                border-radius: 4px;
-                transition: background-color 0.3s ease;
-
-                &.btn-warning {
-                    background-color: $secondary-color;
-                    border: none;
-                    color: #fff;
-
-                    &:hover {
-                        background-color: darken($secondary-color, 10%);
-                    }
-                }
-
-                &.btn-danger {
-                    background-color: #e74c3c;
-                    border: none;
-                    color: #fff;
-
-                    &:hover {
-                        background-color: darken(#e74c3c, 10%);
-                    }
-                }
-
-                &.btn-success {
-                    background-color: $primary-color;
-                    border: none;
-                    color: #fff;
-
-                    &:hover {
-                        background-color: darken($primary-color, 10%);
-                    }
-                }
-            }
-        }
-    }
-
-    .create-limit-btn {
-        display: block;
-        width: 100%;
-        padding: 12px;
-        background-color: $primary-color;
         color: #fff;
-        font-size: 18px;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-        text-align: center;
-        margin-top: 20px;
-        transition: background-color 0.3s ease;
 
         &:hover {
-            background-color: darken($primary-color, 10%);
+            background-color: darken($pastel-green, 10%);
+        }
+    }
+
+    &.btn-pastel-yellow {
+        background-color: $pastel-yellow;
+        border: none;
+        color: #fff;
+
+        &:hover {
+            background-color: darken($pastel-yellow, 10%);
         }
     }
 }

@@ -20,6 +20,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { FinancialGoalOverviewComponent } from './modules/financial-goal-overview/financial-goal-overview.component';
 import { CategoryFormComponent } from './modules/category-form/category-form.component';
 import { CategoryOverviewComponent } from './modules/category-overview/category-overview.component';
+import { SavingsCalculatorComponent } from './modules/savings-calculator/savings-calculator.component';
+import { TransactionAnalysisComponent } from './modules/transaction-analysis/transaction-analysis.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -82,8 +84,23 @@ const routes: Routes = [
     canActivate: [AuthGuard],
   },
   {
+    path: 'savings-calculator',
+    component: SavingsCalculatorComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'create-goal',
+    component: FinancialGoalFormComponent,
+    canActivate: [AuthGuard],
+  },
+  {
     path: 'notifications-overview',
     component: NotificationsOverviewComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'app-transaction-analysis',
+    component: TransactionAnalysisComponent,
     canActivate: [AuthGuard],
   },
   {

@@ -1,15 +1,16 @@
 <div class="container">
   <header>
-    <h2>Добро пожаловать в Penny Guard</h2>
+    <h2>Логин</h2>
   </header>
 
-  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-form" novalidate>
+  <div *ngIf="backendErrorMessage" class="alert alert-danger" role="alert">
+    {{ backendErrorMessage }}
+  </div>
 
+  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-form" novalidate>
     <div class="form-group">
       <label for="email">Почта</label>
-
       <input type="email" id="email" formControlName="email" placeholder="Введите вашу почту">
-
       <div *ngIf="isFieldInvalid('email')" class="error-message" id="emailHelp">
         <div *ngIf="loginForm.get('email')?.errors?.['required']">Обязательное поле</div>
         <div *ngIf="loginForm.get('email')?.errors?.['email']">Неверный формат почты</div>
@@ -18,24 +19,22 @@
 
     <div class="form-group">
       <label for="password">Пароль</label>
-
       <div class="password-container">
         <input [type]="showPassword ? 'text' : 'password'" formControlName="password" placeholder="Введите ваш пароль">
         <i class="toggle-password" (click)="togglePasswordVisibility()"
           [ngClass]="showPassword ? 'fa fa-eye' : 'fa fa-eye-slash'"></i>
       </div>
-
       <div *ngIf="isFieldInvalid('password')" class="error-message" id="passwordHelp">
         <div *ngIf="loginForm.get('password')?.errors?.['required']">Обязательное поле</div>
         <div *ngIf="loginForm.get('password')?.errors?.['minlength']">Минимальная длина пароля - 6 символов</div>
       </div>
     </div>
 
-    <button type="submit" [disabled]="loginForm.invalid">Войти</button>
+    <button type="submit" [disabled]="loginForm.invalid" class="primary-button">Войти</button>
 
     <div class="register-link">
       <p>Еще нет аккаунта?</p>
-      <a routerLink="/registration">Зарегистрироваться</a>
+      <a routerLink="/registration" class="link">Зарегистрироваться</a>
     </div>
   </form>
 </div>

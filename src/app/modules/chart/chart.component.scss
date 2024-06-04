@@ -1,85 +1,60 @@
 .custom-card {
   border: 1px solid #ccc;
+  /* Rahmen um die Karte */
   border-radius: 8px;
-  background-color: #fff;
+  /* Abrundung der Ecken */
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  width: 100%;
-  max-width: 600px;
-  /* Optional: Maximale Breite festlegen */
+  /* Schatten für die Karte */
+  padding: 20px;
+  /* Innenabstand der Karte */
+  width: 300px;
+  /* Breite der Karte */
 }
 
 .custom-card-header {
-  padding: 10px;
-  background-color: #f0f0f0;
-  text-align: center;
+  /* Hintergrundfarbe des Headers */
   border-bottom: 1px solid #ccc;
-  border-top-left-radius: 8px;
-  border-top-right-radius: 8px;
+  /* Untere Trennlinie des Headers */
+  padding: 10px 0;
+  /* Innenabstand des Headers */
+  text-align: center;
+  /* Zentrieren des Textes */
 }
 
-
 .custom-card-body {
-  padding: 20px;
+  margin-top: 20px;
+  /* Abstand zum Header */
 }
 
 .chart-container {
-  display: flex;
-  align-items: center;
+  text-align: center;
+  /* Zentrieren des Inhalts */
 }
 
-
-.card-footer {
-  background-color: #fff;
-  padding: 10px;
-  border-top: 1px solid #ccc;
-  border-bottom-left-radius: 10px;
-  border-bottom-right-radius: 10px;
-
-
-  a.btn-link {
-    color: #777777;
-    text-decoration: none;
-    font-size: 16px;
-    cursor: pointer;
-    transition: color 0.3s ease;
-
-    &:hover {
-      color: #777777;
-      text-decoration: underline;
-    }
-  }
+.label-date-arrows {
+  display: flex;
+  justify-content: space-between;
+  /* Platzierung der Pfeile */
+  align-items: center;
+  /* Zentrieren des Datums */
+  margin-bottom: 10px;
+  /* Abstand zwischen dem Datum und dem Inhalt */
 }
 
 .arrow-left,
 .arrow-right {
-  display: flex;
-  align-items: center;
-  justify-content: center;
   cursor: pointer;
-  padding: 5px;
-}
-
-.arrow-left.disabled,
-.arrow-right.disabled {
-  color: #ccc;
-  cursor: not-allowed;
-}
-
-.arrow-left i,
-.arrow-right i {
-  font-size: 20px;
+  /* Zeiger anzeigen, wenn auf die Pfeile gezeigt wird */
 }
 
 .chart-wrapper {
-  flex: 1;
-  position: relative;
+  margin-top: 20px;
+  /* Abstand zum Datum */
 }
 
-.chart-wrapper canvas {
-  width: 100%;
-}
-
-.no-transactions-message {
-  font-style: italic;
-  color: #888;
+.card-footer {
+  text-align: center;
+  /* Zentrieren des Textes im Footer */
+  margin-top: 20px;
+  /* Abstand zum Inhalt */
 }

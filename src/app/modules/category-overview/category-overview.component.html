@@ -22,8 +22,10 @@
                 <td>{{ resolveTransactionType(category.typeId) }}</td>
                 <td>
                   <div class="btn-group" role="group" aria-label="Действия с категорией">
-                    <button type="button" class="btn btn-primary" (click)="updateCategory(category)">Обновить</button>
-                    <button type="button" class="btn btn-danger" (click)="deleteCategory(category)">Удалить</button>
+                    <button type="button" class="btn btn-custom-update"
+                      (click)="updateCategory(category)">Обновить</button>
+                    <button type="button" class="btn btn-custom-delete"
+                      (click)="deleteCategory(category)">Удалить</button>
                   </div>
                 </td>
               </tr>

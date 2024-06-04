@@ -1,3 +1,5 @@
+@import '../../../styles/shared-styles.scss';
+
 .transaction-container {
   max-width: 400px;
   margin: 20px auto;
@@ -5,9 +7,11 @@
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   background-color: #fff;
 
-  h2 {
+  .transaction-title {
     text-align: center;
-    color: #333;
+    color: var(--charcoal-blue);  
+    font-size: 2em;  
+    margin-bottom: 20px;  
   }
 
   form {
@@ -34,14 +38,24 @@
         border-radius: 4px;
         font-size: 16px;
         margin-top: 4px;
-        /* Add some spacing between input elements */
+        width: 100%; 
+        box-sizing: border-box; 
       }
 
       input[type="checkbox"] {
         width: 20px;
         height: 20px;
         margin-top: 4px;
-        /* Add some spacing between input elements */
+      }
+
+      input[type="time"] {
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        font-size: 16px;
+        margin-top: 4px;
+        width: 100%;
+        box-sizing: border-box;
       }
 
       .error-message {
@@ -56,14 +70,8 @@
     }
 
     .custom-button {
-      background-color: #666;
-      color: #fff;
-      padding: 10px 30px;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
+      @include primary-button; 
     }
-
   }
 
   @media screen and (max-width: 480px) {

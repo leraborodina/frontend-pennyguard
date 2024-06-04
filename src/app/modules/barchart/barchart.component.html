@@ -1,13 +1,13 @@
-<!-- <div class="chart-container">
-  <canvas id="MyBarChart" class="chart">{{ barchart }}</canvas>
-</div> -->
-
 <div class="year-selector">
-  <button (click)="switchYear(displayedYear - 1)">Previous Year</button>
+  <div class="arrow-left" (click)="switchYear(displayedYear - 1)">
+    <i class="bi bi-arrow-left"></i>
+  </div>
   <span>{{ displayedYear }}</span>
-  <button (click)="switchYear(displayedYear + 1)">Next Year</button>
+  <div class="arrow-right" (click)="switchYear(displayedYear + 1)">
+    <i class="bi bi-arrow-right"></i>
+  </div>
 </div>
-
 <div class="chart-container">
-  <canvas id="MyBarChart" class="chart">{{ barchart }}</canvas>
+  <canvas id="MyBarChart" class="chart" *ngIf="!showNoTransactionsMessage">{{ barchart }}</canvas>
+  <div class="no-transactions-message" *ngIf="showNoTransactionsMessage">No data available for the selected year.</div>
 </div>
