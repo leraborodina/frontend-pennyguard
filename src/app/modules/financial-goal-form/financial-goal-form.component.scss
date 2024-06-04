@@ -1,14 +1,38 @@
-// Variables
+@import '../../../styles/shared-styles.scss';
+
 $primary-color: #263238; // Dark blue-gray
 $secondary-color: #78909C; // Light blue-gray
-$accent-color: #ECEFF1; // Light gray
+$accent-color: #ffff; // Light gray
 $font-family: 'Arial', sans-serif;
 
-
 // Base Styles
+.outer-container {
+    display: flex;
+    justify-content: space-around;
+    gap: 20px;
+    /* Adds space between the two components */
+    max-width: 1000px;
+    /* Adjust as needed */
+    margin: 50px auto;
+}
+
+.goal-form-container {
+    flex: 1;
+    /* Allows the component to take equal space */
+    display: flex;
+    justify-content: center;
+    /* Center the content horizontally */
+    align-items: center;
+    /* Center the content vertically */
+}
+
+.savings-calculator-container {
+    flex: 1;
+    /* Allows the component to take equal space */
+}
+
 .savings-calculator {
     max-width: 400px;
-    margin: 50px auto;
     background-color: $accent-color;
     border-radius: 8px;
     padding: 30px;
@@ -54,19 +78,6 @@ $font-family: 'Arial', sans-serif;
     }
 
     button {
-        display: block;
-        width: 100%;
-        padding: 12px;
-        background-color: $primary-color;
-        color: #fff;
-        font-size: 18px;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-        transition: background-color 0.3s ease;
-
-        &:hover {
-            background-color: darken($primary-color, 10%);
-        }
+        @include primary-button;
     }
 }
