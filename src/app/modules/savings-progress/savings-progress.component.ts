@@ -17,14 +17,21 @@ export class SavingsProgressComponent implements OnInit {
   ngOnInit(): void {
     this.loadFinancialGoals();
     this.loadUserBalanceAfterSettingGoals();
+
+    console.log(this.financialGoals)
+    console.log(this.balance)
   }
 
   loadFinancialGoals(): void {
-    this.financialGoalService.getFinancialGoals().subscribe(goals => this.financialGoals = goals);
+    this.financialGoalService.getFinancialGoals().subscribe(goals => {
+      this.financialGoals = goals
+    });
   }
 
   loadUserBalanceAfterSettingGoals(): void {
-    this.transactionService.getUserBalanceAfterSettinigGoals().subscribe(balance => this.balance = balance);
+    this.transactionService.getUserBalanceAfterSettinigGoals().subscribe(balance => {
+      this.balance = balance
+    });
   }
 
   getTotalGoal(goalId: number): number {
@@ -34,10 +41,13 @@ export class SavingsProgressComponent implements OnInit {
 
   calculateProgressPercentage(goal: FinancialGoal): number {
     const totalGoal = this.getTotalGoal(goal.id);
+
     if (totalGoal === 0 || this.balance <= 0) {
       return 0;
     }
-    return Math.min((this.balance / totalGoal) * 100, 100);
+
+    const result = Math.min((this.balance / totalGoal) * 100, 100);
+    return Math.round(result);
   }
 
   noFinancialGoals(): boolean {
