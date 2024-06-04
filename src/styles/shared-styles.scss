@@ -73,13 +73,12 @@ button:hover {
 }
 
 @mixin container-styles {
-    background-color: var(--background-color);
-    padding: var(--padding);
+    background-color: var(--button-text-color);
+    padding: 20px;
     border-radius: var(--border-radius);
     width: 90%;
     max-width: 320px;
-    margin-top: 20px;
-    margin-bottom: 20px;
+    margin: 20px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
