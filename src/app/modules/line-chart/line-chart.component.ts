@@ -8,12 +8,12 @@ import { TransactionType } from '../../shared/interfaces/transaction-type.interf
 import { TransactionService } from '../../core/services/transaction.service';
 
 @Component({
-  selector: 'app-barchart',
-  templateUrl: './barchart.component.html',
-  styleUrls: ['./barchart.component.scss'],
+  selector: 'app-line-chart',
+  templateUrl: './line-chart.component.html',
+  styleUrls: ['./line-chart.component.scss'],
 })
-export class BarchartComponent implements OnInit {
-  barchart: Chart<"bar"> | undefined;
+export class LineChartComponent implements OnInit {
+  lineChart: Chart<"line"> | undefined;
   transactionTypes: TransactionType[] = [];
   transactions: Transaction[] = [];
   groupedTransactions: { [key: string]: { [key: string]: { income: number; expense: number } } } = {};
@@ -93,7 +93,6 @@ export class BarchartComponent implements OnInit {
     return groupedTransactions;
   }
 
-
   getMonthName(monthIndex: number) {
     return this.utilsService.getMonthName(monthIndex);
   }
@@ -104,26 +103,30 @@ export class BarchartComponent implements OnInit {
     const months = this.utilsService.getMonthNames();
     const dataIncome: number[] = [];
     const dataExpense: number[] = [];
-  
+
     months.forEach((month) => {
       const monthData = groupedTransactions[selectedYear] ? groupedTransactions[selectedYear][month] : undefined;
       dataIncome.push(monthData?.income ?? 0);
       dataExpense.push(monthData?.expense ?? 0);
     });
-  
-    if (this.barchart) {
-      if (this.barchart.data.datasets[0] && this.barchart.data.datasets[0].data) {
-        this.barchart.data.datasets[0].data = dataIncome;
+
+    if (this.lineChart) {
+      if (this.lineChart.data.datasets[0] && this.lineChart.data.datasets[0].data) {
+        this.lineChart.data.datasets[0].data = dataIncome;
       }
-      if (this.barchart.data.datasets[1] && this.barchart.data.datasets[1].data) {
-        this.barchart.data.datasets[1].data = dataExpense;
+      if (this.lineChart.data.datasets[1] && this.lineChart.data.datasets[1].data) {
+        this.lineChart.data.datasets[1].data = dataExpense;
       }
-      this.barchart.update();
+      this.lineChart.update();
       return;
     }
-  
-    this.barchart = new Chart('MyBarChart', {
-      type: 'bar',
+
+    const canvas = document.getElementById('MyLineChart') as HTMLCanvasElement;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    this.lineChart = new Chart(ctx, {
+      type: 'line',
       data: {
         labels: months,
         datasets: [
@@ -132,10 +135,9 @@ export class BarchartComponent implements OnInit {
         ],
       },
     });
-  
+
     this.showNoTransactionsMessage = this.isEmptyData();
   }
-  
 
   createDataSet(transactionType: string, totalAmounts: number[], backgroundColor: string) {
     return {
@@ -149,27 +151,18 @@ export class BarchartComponent implements OnInit {
     this.displayedYear = year;
     this.updateChart();
   }
-  
+
   updateChart() {
     this.isUpdate = true;
-    this.destroyChart();
     this.getTransactions().subscribe((transactions: Transaction[]) => {
       const transactionsForYear = transactions.filter(transaction => {
         const transactionDate = new Date(transaction.createdAt);
         return transactionDate.getFullYear() === this.displayedYear;
       });
-  
+
       this.groupedTransactions = this.groupTransactionsByYear(transactionsForYear);
       this.createChart();
     });
-  }
-  
-
-  destroyChart() {
-    if (this.barchart) {
-      this.barchart.destroy();
-      this.barchart = undefined;
-    }
   }
 
   isEmptyData(): boolean {
@@ -187,5 +180,4 @@ export class BarchartComponent implements OnInit {
 
     return isEmpty;
   }
-
 }

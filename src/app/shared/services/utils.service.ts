@@ -74,4 +74,12 @@ export class UtilsService {
     const formattedDate: string | null = this.datePipe.transform(date, 'yyyy-MM-ddTHH:mm:ss');
     return formattedDate || '';
   }
+
+  getIncomeTypeIds(): number[] {
+    return this.transactionTypes.getValue().filter(type => type.type === 'доходы').map(type => type.id);
+  }
+
+  getExpenseTypeIds(): number[] {
+    return this.transactionTypes.getValue().filter(type => type.type === 'расходы').map(type => type.id);
+  }
 }

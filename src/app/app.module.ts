@@ -64,6 +64,7 @@ import { MessageComponent } from './modules/message/message.component';
 import { CategoryFormComponent } from './modules/category-form/category-form.component';
 import { CategoryOverviewComponent } from './modules/category-overview/category-overview.component';
 import { TransactionAnalysisComponent } from './modules/transaction-analysis/transaction-analysis.component';
+import { LineChartComponent } from './modules/line-chart/line-chart.component';
 
 const config: SocketIoConfig = { url: 'ws://localhost:8080', options: {} };
 
@@ -103,7 +104,8 @@ const config: SocketIoConfig = { url: 'ws://localhost:8080', options: {} };
     MessageComponent,
     CategoryFormComponent,
     CategoryOverviewComponent,
-    TransactionAnalysisComponent
+    TransactionAnalysisComponent,
+    LineChartComponent
   ],
   imports: [
     BrowserModule,
