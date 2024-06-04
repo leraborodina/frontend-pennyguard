@@ -53,6 +53,16 @@
           <a class="dropdown-item link" routerLink="/category-overview">Обзор</a>
         </div>
       </li>
+      <li class="nav-item dropdown" *ngIf="isLoggedIn()">
+        <a class="nav-link dropdown-toggle link" href="#" id="limitsDropdown" role="button" data-toggle="dropdown"
+          aria-haspopup="true" aria-expanded="false">
+          Лимиты
+        </a>
+        <div class="dropdown-menu" aria-labelledby="limitsDropdown">
+          <a class="dropdown-item link" routerLink="/limit-form">Создать</a>
+          <a class="dropdown-item link" routerLink="/limit-overview">Обзор</a>
+        </div>
+      </li>
     </ul>
   </div>
   <div class="ml-auto">
