@@ -68,6 +68,7 @@ export class LimitService {
   // Обновить лимит
   updateLimit(limit: Limit): Observable<Limit> {
     const authToken = this.cookieService.get('authToken');
+    
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
       Authorization: `${authToken}`,

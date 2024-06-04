@@ -25,8 +25,9 @@ export class LimitFormComponent implements OnInit {
     private route: ActivatedRoute
   ) {
     this.limitForm = this.fb.group({
+      id: ['', [Validators.required]],
       amount: ['', [Validators.required, Validators.min(0.01)]],
-      createdAt: ['', [Validators.required, Validators.min(1), Validators.max(31)]],
+      startDay: ['', [Validators.required, Validators.min(1), Validators.max(31)]],
       categoryId: [0, Validators.required],
     });
   }
@@ -44,9 +45,11 @@ export class LimitFormComponent implements OnInit {
       })
     ).subscribe(limit => {
       this.limit = limit;
+  
       this.limitForm.patchValue({
+        id: this.limit?.id,
         amount: this.limit?.amount,
-        createdAt: this.limit?.startDay,
+        startDay: this.limit?.startDay,
         categoryId: this.limit?.categoryId,
       });
     });
@@ -66,6 +69,7 @@ export class LimitFormComponent implements OnInit {
 
   createLimit() {
     const formData = this.limitForm.value;
+
     const limit: Limit = {
       amount: formData.amount,
       startDay: formData.createdAt,
@@ -74,7 +78,6 @@ export class LimitFormComponent implements OnInit {
 
     this.limitService.createLimit(limit).subscribe(
       response => {
-        console.log(response);
         this.router.navigate(['/limit-overview']);
       },
       error => {
@@ -85,9 +88,12 @@ export class LimitFormComponent implements OnInit {
 
   updateLimit() {
     const formData = this.limitForm.value;
+
     const limit: Limit = {
-      ...this.limit,
-      ...formData,
+      id: formData.id,
+      amount: formData.amount,
+      startDay: formData.startDay,
+      categoryId: formData.categoryId,
     };
 
     this.limitService.updateLimit(limit).subscribe(

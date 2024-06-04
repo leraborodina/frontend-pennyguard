@@ -9,10 +9,10 @@
     </div>
 
     <div class="form-group">
-      <label for="createdAt">Начало отсчета:</label>
-      <input formControlName="createdAt" type="number" id="createdAt" required min="1" placeholder="Введите день начала отсчета (1-31)">
-      <div *ngIf="isFieldInvalid('createdAt')" class="error-message">Обязательное поле</div>
-      <div *ngIf="limitForm.get('createdAt')?.errors?.['min'] || limitForm.get('createdAt')?.errors?.['max']" class="error-message">Введите число от 1 до 31</div>
+      <label for="startDay">Начало отсчета:</label>
+      <input formControlName="startDay" type="number" id="startDay" required min="1" placeholder="Введите день начала отсчета (1-31)">
+      <div *ngIf="isFieldInvalid('startDay')" class="error-message">Обязательное поле</div>
+      <div *ngIf="limitForm.get('startDay')?.errors?.['min'] || limitForm.get('startDay')?.errors?.['max']" class="error-message">Введите число от 1 до 31</div>
     </div>
 
     <div class="form-group">
