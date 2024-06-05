@@ -56,15 +56,15 @@ export class LimitFormComponent implements OnInit {
   }
 
   createOrUpdate(): void {
-    if (!this.limitForm.valid) {
-      this.limitForm.markAllAsTouched();
-    } else {
+    // if (!this.limitForm.valid) {
+    //   this.limitForm.markAllAsTouched();
+    // } else {
       if (this.limit) {
         this.updateLimit();
       } else {
         this.createLimit();
       }
-    }
+    // }
   }
 
   createLimit() {
@@ -72,7 +72,7 @@ export class LimitFormComponent implements OnInit {
 
     const limit: Limit = {
       amount: formData.amount,
-      startDay: formData.createdAt,
+      startDay: formData.startDay,
       categoryId: formData.categoryId,
     };
 
