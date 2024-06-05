@@ -1,17 +1,17 @@
 <div class="card">
-    <div class="custom-card-header">
+    <div class="card-header">
         <h5>Финансовые цели на сбережения</h5>
     </div>
     <div class="card-body">
-        <div *ngIf="goals.length === 0" class="no-goals">
-            <p class="no-goals-message">У вас еще нет финансовых целей.</p>
-            <button class="btn btn-create-goal" (click)="navigateToCreateGoal()">Создать цель</button>
+        <div *ngIf="goals.length === 0" class="no-content">
+            <p class="message">У вас еще нет финансовых целей.</p>
+            <button class="btn btn-create" (click)="navigateToCreateGoal()">Создать цель</button>
         </div>
-        <div *ngIf="goals.length > 0" class="goal-list">
-            <div class="goal" *ngFor="let goal of goals">
-                <p class="goal-name">{{ goal.name }}</p>
-                <p class="goal-amount">{{ goal.sum | currency:'RUB ':'symbol' }}</p>
-                <p class="goal-end-date">{{ goal.endDate | date:'dd/MM/yyyy' }}</p>
+        <div *ngIf="goals.length > 0" class="card-list">
+            <div class="list-item" *ngFor="let goal of goals">
+                <p class="column-1">{{ goal.name }}</p>
+                <p class="column-2">{{ goal.sum | currency:'RUB ':'symbol' }}</p>
+                <p class="column-3">{{ goal.endDate | customDate:'dd/MM/yyyy' }}</p>
             </div>
         </div>
     </div>

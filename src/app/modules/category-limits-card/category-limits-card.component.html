@@ -1,0 +1,20 @@
+<div class="card">
+    <div class="card-header">
+        <h5>Последние лимиты по категориям</h5>
+    </div>
+    <div class="card-body">
+        <div *ngIf="limits.length === 0" class="no-content">
+            <p class="message">У вас еще нет лимитов.</p>
+            <button class="btn btn-create" (click)="navigateToCreateLimit()">Создать лимит</button>
+        </div>
+        <div *ngIf="limits.length > 0" class="card-list">
+            <div class="list-item" *ngFor="let limit of limits">
+                <p class="column-1">{{ getCategoryName(limit.categoryId) }}</p>
+                <p class="column-2">{{ limit.amount | currency:'RUB ':'symbol' }}</p>
+            </div>
+        </div>
+    </div>
+    <div class="card-footer">
+        <a class="btn btn-link" (click)="navigateTLimits()" target="_blank">Все лимиты</a>
+    </div>
+</div>

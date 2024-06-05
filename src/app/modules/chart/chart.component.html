@@ -1,35 +1,30 @@
-<div class="card-container">
-  <div class="custom-card">
-    <div class="custom-card-header">
-      <h5>Анализ</h5>
-    </div>
-    <div class="custom-card-body">
-      <div class="chart-container">
-        <div class="info-container">
-          <div class="label-date-arrows">
-            <div class="arrow-left" (click)="previousMonth()" [class.disabled]="isPreviousDisabled()">
-              <i class="bi bi-arrow-left"></i>
-            </div>
-            <div class="month-year">
-              {{ getMonthName(displayedChartMonth) }} {{ displayedChartYear }}
-            </div>
-            <div class="arrow-right" (click)="nextMonth()" [class.disabled]="isNextDisabled()">
-              <i class="bi bi-arrow-right"></i>
-            </div>
-          </div>
-          <div class="content">
-            <div *ngIf="!showNoTransactionsMessage" class="chart-wrapper">
-              <canvas #chartCanvas class="chart"></canvas>
-            </div>
-            <div *ngIf="showNoTransactionsMessage" class="no-transactions-message">
-              В этом месяце нет трат.
-            </div>
-          </div>
-        </div>
+<div class="card">
+  <div class="card-header">
+    <h5>Анализ</h5>
+  </div>
+  <div class="card-body">
+    <div class="label-arrows">
+      <div class="arrow-left" (click)="previousMonth()" [class.disabled]="isPreviousDisabled()">
+        <i class="bi bi-arrow-left"></i>
+      </div>
+      <div class="month-year">
+        {{ getMonthName(displayedChartMonth) }} {{ displayedChartYear }}
+      </div>
+      <div class="arrow-right" (click)="nextMonth()" [class.disabled]="isNextDisabled()">
+        <i class="bi bi-arrow-right"></i>
       </div>
     </div>
-    <div class="card-footer">
-      <a class="btn btn-link" (click)="navigateToCharts()" target="_blank">Статистика</a>
+    
+    <div *ngIf="showNoTransactionsMessage" class="no-content">
+      <p class="message">В этом месяце нет трат.</p>
     </div>
+
+    <div *ngIf="!showNoTransactionsMessage" class="chart-wrapper">
+      <canvas #chartCanvas class="chart"></canvas>
+    </div>
+
+  </div>
+  <div class="card-footer">
+    <a class="btn btn-link" (click)="navigateToCharts()" target="_blank">Статистика</a>
   </div>
 </div>

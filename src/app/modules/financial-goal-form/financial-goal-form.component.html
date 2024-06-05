@@ -22,10 +22,10 @@
           </div>
         </div>
         <div class="form-group">
-          <label for="endDate">Количество месяцев:</label>
-          <input type="number" id="endDate" name="endDate" [(ngModel)]="financialGoal.endDate" required min="1">
+          <label for="monthCount">Количество месяцев:</label>
+          <input type="number" id="monthCount" name="monthCount" [(ngModel)]="financialGoal.monthCount" required min="1">
           <div
-            *ngIf="financialGoalForm.controls['endDate'].invalid && (financialGoalForm.controls['endDate'].dirty || financialGoalForm.controls['endDate'].touched)"
+            *ngIf="financialGoalForm.controls['monthCount'].invalid && (financialGoalForm.controls['monthCount'].dirty || financialGoalForm.controls['monthCount'].touched)"
             class="error">
             Количество месяцев обязательно для заполнения и должно быть больше 0.
           </div>

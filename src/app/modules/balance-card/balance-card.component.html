@@ -1,0 +1,31 @@
+<div class="card">
+    <div class="card-header">
+        <h5>Финансовая сводка за {{ getMonthName(selectedMonth) }} {{ selectedYear }}</h5>
+    </div>
+    <div class="card-body">
+        <div class="row mb-3">
+            <div class="col text-center">
+                <h5>Доходы</h5>
+                <p>{{ incomes | currency:'RUB ':'symbol' }}</p>
+            </div>
+            <div class="col text-center">
+                <h5>Расходы</h5>
+                <p>{{ expenses | currency:'RUB ':'symbol' }}</p>
+            </div>
+        </div>
+        <div class="d-flex flex-wrap justify-content-center form-inline">
+            <div class="form-group mr-3">
+                <label for="year" class="m-2">Год:</label>
+                <select [(ngModel)]="selectedYear" (change)="updateBalances()" id="year" class="form-control">
+                    <option *ngFor="let year of availableYears" [value]="year">{{ year }}</option>
+                </select>
+            </div>
+            <div class="form-group mr-3">
+                <label for="month" class="m-2">Месяц:</label>
+                <select [(ngModel)]="selectedMonth" (change)="updateBalances()" id="month" class="form-control">
+                    <option *ngFor="let month of monthNames; let i = index" [value]="i">{{ month }}</option>
+                </select>
+            </div>
+        </div>
+    </div>
+</div>

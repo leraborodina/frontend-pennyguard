@@ -1,11 +1,4 @@
-import {
-  ChangeDetectorRef,
-  Component,
-  ElementRef,
-  OnDestroy,
-  OnInit,
-  ViewChild,
-} from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { forkJoin, lastValueFrom, map } from 'rxjs';
 import Chart from 'chart.js/auto';
 
@@ -15,12 +8,15 @@ import { Category } from '../../shared/interfaces/category.interface';
 import { Transaction } from '../../shared/interfaces/transaction.interface';
 import { Router } from '@angular/router';
 
+/**
+ * Компонент для отображения диаграммы расходов по категориям.
+ */
 @Component({
-  selector: 'app-chart',
-  templateUrl: './chart.component.html',
-  styleUrls: ['./chart.component.scss'],
+  selector: 'doughnut-chart-card',
+  templateUrl: './doughnut-chart-card.component.html',
+  styleUrls: ['./doughnut-chart-card.component.scss'],
 })
-export class ChartComponent implements OnInit, OnDestroy {
+export class DoughnutChartCardComponent implements OnInit, OnDestroy {
   @ViewChild('chartCanvas') chartCanvas!: ElementRef;
 
   chart: Chart<"doughnut"> | undefined;
@@ -38,6 +34,9 @@ export class ChartComponent implements OnInit, OnDestroy {
     private router: Router
   ) { }
 
+  /**
+   * Инициализация компонента.
+   */
   ngOnInit(): void {
     const currentDate = new Date();
     this.displayedChartMonth = currentDate.getMonth() + 1;
@@ -45,10 +44,16 @@ export class ChartComponent implements OnInit, OnDestroy {
     this.initializeChart();
   }
 
+  /**
+   * Уничтожение компонента.
+   */
   ngOnDestroy(): void {
     this.chart?.destroy();
   }
 
+  /**
+   * Инициализация диаграммы.
+   */
   private async initializeChart(): Promise<void> {
     try {
       await this.fetchData();
@@ -58,6 +63,9 @@ export class ChartComponent implements OnInit, OnDestroy {
     }
   }
 
+  /**
+   * Получение данных.
+   */
   private async fetchData(): Promise<void> {
     const [categories, transactions] = await lastValueFrom(
       forkJoin({
@@ -73,6 +81,9 @@ export class ChartComponent implements OnInit, OnDestroy {
     );
   }
 
+  /**
+   * Проверка, относится ли транзакция к указанному месяцу и году.
+   */
   private isTransactionFromCurrentMonthAndYear(createdAt: Date): boolean {
     return (
       createdAt.getMonth() + 1 === this.displayedChartMonth &&
@@ -80,6 +91,9 @@ export class ChartComponent implements OnInit, OnDestroy {
     );
   }
 
+  /**
+   * Создание диаграммы.
+   */
   private createChart(): void {
     this.chart?.destroy();
 
@@ -137,6 +151,11 @@ export class ChartComponent implements OnInit, OnDestroy {
     });
   }
 
+  /**
+   * Получение имени месяца по его номеру.
+   * @param month Номер месяца.
+   * @returns Имя месяца.
+   */
   getMonthName(month: number): string {
     const months = [
       'Январь',
@@ -155,18 +174,27 @@ export class ChartComponent implements OnInit, OnDestroy {
     return months[month - 1];
   }
 
+  /**
+   * Переход к предыдущему месяцу.
+   */
   async previousMonth(): Promise<void> {
     this.displayedChartMonth = this.displayedChartMonth === 1 ? 12 : this.displayedChartMonth - 1;
     this.displayedChartYear = this.displayedChartMonth === 12 ? this.displayedChartYear - 1 : this.displayedChartYear;
     await this.showChartOrMessage();
   }
 
+  /**
+   * Переход к следующему месяцу.
+   */
   async nextMonth(): Promise<void> {
     this.displayedChartMonth = this.displayedChartMonth === 12 ? 1 : this.displayedChartMonth + 1;
     this.displayedChartYear = this.displayedChartMonth === 1 ? this.displayedChartYear + 1 : this.displayedChartYear;
     await this.showChartOrMessage();
   }
 
+  /**
+   * Отображение диаграммы или сообщения об отсутствии транзакций.
+   */
   private async showChartOrMessage(): Promise<void> {
     await this.fetchData();
     this.areTransactionsAvailable(this.displayedChartMonth, this.displayedChartYear)
@@ -174,6 +202,12 @@ export class ChartComponent implements OnInit, OnDestroy {
       : this.showNoTransactionsMessage = true;
   }
 
+  /**
+   * Проверка наличия транзакций за указанный месяц и год.
+   * @param month Месяц.
+   * @param year Год.
+   * @returns true, если есть транзакции, иначе - false.
+   */
   private areTransactionsAvailable(month: number, year: number): boolean {
     return this.transactions.some(transaction => {
       const transactionDate = new Date(transaction.createdAt);
@@ -184,6 +218,10 @@ export class ChartComponent implements OnInit, OnDestroy {
     });
   }
 
+  /**
+   * Проверка доступности кнопки перехода к следующему месяцу.
+   * @returns true, если кнопка отключена, иначе - false.
+   */
   isNextDisabled(): boolean {
     const currentDate = new Date();
     return (
@@ -192,6 +230,10 @@ export class ChartComponent implements OnInit, OnDestroy {
     );
   }
 
+  /**
+   * Проверка доступности кнопки перехода к предыдущему месяцу.
+   * @returns true, если кнопка отключена, иначе - false.
+   */
   isPreviousDisabled(): boolean {
     return (
       this.displayedChartMonth === this.minTransactionDate.getMonth() + 1 &&
@@ -199,7 +241,11 @@ export class ChartComponent implements OnInit, OnDestroy {
     );
   }
 
+  /**
+   * Навигация к странице статистики.
+   */
   navigateToCharts() {
     this.router.navigate(['/app-transaction-analysis']);
   }
 }
+

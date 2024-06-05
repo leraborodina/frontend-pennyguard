@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CategoryLimitsComponent } from './category-limits.component';
+import { CategoryLimitsCardComponent } from './category-limits-card.component';
 
 describe('CategoryLimitsComponent', () => {
-  let component: CategoryLimitsComponent;
-  let fixture: ComponentFixture<CategoryLimitsComponent>;
+  let component: CategoryLimitsCardComponent;
+  let fixture: ComponentFixture<CategoryLimitsCardComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [CategoryLimitsComponent]
+      declarations: [CategoryLimitsCardComponent]
     })
-    .compileComponents();
-    
-    fixture = TestBed.createComponent(CategoryLimitsComponent);
+      .compileComponents();
+
+    fixture = TestBed.createComponent(CategoryLimitsCardComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

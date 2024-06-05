@@ -26,14 +26,14 @@ export class UtilsService {
   private loadCategories(): void {
     this.categoryService.getCategories().subscribe(
       (categories) => this.categories.next(categories),
-      (error) => console.error('Error loading categories:', error)
+      (error) => console.error('Ошибка при загрузке категорий:', error)
     );
   }
 
   getCategoryNameById(categoryId: number): string {
     const categories = this.categories.getValue();
     const category = categories.find(cat => cat.id === categoryId);
-    return category ? category.name : 'Unbekannte Kategorie';
+    return category ? category.name : 'Неизвестная категория';
   }
 
   getCategories(): Observable<Category[]> {
@@ -43,14 +43,14 @@ export class UtilsService {
   private loadTransactionTypes(): void {
     this.transactionService.getTransactionTypes().subscribe(
       (types) => this.transactionTypes.next(types),
-      (error) => console.error('Error loading transaction types:', error)
+      (error) => console.error('Ошибка при загрузке типов транзакций:', error)
     );
   }
 
   getTransactionTypeNameById(typeId: number): string {
     const transactionTypes = this.transactionTypes.getValue();
     const type = transactionTypes.find(type => type.id === typeId);
-    return type ? type.type : 'Unbekannte Kategorie';
+    return type ? type.type : 'Неизвестный тип';
   }
 
   getTransactionTypes(): Observable<TransactionType[]> {

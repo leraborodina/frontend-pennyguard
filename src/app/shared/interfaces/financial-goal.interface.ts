@@ -4,4 +4,5 @@ export interface FinancialGoal {
   sum: number;
   startDate: string;
   endDate: string;
+  monthCount: number;
 }

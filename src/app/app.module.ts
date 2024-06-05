@@ -41,7 +41,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { StartpageComponent } from './modules/startpage/startpage.component';
 import { DashboardComponent } from './modules/dashboard/dashboard.component';
 import { MatGridListModule } from '@angular/material/grid-list';
-import { LastTransactionsComponent } from './modules/last-transactions/last-transactions.component';
+import { TransactionsCardComponent } from './modules/transactions-card/transactions-card.component';
 import { LimitOverviewComponent } from './modules/limit-overview/limit-overview.component';
 import { ChartComponent } from './modules/chart/chart.component';
 import { WebSocketService } from './core/services/websocket.service';
@@ -54,10 +54,9 @@ import { SavingsProgressComponent } from './modules/savings-progress/savings-pro
 import { SocketIoConfig } from 'ngx-socket-io';
 import { BarchartComponent } from './modules/barchart/barchart.component';
 import { GlobalErrorHandlerService } from './core/services/global-error-handler.service.service';
-import { CardComponent } from './modules/card/card.component';
 import { DropdownToggleDirective } from './shared/directives/dropdown-toggle.directive';
-import { FinanceCardComponent } from './modules/finance-card/finance-card.component';
-import { CategoryLimitsComponent } from './modules/category-limits/category-limits.component';
+import { BalanceCardComponent } from './modules/balance-card/balance-card.component';
+import { CategoryLimitsCardComponent } from './modules/category-limits-card/category-limits-card.component';
 import { FinancialGoalCardComponent } from './modules/financial-goal-card/financial-goal-card.component';
 import { FinancialGoalOverviewComponent } from './modules/financial-goal-overview/financial-goal-overview.component';
 import { MessageComponent } from './modules/message/message.component';
@@ -65,6 +64,8 @@ import { CategoryFormComponent } from './modules/category-form/category-form.com
 import { CategoryOverviewComponent } from './modules/category-overview/category-overview.component';
 import { TransactionAnalysisComponent } from './modules/transaction-analysis/transaction-analysis.component';
 import { LineChartComponent } from './modules/line-chart/line-chart.component';
+import { CustomDatePipe } from './shared/pipes/custom-date.pipe';
+import { CardComponent } from './modules/card/card.component';
 
 const config: SocketIoConfig = { url: 'ws://localhost:8080', options: {} };
 
@@ -86,7 +87,7 @@ const config: SocketIoConfig = { url: 'ws://localhost:8080', options: {} };
     LimitFormComponent,
     StartpageComponent,
     DashboardComponent,
-    LastTransactionsComponent,
+    TransactionsCardComponent,
     LimitOverviewComponent,
     ChartComponent,
     PopupMessageComponent,
@@ -95,17 +96,19 @@ const config: SocketIoConfig = { url: 'ws://localhost:8080', options: {} };
     FinancialGoalFormComponent,
     SavingsCalculatorComponent,
     SavingsProgressComponent,
-    CardComponent,
+    ChartComponent,
     DropdownToggleDirective,
-    FinanceCardComponent,
-    CategoryLimitsComponent,
+    BalanceCardComponent,
+    CategoryLimitsCardComponent,
     FinancialGoalCardComponent,
     FinancialGoalOverviewComponent,
     MessageComponent,
     CategoryFormComponent,
     CategoryOverviewComponent,
     TransactionAnalysisComponent,
-    LineChartComponent
+    LineChartComponent,
+    CustomDatePipe,
+    CardComponent
   ],
   imports: [
     BrowserModule,
@@ -142,6 +145,7 @@ const config: SocketIoConfig = { url: 'ws://localhost:8080', options: {} };
     WebSocketService,
     NotificationService,
     DatePipe,
+    CustomDatePipe,
     {
       provide: APP_INITIALIZER,
       useFactory: (authService: AuthService) => () => {

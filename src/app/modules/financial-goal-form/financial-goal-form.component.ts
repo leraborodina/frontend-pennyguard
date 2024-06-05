@@ -13,7 +13,8 @@ export class FinancialGoalFormComponent {
     name: '',
     sum: 0,
     startDate: '',
-    endDate: ''
+    endDate: '',
+    monthCount: 0
   };
 
   message: string | null = null;
@@ -22,6 +23,7 @@ export class FinancialGoalFormComponent {
   constructor(private financialGoalService: FinancialGoalService) { }
 
   createFinancialGoal(): void {
+    console.log(this.financialGoal)
     this.financialGoalService.createFinancialGoal(this.financialGoal)
       .subscribe(
         () => {
