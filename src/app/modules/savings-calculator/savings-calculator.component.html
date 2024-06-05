@@ -13,7 +13,9 @@
                 <div *ngIf="savingsSumInput.errors?.['required']">Это поле обязательно для заполнения.</div>
                 <div *ngIf="savingsSumInput.errors?.['min']">Сумма накоплений должна быть больше 0.</div>
             </div>
+        </div>
 
+        <div class="form-group">
             <label for="months">Количество месяцев:</label>
             <input type="number" id="months" placeholder="Введите количество месяцев" required min="1" [(ngModel)]="months"
                 (ngModelChange)="calculateMonthlyRate()" name="months" #monthsInput="ngModel" class="form-input">
