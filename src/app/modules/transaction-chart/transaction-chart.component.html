@@ -8,7 +8,7 @@
       <mat-card class="dashboard-card">
         <mat-card-content class="dashboard-card-content">
           <div>
-            <app-chart *ngIf="card.id === 'doughnut'"></app-chart>
+            <doughnut-chart-card *ngIf="card.id === 'doughnut'"></doughnut-chart-card>
             <app-barchart *ngIf="card.id === 'barchart'"></app-barchart>
             <div *ngIf="card.id === 'progress1'">
               <h3>Limit progress</h3>

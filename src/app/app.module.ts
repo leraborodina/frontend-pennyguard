@@ -43,7 +43,6 @@ import { DashboardComponent } from './modules/dashboard/dashboard.component';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { TransactionsCardComponent } from './modules/transactions-card/transactions-card.component';
 import { LimitOverviewComponent } from './modules/limit-overview/limit-overview.component';
-import { ChartComponent } from './modules/chart/chart.component';
 import { WebSocketService } from './core/services/websocket.service';
 import { NotificationService } from './shared/services/notification.service';
 import { PopupMessageComponent } from './modules/popup-message/popup-message.component';
@@ -66,6 +65,7 @@ import { TransactionAnalysisComponent } from './modules/transaction-analysis/tra
 import { LineChartComponent } from './modules/line-chart/line-chart.component';
 import { CustomDatePipe } from './shared/pipes/custom-date.pipe';
 import { CardComponent } from './modules/card/card.component';
+import { DoughnutChartCardComponent } from './modules/doughnut-chart-card/doughnut-chart-card.component';
 
 const config: SocketIoConfig = { url: 'ws://localhost:8080', options: {} };
 
@@ -89,14 +89,13 @@ const config: SocketIoConfig = { url: 'ws://localhost:8080', options: {} };
     DashboardComponent,
     TransactionsCardComponent,
     LimitOverviewComponent,
-    ChartComponent,
+    DoughnutChartCardComponent,
     PopupMessageComponent,
     NotificationsOverviewComponent,
     BarchartComponent,
     FinancialGoalFormComponent,
     SavingsCalculatorComponent,
     SavingsProgressComponent,
-    ChartComponent,
     DropdownToggleDirective,
     BalanceCardComponent,
     CategoryLimitsCardComponent,

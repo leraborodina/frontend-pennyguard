@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { TransactionService } from '../../core/services/transaction.service';
 import { UtilsService } from '../../shared/services/utils.service';
-import { Observable, forkJoin, of } from 'rxjs';
-import { map, catchError } from 'rxjs/operators';
+import { Observable, forkJoin } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { Transaction } from '../../shared/interfaces/transaction.interface';
 import { TransactionType } from '../../shared/interfaces/transaction-type.interface';
 
@@ -43,15 +43,15 @@ export class BalanceCardComponent implements OnInit {
    * доходы и расходы на основе сумм транзакций и их типов в указанном диапазоне дат.
    */
   updateBalances() {
-    this.incomes = 0;
-    this.expenses = 0;
-
     const { startDate, endDate } = this.calculateMonthDateRange(this.selectedYear, this.selectedMonth);
 
     forkJoin({
       transactions: this.transactionService.getTransactionsByUserId()
     }).subscribe(
       ({ transactions }) => {
+        this.incomes = 0;
+        this.expenses = 0;
+        
         transactions.forEach(transaction => {
           const transactionDate = this.parseDate(transaction.createdAt);
 
