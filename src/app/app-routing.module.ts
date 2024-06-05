@@ -4,7 +4,7 @@ import { LoginComponent } from './modules/login/login/login.component';
 import { RegistrationComponent } from './modules/registration/registration/registration.component';
 import { AuthGuard } from './core/guards/auth-guard';
 import { IncomesComponent } from './modules/incomes/incomes.component';
-import { TransactionComponent } from './modules/transaction-form/transaction.component';
+import { TransactionFormComponent } from './modules/transaction-form/transaction.component';
 import { TransactionOverviewComponent } from './modules/transaction-overview/transaction-overview.component';
 import { ExpensesComponent } from './modules/expenses/expenses.component';
 import { TransactionChartComponent } from './modules/transaction-chart/transaction-chart.component';
@@ -29,12 +29,12 @@ const routes: Routes = [
   { path: 'expenses', component: ExpensesComponent, canActivate: [AuthGuard] },
   {
     path: 'transaction',
-    component: TransactionComponent,
+    component: TransactionFormComponent,
     canActivate: [AuthGuard],
   },
   {
     path: 'transaction/:id',
-    component: TransactionComponent,
+    component: TransactionFormComponent,
     canActivate: [AuthGuard],
   },
   {

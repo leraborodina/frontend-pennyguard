@@ -1,74 +1,65 @@
-  <!-- transaction form html -->
 <div class="container">
-  <div class="label-container">
-    <h2>{{ transaction ? 'Обновить транзакцию' : 'Новая транзакция' }}</h2>
-  </div>
-
   <form [formGroup]="transactionForm" (ngSubmit)="createOrUpdate()">
+    <div class="form-label">
+      <h3>{{ transaction ? 'Обновить транзакцию' : 'Новая транзакция' }}</h3>
+    </div>
     <div class="form-group">
       <label for="purpose" aria-labelledby="purpose-label">Цель:</label>
       <input formControlName="purpose" type="text" id="purpose" required placeholder="Введите цель транзакции"
-        aria-labelledby="purpose-label">
+        aria-labelledby="purpose-label" class="form-control">
       <div *ngIf="isFieldInvalid('purpose')" class="error-message">Обязательное поле</div>
     </div>
 
     <div class="form-group">
       <label for="amount" aria-labelledby="amount-label">Сумма:</label>
       <input formControlName="amount" type="number" id="amount" required placeholder="Введите сумму транзакции"
-        min="0.01" aria-labelledby="amount-label">
+        min="0.01" aria-labelledby="amount-label" class="form-control">
       <div *ngIf="isFieldInvalid('amount')" class="error-message">Обязательное поле</div>
       <div *ngIf="transactionForm.get('amount')?.errors?.['invalidAmount']" class="error-message">Неверная сумма</div>
     </div>
 
     <div class="form-group">
       <label for="createdAt" aria-labelledby="date-label">Дата:</label>
-      <input formControlName="createdAt" type="date" id="createdAt" required placeholder="Выберите дату" [max]="maxDate" aria-labelledby="date-label" (change)="setMaxTime()">
+      <input formControlName="createdAt" type="date" id="createdAt" required placeholder="Выберите дату" [max]="maxDate"
+        aria-labelledby="date-label" class="form-control" (change)="setMaxTime()">
       <div *ngIf="isFieldInvalid('createdAt')" class="error-message">Обязательное поле</div>
       <div *ngIf="transactionForm.get('createdAt')?.errors?.['invalidDate']" class="error-message">Неверная дата</div>
       <div *ngIf="isFutureDate()" class="error-message">Дата не может быть в будущем</div>
     </div>
-    
+
     <div class="form-group">
       <label for="createdAtTime" aria-labelledby="time-label">Время:</label>
-      <input formControlName="createdAtTime" type="time" id="createdAtTime" required placeholder="Выберите время" [max]="maxTime" aria-labelledby="time-label">
+      <input formControlName="createdAtTime" type="time" id="createdAtTime" required placeholder="Выберите время"
+        [max]="maxTime" aria-labelledby="time-label" class="form-control">
       <div *ngIf="isFieldInvalid('createdAtTime')" class="error-message">Обязательное поле</div>
       <div *ngIf="isFutureTime()" class="error-message">Время не может быть в будущем</div>
     </div>
-    
 
-    <div class="form-group">
-      <label for="regular">Регулярная транзакция:</label>
-      <input formControlName="regular" type="checkbox" id="regular" aria-labelledby="regular-label">
+    <div class="form-group d-flex align-items-center">
+      <label for="regular" class="mr-2">Регулярная транзакция:</label>
+      <input formControlName="regular" type="checkbox" id="regular" aria-labelledby="regular-label"
+        class="custom-checkbox">
     </div>
 
     <div class="form-group">
       <label for="categoryId" aria-labelledby="category-label">Категория:</label>
-      <select formControlName="categoryId" required aria-labelledby="category-label">
-        <option value="0" disabled selected>Выберите категорию</option>
-        <option *ngFor="let category of categories$ | async" [value]="category.id">
-          {{ category.name }}
-        </option>
+      <select formControlName="categoryId" required aria-labelledby="category-label" class="form-select">
+        <option value="0" disabled>Выберите категорию</option>
+        <option *ngFor="let category of categories$ | async" [value]="category.id">{{ category.name }}</option>
       </select>
-      <div *ngIf="isFieldInvalid('categoryId')" class="error-message">
-        Выберите категорию
-      </div>
+      <div *ngIf="isFieldInvalid('categoryId')" class="error-message">Выберите категорию</div>
     </div>
 
     <div class="form-group">
       <label for="typeId" aria-labelledby="type-label">Тип транзакции:</label>
-      <select formControlName="typeId" required aria-labelledby="type-label">
-        <option value="0" disabled selected>Выберите тип транзакции</option>
-        <option *ngFor="let transactionType of transactionTypes$ | async" [value]="transactionType.id">
-          {{ transactionType.type }}
-        </option>
+      <select formControlName="typeId" required aria-labelledby="type-label" class="form-select">
+        <option value="0" disabled>Выберите тип транзакции</option>
+        <option *ngFor="let transactionType of transactionTypes$ | async" [value]="transactionType.id">{{
+          transactionType.type }}</option>
       </select>
-      <div *ngIf="isFieldInvalid('typeId')" class="error-message">
-        Выберите тип транзакции
-      </div>
+      <div *ngIf="isFieldInvalid('typeId')" class="error-message">Выберите тип транзакции</div>
     </div>
 
-  
-      <button class="primary-button" type="submit">{{ transaction ? 'Обновить' : 'Создать' }}</button>
-
+    <button type="submit">{{ transaction ? 'Обновить' : 'Создать' }}</button>
   </form>
 </div>

@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { FinancialGoal } from '../../shared/interfaces/financial-goal.interface';
 import { FinancialGoalService } from '../../core/services/financial-goal.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'financial-goal-form',
@@ -8,34 +10,64 @@ import { FinancialGoalService } from '../../core/services/financial-goal.service
   styleUrls: ['./financial-goal-form.component.scss']
 })
 export class FinancialGoalFormComponent {
-  financialGoal: FinancialGoal = {
-    id: 0,
-    name: '',
-    sum: 0,
-    startDate: '',
-    endDate: '',
-    monthCount: 0
-  };
+  financialGoalForm: FormGroup;
+  financialGoal?: FinancialGoal;
 
-  message: string | null = null;
-  messageType: 'error' | 'warning' | 'success' = 'error';
+  errorMessage: string = '';
 
-  constructor(private financialGoalService: FinancialGoalService) { }
+  constructor(
+    private fb: FormBuilder,
+    private financialGoalService: FinancialGoalService,
+    private router: Router,
+    private route: ActivatedRoute
+  ) {
+    this.financialGoalForm = this.fb.group({
+      id: null,
+      name: ['', Validators.required],
+      sum: [0, [Validators.required, Validators.min(0.01)]],
+      startDate: ['', Validators.required],
+      endDate: ['', Validators.required],
+      monthCount: [0, Validators.required]
+    });
+  }
 
+  /**
+     * Создает новую финансовую цель.
+     */
   createFinancialGoal(): void {
-    console.log(this.financialGoal)
-    this.financialGoalService.createFinancialGoal(this.financialGoal)
-      .subscribe(
-        () => {
-          // Reset form and set success message
-          this.message = 'Цель успешно создана';
-          this.messageType = 'success';
-        },
-        (error: unknown) => {
-          // Set error message
-          this.message = 'Ошибка при создании цели';
-          console.error('Error creating financial goal:', error);
-        }
-      );
+    const formData = this.financialGoalForm.value;
+
+    const financialGoal: FinancialGoal = {
+      name: formData.name,
+      sum: formData.sum,
+      startDate: formData.startDate,
+      endDate: formData.endDate,
+      monthCount: formData.monthCount,
+      id: 0
+    };
+
+    this.financialGoalService.createFinancialGoal(financialGoal).subscribe(
+      () => this.router.navigate(['/financial-goal-overview']),
+      error => {
+        this.errorMessage = error;
+      }
+    );
+  }
+
+  /**
+    * Проверяет, является ли поле недопустимым.
+    * @param field Имя поля формы.
+    * @returns true, если поле недопустимо, в противном случае - false.
+    */
+  isFieldInvalid(field: string): boolean {
+    const control = this.financialGoalForm.get(field);
+    if (!control) {
+      return false;
+    }
+
+    if (control.value === 0) {
+      control.setErrors({ 'required': true });
+    }
+    return control.invalid && (control.dirty || control.touched);
   }
 }

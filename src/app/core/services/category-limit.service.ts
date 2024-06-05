@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
+import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { Limit } from '../../shared/interfaces/limit.interface';
 import { urls } from '../../config/config';
@@ -17,84 +17,110 @@ export class LimitService {
     private cookieService: CookieService,
   ) { }
 
-  // Создать лимит
+  /**
+   * Создает HTTP-заголовки для аутентификации.
+   * @returns Объект HttpHeaders с заголовками аутентификации.
+   */
+  private getAuthHeaders(): HttpHeaders {
+    const authToken = this.cookieService.get('authToken');
+
+    return new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${authToken}`,
+    });
+  }
+
+  /**
+   * Создать лимит.
+   * @param limit Объект Limit, который необходимо создать.
+   * @returns Observable с объектом Limit или строкой ошибки.
+   */
   createLimit(limit: Limit): Observable<Limit> {
-    const authToken = this.cookieService.get('authToken');
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      Authorization: `${authToken}`,
-    });
-
-    return this.http.post<Limit>(this.limitEndpoint, limit, { headers }).pipe(
-      catchError((error) => {
-        console.error('Error in creating limit:', error);
-        throw error;
+    return this.http.post<Limit>(this.limitEndpoint, limit, { headers: this.getAuthHeaders() }).pipe(
+      catchError(error => {
+        return this.handleError(error);
       })
     );
   }
 
-  // Получить все лимиты
+  /**
+   * Получить все лимиты.
+   * @returns Observable с массивом объектов Limit или строкой ошибки.
+   */
   getLimits(): Observable<Limit[]> {
-    const authToken = this.cookieService.get('authToken');
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      Authorization: `${authToken}`,
-    });
-
-    return this.http.get<Limit[]>(this.limitEndpoint, { headers }).pipe(
-      catchError((error) => {
-        console.error('Error fetching limits:', error);
-        throw error;
+    return this.http.get<Limit[]>(this.limitEndpoint, { headers: this.getAuthHeaders() }).pipe(
+      catchError(error => {
+        return this.handleError(error);
       })
     );
   }
 
-  // Получить лимит по ID
+  /**
+   * Получить лимит по ID.
+   * @param id Идентификатор лимита.
+   * @returns Observable с объектом Limit или строкой ошибки.
+   */
   getLimitById(id: number): Observable<Limit> {
-    const authToken = this.cookieService.get('authToken');
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      Authorization: `${authToken}`,
-    });
-
-    return this.http.get<Limit>(`${this.limitEndpoint}/${id}`, { headers }).pipe(
-      catchError((error) => {
-        console.error(`Error fetching limit with ID ${id}:`, error);
-        throw error;
+    return this.http.get<Limit>(`${this.limitEndpoint}/${id}`, { headers: this.getAuthHeaders() }).pipe(
+      catchError(error => {
+        return this.handleError(error);
       })
     );
   }
 
-  // Обновить лимит
+  /**
+   * Обновить лимит.
+   * @param limit Объект Limit, который необходимо обновить.
+   * @returns Observable с объектом Limit или строкой ошибки.
+   */
   updateLimit(limit: Limit): Observable<Limit> {
-    const authToken = this.cookieService.get('authToken');
-    
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      Authorization: `${authToken}`,
-    });
-
-    return this.http.put<Limit>(`${this.limitEndpoint}/${limit.id}`, limit, { headers }).pipe(
-      catchError((error) => {
-        console.error('Error updating limit:', error);
-        throw error;
+    return this.http.put<Limit>(`${this.limitEndpoint}/${limit.id}`, limit, { headers: this.getAuthHeaders() }).pipe(
+      catchError(error => {
+        return this.handleError(error);
       })
     );
   }
 
-  // Удалить лимит
+  /**
+   * Удалить лимит по его идентификатору.
+   * @param id Идентификатор лимита, который необходимо удалить.
+   * @returns Observable с пустым результатом или строкой ошибки.
+   */
   deleteLimit(id: number): Observable<void> {
-    const authToken = this.cookieService.get('authToken');
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      Authorization: `${authToken}`,
-    });
-
-    return this.http.delete<void>(`${this.limitEndpoint}/${id}`, { headers }).pipe(
-      catchError((error) => {
-        console.error(`Error deleting limit with ID ${id}:`, error);
-        throw error;
+    return this.http.delete<void>(`${this.limitEndpoint}/${id}`, { headers: this.getAuthHeaders() }).pipe(
+      catchError(error => {
+        return this.handleError(error);
       })
     );
+  }
+
+  /**
+   * Обрабатывает ошибки, возникающие при HTTP-запросах.
+   * @param error Объект HttpErrorResponse с возникшей ошибкой.
+   * @returns Observable, возвращающий строку ошибки.
+   */
+  private handleError(error: HttpErrorResponse): Observable<never> {
+    const errorMessage = this.getErrorMessage(error);
+    console.error('Ошибка в HTTP-запросе:', error);
+    return throwError(errorMessage);
+  }
+
+  /**
+   * Определяет сообщение об ошибке на основе объекта HttpErrorResponse.
+   * @param error Объект HttpErrorResponse с возникшей ошибкой.
+   * @returns Соответствующая строка сообщения об ошибке.
+   */
+  private getErrorMessage(error: HttpErrorResponse): string {
+    let errorMessage = '';
+    if (error.status === 409) {
+      errorMessage = 'Лимит на данную категорию уже существует';
+    } else if (error.status === 400) {
+      errorMessage = error.error.message || 'Ошибка в запросе.';
+    } else if (error.status === 500) {
+      errorMessage = 'Внутренняя ошибка сервера';
+    } else {
+      errorMessage = 'Неизвестная ошибка';
+    }
+    return errorMessage;
   }
 }

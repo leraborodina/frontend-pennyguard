@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CategoryService } from '../../core/services/category.service';
 import { TransactionType } from '../../shared/interfaces/transaction-type.interface';
 import { UtilsService } from '../../shared/services/utils.service';
-import { ActivatedRoute, Route, Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Category } from '../../shared/interfaces/category.interface';
 import { switchMap } from 'rxjs';
 
@@ -32,7 +32,11 @@ export class CategoryFormComponent implements OnInit {
     });
   }
 
+  /**
+   * Инициализация компонента.
+   */
   ngOnInit(): void {
+    // Загрузка типов транзакций при инициализации компонента
     this.utilsService.getTransactionTypes().subscribe(
       (types: TransactionType[]) => {
         this.transactionTypes = types;
@@ -40,17 +44,19 @@ export class CategoryFormComponent implements OnInit {
       (error: any) => console.error('Ошибка при загрузке типов транзакций:', error)
     );
 
+    // Получение и загрузка категории по ID, если таковая передана в параметрах маршрута
     this.route.paramMap.pipe(
       switchMap(params => {
         const id = params.get('id');
         if (id) {
           return this.categoryService.getCategoryById(+id);
         }
-        throw new Error('ID not provided');
+        return [];
       })
     ).subscribe(category => {
       this.category = category;
 
+      // Заполнение формы данными категории
       this.categoryForm.patchValue({
         name: this.category.name,
         typeId: this.category.typeId
@@ -58,6 +64,9 @@ export class CategoryFormComponent implements OnInit {
     });
   }
 
+  /**
+   * Создает новую категорию или обновляет существующую в зависимости от валидности формы.
+   */
   createOrUpdate(): void {
     if (!this.categoryForm.valid) {
       this.categoryForm.markAllAsTouched();
@@ -70,9 +79,11 @@ export class CategoryFormComponent implements OnInit {
     }
   }
 
+  /**
+   * Обновляет существующую категорию.
+   */
   updateCategory() {
     const formData = this.categoryForm.value;
-    console.log(formData)
 
     const category: Category = {
       ...this.category,
@@ -80,33 +91,24 @@ export class CategoryFormComponent implements OnInit {
     };
 
     this.categoryService.updateCategory(category).subscribe(
-      (response) => {
-        this.router.navigate(['/category-overview']);
-      },
+      () => this.router.navigate(['/category-overview']),
       (error) => {
         console.error('Error updating transaction:', error);
       },
     );
   }
 
+  /**
+   * Создает новую категорию.
+   */
   createCategory(): void {
     if (this.categoryForm.valid) {
       const category: Category = this.categoryForm.value;
-      console.log(category);
+
       this.categoryService.createCategory(category).subscribe(
         () => this.router.navigate(['/category-overview']),
         (error) => {
-          console.log(error.status == 409)
-          if (error.status == 409) {
-            this.errorMessage = 'Категория уже существует.';
-          } else if (error.status == 400) {
-            this.errorMessage = error.error;
-          } else if (error.status == 500) {
-            this.errorMessage = 'Внутренняя ошибка сервера';
-          } else {
-            console.error('Ошибка при создании категории:', error);
-            this.errorMessage = 'Неизвестная ошибка';
-          }
+          this.errorMessage = error;
         }
       );
     } else {
@@ -114,7 +116,11 @@ export class CategoryFormComponent implements OnInit {
     }
   }
 
-
+  /**
+   * Проверяет, является ли поле недопустимым.
+   * @param field Имя поля формы.
+   * @returns true, если поле недопустимо, в противном случае - false.
+   */
   isFieldInvalid(field: string): boolean {
     const control = this.categoryForm.get(field);
     return !!control && (control.invalid && (control.dirty || control.touched));

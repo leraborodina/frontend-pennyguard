@@ -9,7 +9,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { IncomesComponent } from './modules/incomes/incomes.component';
 import { ExpensesComponent } from './modules/expenses/expenses.component';
 import { LogoutComponent } from './modules/logout/logout.component';
-import { TransactionComponent } from './modules/transaction-form/transaction.component';
+import { TransactionFormComponent } from './modules/transaction-form/transaction.component';
 import { TransactionOverviewComponent } from './modules/transaction-overview/transaction-overview.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatCard, MatCardModule } from '@angular/material/card';
@@ -77,7 +77,7 @@ const config: SocketIoConfig = { url: 'ws://localhost:8080', options: {} };
     RegistrationComponent,
     IncomesComponent,
     ExpensesComponent,
-    TransactionComponent,
+    TransactionFormComponent,
     TransactionOverviewComponent,
     NavbarComponent,
     TransactionChartComponent,

@@ -1,6 +1,8 @@
-<div class="category-form-container">
-  <h2>{{ category ? 'Обновить категорию' : 'Создать категорию' }}</h2>
+<div class="container">
   <form [formGroup]="categoryForm" (ngSubmit)="createOrUpdate()">
+    <div class="form-label">
+      <h3>{{ category ? 'Обновить категорию' : 'Создать категорию' }}</h3>
+    </div>
     <div class="form-group">
       <label for="name">Название:</label>
       <input formControlName="name" type="text" id="name" required placeholder="Введите название категории">
@@ -16,9 +18,11 @@
       <div *ngIf="isFieldInvalid('typeId')" class="error-message">Выберите тип категории</div>
     </div>
 
-    <div class="button-container">
-      <button class="custom-button" type="submit">{{ category ? 'Обновить' : 'Создать' }}</button>
+    <button type="submit">{{ category ? 'Обновить' : 'Создать' }}</button>
+
+    <div class="alert alert-danger d-flex justify-content-center align-items-center" role="alert" *ngIf="errorMessage">
+      {{ errorMessage }}
     </div>
-    <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
+
   </form>
 </div>

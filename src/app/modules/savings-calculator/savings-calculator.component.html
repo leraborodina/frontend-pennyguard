@@ -1,31 +1,33 @@
-<div class="savings-calculator">
-    <h2>Калькулятор накоплений</h2>
+<div class="container">
     <form #savingsForm="ngForm">
+        <div class="form-label">
+            <h3>Калькулятор накоплений</h3>
+        </div>
         <div class="form-group">
-            <div class="input-container">
-                <label for="savingsSum">Сумма накоплений:</label>
-                <input type="number" id="savingsSum" required min="0.01" [(ngModel)]="savingsSum"
-                    (ngModelChange)="calculateMonthlyRate()" name="savingsSum" #savingsSumInput="ngModel"
-                    class="form-input">
-                <div *ngIf="savingsSumInput.invalid && (savingsSumInput.dirty || savingsSumInput.touched)"
-                    class="error">
-                    <div *ngIf="savingsSumInput.errors?.['required']">Это поле обязательно для заполнения.</div>
-                    <div *ngIf="savingsSumInput.errors?.['min']">Сумма накоплений должна быть больше 0.</div>
-                </div>
+            <label for="savingsSum">Сумма накоплений:</label>
+            <input type="number" id="savingsSum" placeholder="Введите сумму накоплений" required min="0.01" [(ngModel)]="savingsSum"
+                (ngModelChange)="calculateMonthlyRate()" name="savingsSum" #savingsSumInput="ngModel"
+                class="form-input">
+        
+            <div *ngIf="savingsSumInput.invalid && (savingsSumInput.dirty || savingsSumInput.touched)" class="error">
+                <div *ngIf="savingsSumInput.errors?.['required']">Это поле обязательно для заполнения.</div>
+                <div *ngIf="savingsSumInput.errors?.['min']">Сумма накоплений должна быть больше 0.</div>
             </div>
-            <div class="input-container">
-                <label for="months">Количество месяцев:</label>
-                <input type="number" id="months" required min="1" [(ngModel)]="months"
-                    (ngModelChange)="calculateMonthlyRate()" name="months" #monthsInput="ngModel" class="form-input">
-                <div *ngIf="monthsInput.invalid && (monthsInput.dirty || monthsInput.touched)" class="error">
-                    <div *ngIf="monthsInput.errors?.['required']">Это поле обязательно для заполнения.</div>
-                    <div *ngIf="monthsInput.errors?.['min']">Количество месяцев должно быть больше 0.</div>
-                </div>
+
+            <label for="months">Количество месяцев:</label>
+            <input type="number" id="months" placeholder="Введите количество месяцев" required min="1" [(ngModel)]="months"
+                (ngModelChange)="calculateMonthlyRate()" name="months" #monthsInput="ngModel" class="form-input">
+          
+            <div *ngIf="monthsInput.invalid && (monthsInput.dirty || monthsInput.touched)" class="error">
+                <div *ngIf="monthsInput.errors?.['required']">Это поле обязательно для заполнения.</div>
+                <div *ngIf="monthsInput.errors?.['min']">Количество месяцев должно быть больше 0.</div>
             </div>
+
+        </div>
+
+        <div *ngIf="monthlyRate !== null" class="result">
+            <h5>Месячная норма накоплений:</h5>
+            <p>{{ monthlyRate | currency:'RUB ':'symbol' }}</p>
         </div>
     </form>
-    <div *ngIf="monthlyRate !== null" class="result">
-        <h3>Месячная норма накоплений:</h3>
-        <p>{{ monthlyRate | currency:'RUB ':'symbol' }}</p>
-    </div>
 </div>

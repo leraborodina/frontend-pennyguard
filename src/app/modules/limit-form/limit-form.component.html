@@ -1,6 +1,8 @@
-<div class="limit-container">
-  <h2>{{ limit ? 'Обновить лимит' : 'Новый лимит' }}</h2>
+<div class="container">
   <form [formGroup]="limitForm" (ngSubmit)="createOrUpdate()">
+    <div class="form-label">
+      <h3>{{ limit ? 'Обновить лимит' : 'Новый лимит' }}</h3>
+    </div>
     <div class="form-group">
       <label for="amount">Сумма:</label>
       <input formControlName="amount" type="number" id="amount" required placeholder="Введите сумму лимита" min="0.01">
@@ -10,9 +12,11 @@
 
     <div class="form-group">
       <label for="startDay">Начало отсчета:</label>
-      <input formControlName="startDay" type="number" id="startDay" required min="1" placeholder="Введите день начала отсчета (1-31)">
+      <input formControlName="startDay" type="number" id="startDay" required min="1"
+        placeholder="Введите день начала отсчета (1-31)">
       <div *ngIf="isFieldInvalid('startDay')" class="error-message">Обязательное поле</div>
-      <div *ngIf="limitForm.get('startDay')?.errors?.['min'] || limitForm.get('startDay')?.errors?.['max']" class="error-message">Введите число от 1 до 31</div>
+      <div *ngIf="limitForm.get('startDay')?.errors?.['min'] || limitForm.get('startDay')?.errors?.['max']"
+        class="error-message">Введите число от 1 до 31</div>
     </div>
 
     <div class="form-group">
@@ -26,8 +30,11 @@
       <div *ngIf="isFieldInvalid('categoryId')" class="error-message">Выберите категорию</div>
     </div>
 
-    <div class="button-container">
-      <button class="custom-button" type="submit">{{ limit ? 'Обновить' : 'Создать' }}</button>
+    <button type="submit">{{ limit ? 'Обновить' : 'Создать' }}</button>
+
+    <div class="alert alert-danger d-flex justify-content-center align-items-center" role="alert" *ngIf="errorMessage">
+      {{ errorMessage }}
     </div>
+
   </form>
 </div>

@@ -1,5 +1,3 @@
-// savings-calculator.component.ts
-
 import { Component } from '@angular/core';
 
 @Component({
@@ -12,6 +10,9 @@ export class SavingsCalculatorComponent {
   months: number | null = null;
   monthlyRate: number | null = null;
 
+  /**
+  * Расчитывает месячную норму накоплений.
+  */
   calculateMonthlyRate() {
     if (this.savingsSum !== null && this.months !== null && this.months > 0) {
       this.monthlyRate = this.savingsSum / this.months;

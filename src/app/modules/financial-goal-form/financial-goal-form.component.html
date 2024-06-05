@@ -1,42 +1,31 @@
-<div class="outer-container">
-  <div class="goal-form-container">
-    <div class="savings-calculator">
-      <h2>Создать Финансовую Цель</h2>
-      <form (ngSubmit)="createFinancialGoal()" #financialGoalForm="ngForm">
-        <div class="form-group">
-          <label for="name">Название:</label>
-          <input type="text" id="name" name="name" [(ngModel)]="financialGoal.name" required>
-          <div
-            *ngIf="financialGoalForm.controls['name'].invalid && (financialGoalForm.controls['name'].dirty || financialGoalForm.controls['name'].touched)"
-            class="error">
-            Название обязательно для заполнения.
-          </div>
-        </div>
-        <div class="form-group">
-          <label for="sum">Сумма:</label>
-          <input type="number" id="sum" name="sum" [(ngModel)]="financialGoal.sum" required min="0.01">
-          <div
-            *ngIf="financialGoalForm.controls['sum'].invalid && (financialGoalForm.controls['sum'].dirty || financialGoalForm.controls['sum'].touched)"
-            class="error">
-            Сумма обязательна для заполнения и должна быть больше 0.
-          </div>
-        </div>
-        <div class="form-group">
-          <label for="monthCount">Количество месяцев:</label>
-          <input type="number" id="monthCount" name="monthCount" [(ngModel)]="financialGoal.monthCount" required min="1">
-          <div
-            *ngIf="financialGoalForm.controls['monthCount'].invalid && (financialGoalForm.controls['monthCount'].dirty || financialGoalForm.controls['monthCount'].touched)"
-            class="error">
-            Количество месяцев обязательно для заполнения и должно быть больше 0.
-          </div>
-        </div>
-        <button type="submit">Создать</button>
-      </form>
-      <app-message [message]="message" [messageType]="messageType"></app-message>
-    </div>
-  </div>
+<div class="container">
+  <savings-calculator></savings-calculator>
 
-  <div class="savings-calculator-container">
-    <savings-calculator></savings-calculator>
-  </div>
+  <form (ngSubmit)="createFinancialGoal()" #financialGoalForm="ngForm">
+    <div class="form-label">
+      <h3>{{ financialGoal ? 'Обновить финансовую цель' : 'Создать финансовую цель' }}</h3>
+    </div>
+    <div class="form-group">
+      <label for="name">Название:</label>
+      <input type="text" id="name" name="name" placeholder="Введите название" required>
+      <div *ngIf="isFieldInvalid('name')" class="error">Название обязательно для заполнения.</div>
+    </div>
+    <div class="form-group">
+      <label for="sum">Сумма:</label>
+      <input type="number" id="sum" name="sum" placeholder="Введите сумму" required min="0.01">
+      <div *ngIf="isFieldInvalid('sum')" class="error">Сумма обязательна для заполнения и должна быть больше 0.</div>
+    </div>
+    <div class="form-group">
+      <label for="monthCount">Количество месяцев:</label>
+      <input type="number" id="monthCount" name="monthCount" placeholder="Введите количество месяцев" required min="1">
+      <div *ngIf="isFieldInvalid('monthCount')" class="error">Количество месяцев обязательно для заполнения и должно
+        быть больше 0.</div>
+    </div>
+
+    <button type="submit">{{ financialGoal ? 'Обновить' : 'Создать' }}</button>
+
+    <div class="alert alert-danger d-flex justify-content-center align-items-center" role="alert" *ngIf="errorMessage">
+      {{ errorMessage }}
+    </div>
+  </form>
 </div>
