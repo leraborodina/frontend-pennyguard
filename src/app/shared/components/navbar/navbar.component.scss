@@ -8,18 +8,38 @@
   font-family: var(--penny-guard-font-family);
 }
 
+.navbar-header {
+  display: flex;
+  align-items: center;
+}
+
 .navbar-brand {
   font-size: 1.5rem;
   font-weight: bold;
   color: var(--penny-guard-label-color);
+  margin-right: 0.5rem;
 }
 
 .navbar-toggler {
   border: none;
+  padding: 0.25rem 0.5rem;
+  cursor: pointer;
+  background-color: transparent;
+}
+
+.navbar-toggler:focus,
+.navbar-toggler:active {
+  outline: none;
+  box-shadow: none;
 }
 
 .navbar-toggler-icon {
-  background-image: url("data:image/svg+xml;charset=UTF8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(255, 255, 255, 1)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-image: url("data:image/svg+xml;charset=UTF8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3E%3Cpath stroke='rgba(255, 255, 255, 1)' stroke-width='2' stroke-linecap='round' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
 }
 
 .navbar-nav {
@@ -70,24 +90,82 @@
   color: var(--primary-color);
 }
 
-/* Responsive Design */
-@include respond-to(small) {
+// Media queries for responsive design
+@media (max-width: 992px) {
   .navbar {
-    flex-direction: row;
-    align-items: center;
+    flex-direction: column;
   }
 
-  .navbar-menu {
+  .navbar-collapse {
     width: 100%;
   }
 
   .navbar-nav {
-    flex-direction: row;
+    flex-direction: column;
     width: 100%;
   }
 
   .nav-item {
-    margin-right: 1rem;
-    width: auto;
+    margin: 0;
+    width: 100%;
   }
+
+  .nav-link {
+    text-align: center;
+  }
+}
+
+@media (max-width: 768px) {
+  .navbar-brand {
+    font-size: 1.2rem;
+  }
+
+  .navbar-toggler-icon {
+    width: 25px;
+    height: 25px;
+  }
+}
+
+@media (max-width: 576px) {
+  .navbar {
+    padding: 0.5rem;
+  }
+
+  .navbar-brand {
+    font-size: 1.2rem;
+  }
+
+  .navbar-toggler {
+    padding: 0.5rem;
+  }
+
+  .navbar-toggler-icon {
+    width: 24px;
+    height: 24px;
+  }
+
+  .nav-link {
+    padding: 0.5rem;
+  }
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.text-section {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.text-section h2 {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.text-section p {
+  font-size: 16px;
+  margin-bottom: 20px;
 }

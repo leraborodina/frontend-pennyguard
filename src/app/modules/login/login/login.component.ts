@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../../core/guards/auth.service';
 import { catchError } from 'rxjs/operators';
 import { throwError } from 'rxjs';
+import { UserService } from '../../../shared/services/user.service';
 
 @Component({
   selector: 'app-login',
@@ -13,10 +14,11 @@ import { throwError } from 'rxjs';
 export class LoginComponent implements OnInit {
   loginForm!: FormGroup;
   showPassword: boolean = false;
-  backendErrorMessage: string | null = null;
+  errorMessage: string | null = null;
 
   constructor(
     private authService: AuthService,
+    private userService: UserService,
     private router: Router,
     private fb: FormBuilder
   ) { }
@@ -80,14 +82,21 @@ export class LoginComponent implements OnInit {
   }
 
   private handleSuccessfulLogin(token: string): void {
-    this.backendErrorMessage = null;
+    this.errorMessage = null;
     this.authService.setAuthToken(token);
+
+    const userData = this.userService.getUserData();
+    const userName = userData?.firstname + ' ' + userData?.lastname;
+
+    this.userService.setUsername(userName);
+
     const redirectUrl = this.authService.getRedirectUrl();
     this.router.navigate([redirectUrl]);
   }
 
+
   private handleLoginError(error: any): void {
-    this.backendErrorMessage = error.error|| 'Ошибка входа. Попробуйте еще раз.';
+    this.errorMessage = error.error || 'Ошибка входа. Попробуйте еще раз.';
     console.error('Login error:', error);
   }
 }

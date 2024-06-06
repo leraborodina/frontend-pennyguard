@@ -1,13 +1,9 @@
 <div class="container">
-  <div class="label-container">
-    <h2>Логин</h2>
-  </div>
+  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" novalidate>
+    <div class="label-container">
+      <h2>Логин</h2>
+    </div>
 
-  <div *ngIf="backendErrorMessage" class="alert alert-danger" role="alert">
-    {{ backendErrorMessage }}
-  </div>
-
-  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-form" novalidate>
     <div class="form-group">
       <label for="email">Почта</label>
       <input type="email" id="email" formControlName="email" placeholder="Введите вашу почту">
@@ -30,11 +26,15 @@
       </div>
     </div>
 
+    <div *ngIf="errorMessage" class="alert alert-danger" role="alert">
+      {{ errorMessage }}
+    </div>
+
     <button type="submit" [disabled]="loginForm.invalid" class="primary-button">Войти</button>
 
-    <div class="register-link">
+    <div class="link">
       <p>Еще нет аккаунта?</p>
-      <a routerLink="/registration" class="link">Зарегистрироваться</a>
+      <a routerLink="/registration">Зарегистрироваться</a>
     </div>
   </form>
 </div>

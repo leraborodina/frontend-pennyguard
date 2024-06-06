@@ -12,7 +12,7 @@ import { LogoutComponent } from './modules/logout/logout.component';
 import { TransactionFormComponent } from './modules/transaction-form/transaction.component';
 import { TransactionOverviewComponent } from './modules/transaction-overview/transaction-overview.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatCard, MatCardModule } from '@angular/material/card';
+import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';

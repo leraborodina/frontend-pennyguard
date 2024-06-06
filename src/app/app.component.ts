@@ -10,7 +10,7 @@ import { WebSocketService } from './core/services/websocket.service';
 export class AppComponent implements OnInit {
   isAuthenticated: boolean = false;
   notification: string | null = null;
-  notifications: string[] = []; // Array to hold notifications
+  notifications: string[] = []; 
 
   constructor(
     private authService: AuthService,

@@ -63,7 +63,9 @@
 
 <div class="container mt-4">
   <div class="content">
-    <div class="table-header">Транзакции</div>
+    <div class="table-header">
+      <p class="table-label">Транзакции</p>
+    </div>
     <div class="table-body">
       <div class="transaction-quantity">
         <span>Всего транзакций: {{ filteredTransactions.length }}</span>
@@ -88,11 +90,11 @@
                 getAmountWithSignAndColor(transaction.amount, transaction.typeId) }}</td>
               <td>
                 <div class="action-buttons">
-                  <button type="button" (click)="deleteTransaction(transaction.id)">
-                    <i class="fa fa-trash"></i>
-                  </button>
                   <button type="button" (click)="editTransaction(transaction.id)">
                     <i class="fa fa-edit"></i>
+                  </button>
+                  <button type="button" (click)="deleteTransaction(transaction.id)">
+                    <i class="fa fa-trash"></i>
                   </button>
                 </div>
               </td>

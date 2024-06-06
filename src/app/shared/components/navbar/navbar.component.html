@@ -1,14 +1,13 @@
 <nav class="navbar navbar-expand-lg">
-  <a class="navbar-brand link penny-guard-label" routerLink="startpage">PennyGuard</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
-    aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
+  <div class="navbar-header">
+    <a class="navbar-brand link penny-guard-label" routerLink="startpage">PennyGuard</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
+      aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  </div>
   <div class="collapse navbar-collapse" id="navbarNavDropdown">
     <ul class="navbar-nav mr-auto">
-      <li class="nav-item" *ngIf="isLoggedIn(); else notLoggedInMenu">
-        <a class="nav-link link" routerLink="/dashboard">Dashboard</a>
-      </li>
       <ng-template #notLoggedInMenu>
         <li class="nav-item">
           <a class="nav-link link" routerLink="/startpage">Главная</a>
@@ -17,6 +16,9 @@
           <a class="nav-link link" routerLink="/login">Войти</a>
         </li>
       </ng-template>
+      <li class="nav-item" *ngIf="isLoggedIn(); else notLoggedInMenu">
+        <a class="nav-link link" routerLink="/dashboard">Dashboard</a>
+      </li>
       <li class="nav-item dropdown" *ngIf="isLoggedIn()">
         <a class="nav-link dropdown-toggle link" href="#" id="transactionsDropdown" role="button" data-toggle="dropdown"
           aria-haspopup="true" aria-expanded="false">
@@ -63,11 +65,15 @@
         </div>
       </li>
     </ul>
-  </div>
-  <div class="ml-auto">
     <ul class="navbar-nav">
-      <li class="nav-item" *ngIf="isLoggedIn()">
-        <a class="nav-link link" (click)="logout()">Выйти</a>
+      <li class="nav-item dropdown" *ngIf="isLoggedIn()">
+        <a class="nav-link dropdown-toggle link" href="#" id="userDropdown" role="button" data-toggle="dropdown"
+          aria-haspopup="true" aria-expanded="false">
+          {{ username }}
+        </a>
+        <div class="dropdown-menu" aria-labelledby="userDropdown">
+          <a class="dropdown-item link" (click)="logout()">Выйти</a>
+        </div>
       </li>
     </ul>
   </div>

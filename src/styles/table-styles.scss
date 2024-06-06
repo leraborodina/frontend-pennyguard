@@ -15,12 +15,19 @@
     border-bottom: 1px solid rgba(0, 0, 0, 0.125);
 }
 
+.table-label {
+    font-size: 1.3em;
+    text-align: left;
+    margin: 10px;
+    color: var(--text-color);
+}
+
 .table-body {
     padding: 1.25rem;
 }
 
 .transaction-quantity {
-    margin-bottom: 10px;
+    margin: 10px;
 }
 
 .empty-list-message {
@@ -57,5 +64,6 @@
 }
 
 .action-buttons button {
-    margin-right: 5px;
+    margin: 0.1rem;
+    width: 4rem;
 }

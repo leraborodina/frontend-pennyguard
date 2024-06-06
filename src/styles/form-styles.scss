@@ -6,6 +6,13 @@
     align-items: center;
     justify-content: center;
     padding: 20px;
+    height: 100vh;
+    /* Adjust the height of the container to fill the viewport */
+
+    .label-container {
+        margin: 10px;
+        text-align: center
+    }
 
     .form-label {
         margin-bottom: 20px;
@@ -14,6 +21,12 @@
 
     form {
         @include form-container;
+        width: 100%;
+        max-width: 400px;
+
+        // reg and login
+        text-align: left;
+        background-color: #ffff;
 
         .form-group {
             margin-bottom: 15px;
@@ -29,6 +42,8 @@
             input,
             select {
                 @include input-styles;
+                width: 100%;
+                /* Make input fields full width */
             }
 
             .custom-checkbox {
@@ -37,106 +52,77 @@
                 margin: 0;
             }
 
-
             .error-message {
                 color: red;
                 font-size: 14px;
             }
+
+            .password-container {
+                position: relative;
+                width: 100%;
+            }
+
+            .password-container input {
+                width: 100%;
+                padding-right: 30px;
+            }
+
+            .password-container .toggle-password {
+                position: absolute;
+                right: 10px;
+                top: 50%;
+                transform: translateY(-50%);
+                cursor: pointer;
+                color: #aaa;
+            }
+
+            .password-container .toggle-password:hover {
+                color: #000;
+            }
+        }
+
+        .link {
+            margin-top: var(--padding);
+            text-align: center;
+
+            p {
+                margin-bottom: 5px;
+            }
+        }
+
+        .alert-danger {
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
         button {
             @include primary-button;
+            padding: 10px;
+            font-size: 1rem;
+        }
+
+
+    }
+
+    @media (max-width: 992px) {
+        form {
+            max-width: 100%;
+            /* Adjust maximum width for smaller screens */
         }
     }
 
-    @media screen and (max-width: 480px) {
-        form {
-            padding: 15px;
+    @media (max-width: 768px) {
+        .container {
+            padding: 10px;
+            /* Adjust padding for smaller screens */
+        }
+    }
 
-            .form-group {
-                margin-bottom: 10px;
-
-                label {
-                    margin-bottom: 3px;
-                }
-
-                input[type="text"],
-                input[type="number"],
-                input[type="date"],
-                input[type="time"],
-                select {
-                    font-size: 14px;
-                }
-            }
-
-            button {
-                padding: 8px;
-                font-size: 14px;
-            }
+    @media (max-width: 576px) {
+        .container {
+            padding: 5px;
+            /* Further adjust padding for smallest screens */
         }
     }
 }
-
-
-// .limit-form,
-// .category-form,
-// .goal-form {
-//     .form-group {
-//         margin-bottom: 15px;
-
-//         label {
-//             display: block;
-//             font-weight: bold;
-//             margin-bottom: 5px;
-//             color: #333;
-//         }
-
-//         input[type="text"],
-//         input[type="number"],
-//         input[type="date"],
-//         input[type="time"],
-//         select {
-//             @include input-styles;
-//             width: 100%;
-//             box-sizing: border-box;
-//         }
-
-//         .error-message {
-//             color: red;
-//             font-size: 14px;
-//         }
-//     }
-
-//     button {
-//         @include primary-button;
-//         display: block;
-//         width: 100%;
-//         padding: 10px;
-//         font-size: 16px;
-//     }
-
-//     @media screen and (max-width: 480px) {
-//         padding: 15px;
-
-//         .form-group {
-//             margin-bottom: 10px;
-
-//             label {
-//                 margin-bottom: 3px;
-//             }
-
-//             input[type="text"],
-//             input[type="number"],
-//             input[type="date"],
-//             input[type="time"],
-//             select {
-//                 font-size: 14px;
-//             }
-//         }
-
-//         button {
-//             padding: 8px;
-//             font-size: 14px;
-//         }
-//     }
-// }
