@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { AuthService } from './core/guards/auth.service';
 import { WebSocketService } from './core/services/websocket.service';
 
@@ -10,7 +10,7 @@ import { WebSocketService } from './core/services/websocket.service';
 export class AppComponent implements OnInit {
   isAuthenticated: boolean = false;
   notification: string | null = null;
-  notifications: string[] = []; 
+  notifications: string[] = [];
 
   constructor(
     private authService: AuthService,

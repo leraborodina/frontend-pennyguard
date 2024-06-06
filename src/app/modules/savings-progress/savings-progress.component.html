@@ -1,14 +1,47 @@
-<div *ngIf="financialGoals.length === 0">
+<div *ngIf="financialGoals.length === 0" class="no-goals-container">
     <p>Финансовые цели не найдены. Добавьте финансовую цель, чтобы начать отслеживание прогресса.</p>
+    <button (click)="navigateToCreateGoal()">Создать финансовую цель</button>
 </div>
-<div *ngFor="let goal of financialGoals">
+
+<!-- <div *ngFor="let goal of financialGoals" class="goal-item">
     <h3>{{ goal.name }}</h3>
-    <div class="progress" *ngIf="calculateProgressPercentage(goal) > 0">
-        <div class="progress-bar" role="progressbar" [style.width.%]="calculateProgressPercentage(goal)">
-            {{ calculateProgressPercentage(goal) }}%
+    <div class="progress" style="height: 30px; position: relative;">
+        <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar"
+            [style.width.%]="calculateProgressPercentage(goal)" aria-valuemin="0" aria-valuemax="100">
+        </div>
+        <span class="progress-text">
+            {{ calculateProgressPercentage(goal) }}% ({{ balance | currency:'RUB ':'symbol' }} из {{
+            getTotalGoal(goal.id) | currency:'RUB ':'symbol'
+            }})
+        </span>
+    </div>
+</div> -->
+
+<div *ngFor="let goal of financialGoals" class="goal-item">
+    <div class="goal-label-details-container">
+        <div class="goal-label">
+            <h3>{{ goal.name }}</h3>
+        </div>
+        <div class="goal-details">
+            <p>{{ goal.startDate | customDate:'dd/MM/yyyy' }}</p>
+            <p>{{ goal.endDate | customDate:'dd/MM/yyyy' }}</p>
         </div>
     </div>
-    <div *ngIf="calculateProgressPercentage(goal) === 0">
-        <p>0%</p>
+    <hr class="divider"> <!-- Horizontal line -->
+    <div class="progress-container">
+        <div class="progress" style="height: 30px;">
+            <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar"
+                [style.width.%]="calculateProgressPercentage(goal)" aria-valuemin="0" aria-valuemax="100">
+                <span class="progress-text">
+                    {{ calculateProgressPercentage(goal) }}% ({{ balance | currency:'RUB ':'symbol' }} из {{
+                    getTotalGoal(goal.id) | currency:'RUB ':'symbol' }})
+                </span>
+            </div>
+        </div>
+        <div class="delete-button-container">
+            <button class="btn btn-danger" (click)="deleteGoal(goal.id)">
+                <i class="fas fa-trash-alt"></i>
+            </button>
+        </div>
     </div>
 </div>

@@ -34,6 +34,7 @@ export class FinancialGoalCardComponent implements OnInit {
     this.financialGoalService.getFinancialGoals().subscribe(
       (goals: FinancialGoal[]) => {
         this.goals = goals.slice(0, 3);
+        console.log(this.goals)
       },
       (error) => {
         console.error('Ошибка при получении финансовых целей:', error);

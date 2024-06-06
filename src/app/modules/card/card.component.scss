@@ -24,11 +24,19 @@
 }
 
 .title {
-    font-size: bold;
+    padding: 10px;
+    font-size: 2rem;
+    text-align: center;
+    color: var(--text-color);
 }
 
 .content {
     flex-grow: 1;
+}
+
+.description {
+    text-align: center;
+    padding: 10px;
 }
 
 .image-container {

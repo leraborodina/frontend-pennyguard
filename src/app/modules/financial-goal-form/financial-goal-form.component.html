@@ -1,24 +1,26 @@
 <div class="container">
   <savings-calculator></savings-calculator>
 
-  <form (ngSubmit)="createFinancialGoal()" #financialGoalForm="ngForm">
+  <form (ngSubmit)="createFinancialGoal()" [formGroup]="financialGoalForm">
     <div class="form-label">
       <h3>{{ financialGoal ? 'Обновить финансовую цель' : 'Создать финансовую цель' }}</h3>
     </div>
     <div class="form-group">
       <label for="name">Название:</label>
-      <input type="text" id="name" name="name" placeholder="Введите название" required>
-      <div *ngIf="isFieldInvalid('name')" class="error">Название обязательно для заполнения.</div>
+      <input type="text" id="name" formControlName="name" placeholder="Введите название" required>
+      <div *ngIf="isFieldInvalid('name')" class="error-message">Название обязательно для заполнения.</div>
     </div>
     <div class="form-group">
       <label for="sum">Сумма:</label>
-      <input type="number" id="sum" name="sum" placeholder="Введите сумму" required min="0.01">
-      <div *ngIf="isFieldInvalid('sum')" class="error">Сумма обязательна для заполнения и должна быть больше 0.</div>
+      <input type="number" id="sum" formControlName="sum" placeholder="Введите сумму" required min="0.01">
+      <div *ngIf="isFieldInvalid('sum')" class="error-message">Сумма обязательна для заполнения и должна быть больше 0.
+      </div>
     </div>
     <div class="form-group">
       <label for="monthCount">Количество месяцев:</label>
-      <input type="number" id="monthCount" name="monthCount" placeholder="Введите количество месяцев" required min="1">
-      <div *ngIf="isFieldInvalid('monthCount')" class="error">Количество месяцев обязательно для заполнения и должно
+      <input type="number" id="monthCount" formControlName="monthCount" placeholder="Введите количество месяцев" required min="1">
+      <div *ngIf="isFieldInvalid('monthCount')" class="error-message">Количество месяцев обязательно для заполнения и
+        должно
         быть больше 0.</div>
     </div>
 

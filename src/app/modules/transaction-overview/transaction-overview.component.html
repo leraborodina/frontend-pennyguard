@@ -66,44 +66,46 @@
     <div class="table-header">
       <p class="table-label">Транзакции</p>
     </div>
-    <div class="table-body">
-      <div class="transaction-quantity">
-        <span>Всего транзакций: {{ filteredTransactions.length }}</span>
-      </div>
-      <form *ngIf="filteredTransactions.length > 0">
-        <table class="table table-striped">
-          <thead>
-            <tr>
-              <th>Дата</th>
-              <th>Категория</th>
-              <th>Назначение</th>
-              <th>Сумма</th>
-              <th>Действия</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let transaction of filteredTransactions; let i = index">
-              <td>{{ transaction.createdAt | date }}</td>
-              <td>{{ getCategoryName(transaction.categoryId) }}</td>
-              <td>{{ transaction.purpose || "Нет данных" }}</td>
-              <td [ngStyle]="{'color': getAmountColorByTransactionType(transaction.typeId)}">{{
-                getAmountWithSignAndColor(transaction.amount, transaction.typeId) }}</td>
-              <td>
-                <div class="action-buttons">
-                  <button type="button" (click)="editTransaction(transaction.id)">
-                    <i class="fa fa-edit"></i>
-                  </button>
-                  <button type="button" (click)="deleteTransaction(transaction.id)">
-                    <i class="fa fa-trash"></i>
-                  </button>
-                </div>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </form>
-      <div *ngIf="filteredTransactions.length === 0" class="empty-list-message">
-        Нет доступных транзакций.
+    <div class="table-responsive">
+      <div class="table-body">
+        <div class="transaction-quantity">
+          <span>Всего транзакций: {{ filteredTransactions.length }}</span>
+        </div>
+        <form *ngIf="filteredTransactions.length > 0">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>Дата</th>
+                <th>Категория</th>
+                <th>Назначение</th>
+                <th>Сумма</th>
+                <th>Действия</th>
+              </tr>
+            </thead>
+            <tbody class="table-container">
+              <tr *ngFor="let transaction of filteredTransactions; let i = index">
+                <td>{{ transaction.createdAt | date }}</td>
+                <td>{{ getCategoryName(transaction.categoryId) }}</td>
+                <td>{{ transaction.purpose || "Нет данных" }}</td>
+                <td [ngStyle]="{'color': getAmountColorByTransactionType(transaction.typeId)}">{{
+                  getAmountWithSignAndColor(transaction.amount, transaction.typeId) }}</td>
+                <td>
+                  <div class="action-buttons">
+                    <button type="button" (click)="editTransaction(transaction.id)">
+                      <i class="fa fa-edit"></i>
+                    </button>
+                    <button type="button" (click)="deleteTransaction(transaction.id)">
+                      <i class="fa fa-trash"></i>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </form>
+        <div *ngIf="filteredTransactions.length === 0" class="empty-list-message">
+          Нет доступных транзакций.
+        </div>
       </div>
     </div>
   </div>

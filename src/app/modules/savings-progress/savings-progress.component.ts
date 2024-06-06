@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { FinancialGoal } from '../../shared/interfaces/financial-goal.interface';
 import { FinancialGoalService } from '../../core/services/financial-goal.service';
 import { TransactionService } from '../../core/services/transaction.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'savings-progress',
@@ -12,19 +13,21 @@ export class SavingsProgressComponent implements OnInit {
   @Input() financialGoals: FinancialGoal[] = [];
   @Input() balance: number = 0;
 
-  constructor(private financialGoalService: FinancialGoalService, private transactionService: TransactionService) { }
+  constructor(private financialGoalService: FinancialGoalService, private transactionService: TransactionService, private router: Router) { }
+
+  navigateToCreateGoal() {
+    this.router.navigate(['/create-goal']);
+  }
 
   ngOnInit(): void {
     this.loadFinancialGoals();
     this.loadUserBalanceAfterSettingGoals();
-
-    console.log(this.financialGoals)
-    console.log(this.balance)
   }
 
   loadFinancialGoals(): void {
     this.financialGoalService.getFinancialGoals().subscribe(goals => {
       this.financialGoals = goals
+      console.log(this.financialGoals)
     });
   }
 
@@ -52,5 +55,9 @@ export class SavingsProgressComponent implements OnInit {
 
   noFinancialGoals(): boolean {
     return this.financialGoals.length === 0;
+  }
+
+  deleteGoal(id: number) {
+
   }
 }

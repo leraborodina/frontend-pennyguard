@@ -13,102 +13,6 @@
     --button-border-radius: 12px;
 }
 
-@mixin primary-button {
-    background-color: var(--primary-color);
-    color: var(--text-color);
-    border: none;
-    padding: 10px;
-    margin: 10px auto;
-    border-radius: 0.5rem;
-    cursor: pointer;
-    font-family: 'Arial', sans-serif;
-    font-size: 1.25rem;
-    width: 100%;
-    text-align: center;
-}
-
-@mixin respond-to($breakpoint) {
-    @if $breakpoint ==small {
-        @media (min-width: 576px) {
-            @content;
-        }
-    }
-
-    @else if $breakpoint ==medium {
-        @media (min-width: 768px) {
-            @content;
-        }
-    }
-
-    @else if $breakpoint ==large {
-        @media (min-width: 992px) {
-            @content;
-        }
-    }
-
-    @else if $breakpoint ==xlarge {
-        @media (min-width: 1200px) {
-            @content;
-        }
-    }
-
-    @else if $breakpoint ==xxlarge {
-        @media (min-width: 1600px) {
-            @content;
-        }
-    }
-}
-
-button {
-    background-color: var(--button-bg-color);
-    color: var(--button-text-color);
-    border: none;
-    border-radius: var(--button-border-radius);
-    padding: 10px 20px;
-    cursor: pointer;
-}
-
-button:hover {
-    filter: brightness(90%);
-}
-
-@mixin container-styles {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 20px;
-
-    background-color: var(--button-text-color);
-    border-radius: var(--border-radius);
-    width: 90%;
-    // max-width: 320px;
-    // padding: 20px;
-    // margin: 20px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-@mixin input-styles {
-    padding: 8px;
-    border: 1px solid var(--light-gray);
-    border-radius: 4px;
-    font-size: 1rem;
-    width: 100%;
-
-    &:focus {
-        outline: none;
-        border-color: var(--primary-color);
-    }
-}
-
-@mixin dark-button {
-    background-color: var(--dark-button-bg-color);
-    color: var(--button-text-color);
-    border: none;
-    padding: 10px 20px;
-    border-radius: var(--button-border-radius);
-    cursor: pointer;
-    font-size: 1rem;
-}
-
 h1,
 h2,
 h3,
@@ -141,6 +45,60 @@ input {
     }
 }
 
+button {
+    background-color: var(--button-bg-color);
+    color: var(--button-text-color);
+    border: none;
+    border-radius: var(--button-border-radius);
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
+button:hover {
+    filter: brightness(90%);
+}
+
+@mixin primary-button {
+    background-color: var(--primary-color);
+    color: var(--text-color);
+    border: none;
+    padding: 10px;
+    margin: 10px auto;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    font-family: 'Arial', sans-serif;
+    font-size: 1.25rem;
+    width: 100%;
+    text-align: center;
+}
+
+@mixin container-styles {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+
+    background-color: var(--button-text-color);
+    border-radius: var(--border-radius);
+    width: 90%;
+    // max-width: 320px;
+    // padding: 20px;
+    // margin: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+@mixin input-styles {
+    padding: 8px;
+    border: 1px solid var(--light-gray);
+    border-radius: 4px;
+    font-size: 1rem;
+    width: 100%;
+
+    &:focus {
+        outline: none;
+        border-color: var(--primary-color);
+    }
+}
+
 @mixin form-container {
     background-color: var(--button-text-color);
     padding: 20px;
@@ -149,4 +107,36 @@ input {
     width: 90%;
     max-width: 500px;
     margin: 0 auto;
+}
+
+@mixin respond-to($breakpoint) {
+    @if $breakpoint ==small {
+        @media (min-width: 576px) {
+            @content;
+        }
+    }
+
+    @else if $breakpoint ==medium {
+        @media (min-width: 768px) {
+            @content;
+        }
+    }
+
+    @else if $breakpoint ==large {
+        @media (min-width: 992px) {
+            @content;
+        }
+    }
+
+    @else if $breakpoint ==xlarge {
+        @media (min-width: 1200px) {
+            @content;
+        }
+    }
+
+    @else if $breakpoint ==xxlarge {
+        @media (min-width: 1600px) {
+            @content;
+        }
+    }
 }

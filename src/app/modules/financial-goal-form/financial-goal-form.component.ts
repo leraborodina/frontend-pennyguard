@@ -22,36 +22,35 @@ export class FinancialGoalFormComponent {
     private route: ActivatedRoute
   ) {
     this.financialGoalForm = this.fb.group({
-      id: null,
       name: ['', Validators.required],
       sum: [0, [Validators.required, Validators.min(0.01)]],
-      startDate: ['', Validators.required],
-      endDate: ['', Validators.required],
       monthCount: [0, Validators.required]
     });
   }
 
-  /**
-     * Создает новую финансовую цель.
-     */
   createFinancialGoal(): void {
-    const formData = this.financialGoalForm.value;
+    if (this.financialGoalForm.valid) {
+      const formData = this.financialGoalForm.value;
 
-    const financialGoal: FinancialGoal = {
-      name: formData.name,
-      sum: formData.sum,
-      startDate: formData.startDate,
-      endDate: formData.endDate,
-      monthCount: formData.monthCount,
-      id: 0
-    };
+      const financialGoal: FinancialGoal = {
+        id: 0,
+        name: formData.name,
+        sum: formData.sum,
+        startDate: '',
+        endDate: '',
+        monthCount: formData.monthCount,
+      };
 
-    this.financialGoalService.createFinancialGoal(financialGoal).subscribe(
-      () => this.router.navigate(['/financial-goal-overview']),
-      error => {
-        this.errorMessage = error;
-      }
-    );
+      this.financialGoalService.createFinancialGoal(financialGoal).subscribe(
+        () => this.router.navigate(['/financial-goal-overview']),
+        error => {
+          this.errorMessage = error;
+        }
+      );
+    } else {
+      console.log('invalid')
+      this.financialGoalForm.markAllAsTouched();
+    }
   }
 
   /**
