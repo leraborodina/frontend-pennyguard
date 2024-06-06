@@ -1,0 +1,61 @@
+@import '../styles/';
+
+.container {
+    @include container-styles;
+}
+
+.content {
+    border: 1px solid rgba(0, 0, 0, 0.125);
+    border-radius: 0.25rem;
+}
+
+.table-header {
+    background-color: var(--primary-color);
+    padding: 0.75rem 1.25rem;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+}
+
+.table-body {
+    padding: 1.25rem;
+}
+
+.transaction-quantity {
+    margin-bottom: 10px;
+}
+
+.empty-list-message {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    color: var(--text-color);
+}
+
+.table th,
+.table td {
+    padding: 0.75rem;
+    vertical-align: top;
+    border-top: 1px solid var(--light-gray);
+    color: var(--text-color);
+}
+
+.table th {
+    vertical-align: bottom;
+    border-bottom: 2px solid var(--light-gray);
+    text-align: left;
+}
+
+.table-striped {
+    background-color: var(--light-gray);
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+.action-buttons button {
+    margin-right: 5px;
+}

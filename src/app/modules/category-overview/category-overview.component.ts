@@ -5,7 +5,7 @@ import { UtilsService } from '../../shared/services/utils.service';
 import { Route, Router } from '@angular/router';
 
 @Component({
-  selector: 'app-category-overview',
+  selector: 'category-overview',
   templateUrl: './category-overview.component.html',
   styleUrl: './category-overview.component.scss'
 })
@@ -28,18 +28,17 @@ export class CategoryOverviewComponent {
     });
   }
 
-  updateCategory(category: Category) {
-    this.router.navigate(['/category-form', category.id]);
+  updateCategory(id: number) {
+    this.router.navigate(['/category-form', id]);
   }
 
-  deleteCategory(category: Category) {
-    this.categoryService.deleteCategory(category.id).subscribe(() => {
-      // Assuming you want to remove the deleted category from the UI
-      this.categories = this.categories.filter(c => c.id !== category.id);
+  deleteCategory(id: number) {
+    this.categoryService.deleteCategory(id).subscribe(() => {
+      this.categories = this.categories.filter(category => category.id !== id);
     });
   }
 
   resolveTransactionType(typeId: number): string {
-    return this.utilsService.getTransactionTypeNameById(typeId); // Use UtilsService method
+    return this.utilsService.getTransactionTypeNameById(typeId); 
   }
 }

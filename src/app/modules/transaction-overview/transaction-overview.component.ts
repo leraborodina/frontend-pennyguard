@@ -11,15 +11,19 @@ import { UtilsService } from '../../shared/services/utils.service';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 
 @Component({
-  selector: 'app-transaction-overview',
+  selector: 'transaction-overview',
   templateUrl: './transaction-overview.component.html',
   styleUrls: ['./transaction-overview.component.scss'],
 })
 export class TransactionOverviewComponent implements OnInit, OnDestroy {
+  subscription: Subscription = new Subscription();
+
   transactions: Transaction[] = [];
   filteredTransactions: Transaction[] = [];
-  subscription: Subscription = new Subscription();
-  errorMessage: string = '';
+
+  categories: Category[] = [];
+  transactionTypes: TransactionType[] = [];
+
   today: Date = new Date();
   minAmount: number = 0;
   maxAmount: number = 0;
@@ -32,9 +36,6 @@ export class TransactionOverviewComponent implements OnInit, OnDestroy {
   minDateControl = new FormControl();
   maxDateControl = new FormControl();
 
-  categories: Category[] = [];
-  transactionTypes: TransactionType[] = [];
-
   selectedCategory: number | null = null;
   selectedTransactionType: number | null = null;
   selectedMinAmount: number | null = null;
@@ -43,6 +44,8 @@ export class TransactionOverviewComponent implements OnInit, OnDestroy {
   selectedMaxDate: Date | null = null;
   selectedQuery: string = '';
 
+  errorMessage: string = '';
+
   constructor(
     private transactionService: TransactionService,
     private authService: AuthService,
@@ -50,36 +53,51 @@ export class TransactionOverviewComponent implements OnInit, OnDestroy {
     private utilsService: UtilsService,
   ) { }
 
+  /**
+  * Инициализация компонента
+  */
   ngOnInit(): void {
     this.loadCategories();
     this.loadTransactionTypes();
     this.verifyTokenAndFetchTransactions();
-
     this.subscribeToFilterChanges();
   }
 
+  /**
+  * Уничтожение компонента
+  */
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
   }
 
+  /**
+   * Загрузка категорий транзакций
+   */
   loadCategories(): void {
     this.subscription.add(this.utilsService.getCategories().subscribe(
       (categories: Category[]) => {
         this.categories = categories;
       },
-      (error) => this.handleError('Error fetching categories:', error),
+      (error) => this.handleError('Ошибка при загрузке категорий:', error),
     ));
   }
 
+
+  /**
+  * Загрузка типов транзакций
+  */
   loadTransactionTypes(): void {
     this.subscription.add(this.utilsService.getTransactionTypes().subscribe(
       (transactionTypes: TransactionType[]) => {
         this.transactionTypes = transactionTypes;
       },
-      (error) => this.handleError('Error fetching transaction types:', error),
+      (error) => this.handleError('Ошибка при загрузке типов транзакций:', error),
     ));
   }
 
+  /**
+   * Проверка токена и загрузка транзакций пользователя
+   */
   verifyTokenAndFetchTransactions(): void {
     if (this.authService.checkTokenExpiration()) {
       this.fetchTransactions();
@@ -88,6 +106,9 @@ export class TransactionOverviewComponent implements OnInit, OnDestroy {
     }
   }
 
+  /**
+   * Получение транзакций пользователя
+   */
   fetchTransactions(): void {
     this.subscription.add(this.transactionService.getTransactionsByUserId().subscribe(
       (userTransactions: Transaction[]) => {
@@ -101,11 +122,13 @@ export class TransactionOverviewComponent implements OnInit, OnDestroy {
 
         this.applyFilters();
       },
-      (error) => this.handleError('Error fetching transactions:', error),
+      (error) => this.handleError('Ошибка при загрузке транзакций:', error),
     ));
   }
 
-
+  /**
+  * Применение фильтров
+  */
   applyFilters(): void {
     let filteredTransactions = this.transactions;
 
@@ -145,36 +168,83 @@ export class TransactionOverviewComponent implements OnInit, OnDestroy {
     }
 
     const minDate = this.selectedMinDate;
-    if (minDate) {
-      filteredTransactions = filteredTransactions.filter(transaction =>
-        new Date(transaction.createdAt) >= new Date(minDate)
-      );
+    const maxDate = this.selectedMaxDate;
+
+    if (minDate && maxDate) {
+      const minDateWithoutTime = new Date(minDate);
+      minDateWithoutTime.setHours(0, 0, 0, 0);
+
+      const maxDateWithoutTime = new Date(maxDate);
+      maxDateWithoutTime.setHours(0, 0, 0, 0);
+
+      if (minDateWithoutTime > maxDateWithoutTime) {
+        this.selectedMaxDate = minDate;
+      }
     }
 
-    const maxDate = this.selectedMaxDate;
+    if (minDate) {
+      filteredTransactions = filteredTransactions.filter(transaction => {
+        const transactionDate = new Date(transaction.createdAt);
+        transactionDate.setHours(0, 0, 0, 0);
+
+        const minDateWithoutTime = new Date(minDate);
+        minDateWithoutTime.setHours(0, 0, 0, 0);
+
+        return transactionDate >= minDateWithoutTime;
+      });
+    }
+
     if (maxDate) {
-      filteredTransactions = filteredTransactions.filter(transaction =>
-        new Date(transaction.createdAt) <= new Date(maxDate)
-      );
+      filteredTransactions = filteredTransactions.filter(transaction => {
+        const transactionDate = new Date(transaction.createdAt);
+        transactionDate.setHours(0, 0, 0, 0);
+
+        const maxDateWithoutTime = new Date(maxDate);
+        maxDateWithoutTime.setHours(0, 0, 0, 0);
+
+        return transactionDate <= maxDateWithoutTime;
+      });
     }
 
     this.filteredTransactions = filteredTransactions;
   }
 
 
+  /**
+  * Удаление транзакции
+  * @param id Идентификатор транзакции для удаления
+  */
   deleteTransaction(id?: number): void {
     this.subscription.add(this.transactionService.deleteTransactionById(id).subscribe(
       () => {
         this.fetchTransactions();
       },
-      (error) => this.handleError('Fehler beim Löschen der Transaktion:', error),
+      (error) => this.handleError('Ошибка при удалении транзакции:', error),
     ));
   }
 
+  /**
+   * Редактирование транзакции
+   * @param id Идентификатор транзакции для редактирования
+   */
   editTransaction(id?: number): void {
     this.router.navigate(['/transaction', id]);
   }
 
+  /**
+   * Получение имени категории по идентификатору
+   * @param categoryId Идентификатор категории
+   * @returns Имя категории
+   */
+  getCategoryName(categoryId: number): string {
+    return this.utilsService.getCategoryNameById(categoryId);
+  }
+  /**
+   * Получение суммы с знаком и цветом в зависимости от типа транзакции
+   * @param amount Сумма транзакции
+   * @param transactionTypeId Идентификатор типа транзакции
+   * @returns Строка с суммой, знаком и валютой
+   */
   getAmountWithSignAndColor(amount: number, transactionTypeId: number): string {
     const transactionType = this.transactionTypes.find(type => type.id === transactionTypeId);
     if (transactionType) {
@@ -183,12 +253,16 @@ export class TransactionOverviewComponent implements OnInit, OnDestroy {
       const absAmount = Math.abs(amount);
       return `${sign}${absAmount} ₽`;
     } else {
-      // Fallback: Wenn der Transaktionstyp nicht gefunden wird, verwenden wir standardmäßig das Minuszeichen
       const absAmount = Math.abs(amount);
       return `-${absAmount} ₽`;
     }
   }
 
+  /**
+   * Получение цвета суммы в зависимости от типа транзакции
+   * @param transactionTypeId Идентификатор типа транзакции
+   * @returns Строка с названием цвета
+   */
   getAmountColorByTransactionType(transactionTypeId: number): string {
     const transactionType = this.transactionTypes.find(type => type.id === transactionTypeId);
     if (transactionType) {
@@ -199,11 +273,10 @@ export class TransactionOverviewComponent implements OnInit, OnDestroy {
     }
   }
 
-  getCategoryName(categoryId: number): string {
-    return this.utilsService.getCategoryNameById(categoryId);
-  }
 
-
+  /**
+   * Подписка на изменения фильтров
+   */
   subscribeToFilterChanges(): void {
     this.searchControl.valueChanges.pipe(
       debounceTime(300),
@@ -222,11 +295,14 @@ export class TransactionOverviewComponent implements OnInit, OnDestroy {
 
     this.maxDateControl.valueChanges.subscribe(() => this.applyFilters());
   }
-
-
+  /**
+     * Обработка ошибки
+     * @param message Сообщение об ошибке
+     * @param error Объект ошибки
+     */
   handleError(message: string, error: any): void {
     console.error(message, error);
-    // Handle error display as needed
+    // Обработка отображения ошибки по необходимости
   }
 }
 

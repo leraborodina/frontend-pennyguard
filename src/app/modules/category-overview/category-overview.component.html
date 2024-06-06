@@ -1,40 +1,36 @@
-<!-- categories.component.html -->
-
-<div class="container">
-  <div class="transaction-container">
-    <div class="card">
-      <div class="card-header">
-        Категории
-      </div>
-      <div class="card-body">
-        <div class="table-responsive">
-          <table class="table">
-            <thead>
-              <tr>
-                <th>Название категории</th>
-                <th>Тип категории</th>
-                <th>Действия</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let category of categories">
-                <td>{{ category.name }}</td>
-                <td>{{ resolveTransactionType(category.typeId) }}</td>
-                <td>
-                  <div class="btn-group" role="group" aria-label="Действия с категорией">
-                    <button type="button" class="btn btn-custom-update"
-                      (click)="updateCategory(category)">Обновить</button>
-                    <button type="button" class="btn btn-custom-delete"
-                      (click)="deleteCategory(category)">Удалить</button>
-                  </div>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        <div *ngIf="categories.length === 0" class="empty-list-message">
-          Нет доступных категорий.
-        </div>
+<div class="container mt-4">
+  <div class="content">
+    <div class="table-header">
+      Категории
+    </div>
+    <div class="table-body">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Название категории</th>
+            <th>Тип категории</th>
+            <th>Действия</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let category of categories">
+            <td>{{ category.name }}</td>
+            <td>{{ resolveTransactionType(category.typeId) }}</td>
+            <td>
+              <div class="action-buttons">
+                <button type="button" (click)="deleteCategory(category.id)">
+                  <i class="fa fa-trash"></i>
+                </button>
+                <button type="button" (click)="updateCategory(category.id)">
+                  <i class="fa fa-edit"></i>
+                </button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <div *ngIf="categories.length === 0" class="empty-list-message">
+        Нет доступных категорий.
       </div>
     </div>
   </div>

@@ -35,15 +35,12 @@
       <div class="form-group">
         <input type="number" class="form-control" id="minAmount" placeholder="Минимальная сумма" [min]="0"
           [(ngModel)]="selectedMinAmount" (ngModelChange)="applyFilters()">
-        <!-- <div *ngIf="selectedMinAmount < 0" class="text-danger">Минимальная сумма должна быть больше или равна 0.</div> -->
       </div>
     </div>
     <div class="col-md-6">
       <div class="form-group">
         <input type="number" class="form-control" id="maxAmount" placeholder="Максимальная сумма"
           [min]="selectedMinAmount" [(ngModel)]="selectedMaxAmount" (ngModelChange)="applyFilters()">
-        <!-- <div *ngIf="selectedMaxAmount <= selectedMinAmount" class="text-danger">Максимальная сумма должна быть больше,
-          чем минимальная сумма.</div> -->
       </div>
     </div>
   </div>
@@ -65,9 +62,9 @@
 </div>
 
 <div class="container mt-4">
-  <div class="card">
-    <div class="card-header">Транзакции</div>
-    <div class="card-body">
+  <div class="content">
+    <div class="table-header">Транзакции</div>
+    <div class="table-body">
       <div class="transaction-quantity">
         <span>Всего транзакций: {{ filteredTransactions.length }}</span>
       </div>
@@ -83,19 +80,18 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let transaction of filteredTransactions; let i = index" class="transaction-item">
+            <tr *ngFor="let transaction of filteredTransactions; let i = index">
               <td>{{ transaction.createdAt | date }}</td>
               <td>{{ getCategoryName(transaction.categoryId) }}</td>
               <td>{{ transaction.purpose || "Нет данных" }}</td>
-              <td [ngStyle]="{'color': getAmountColorByTransactionType(transaction.typeId)}">
-                {{ getAmountWithSignAndColor(transaction.amount, transaction.typeId) }}
-              </td>
+              <td [ngStyle]="{'color': getAmountColorByTransactionType(transaction.typeId)}">{{
+                getAmountWithSignAndColor(transaction.amount, transaction.typeId) }}</td>
               <td>
                 <div class="action-buttons">
-                  <button class="btn btn-danger btn-sm" type="button" (click)="deleteTransaction(transaction.id)">
+                  <button type="button" (click)="deleteTransaction(transaction.id)">
                     <i class="fa fa-trash"></i>
                   </button>
-                  <button class="btn btn-primary btn-sm" type="button" (click)="editTransaction(transaction.id)">
+                  <button type="button" (click)="editTransaction(transaction.id)">
                     <i class="fa fa-edit"></i>
                   </button>
                 </div>
