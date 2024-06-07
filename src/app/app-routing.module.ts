@@ -25,7 +25,6 @@ import { TransactionAnalysisComponent } from './modules/transaction-analysis/tra
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'registration', component: RegistrationComponent },
-  { path: 'startpage', component: StartpageComponent },
   { path: 'incomes', component: IncomesComponent, canActivate: [AuthGuard] },
   { path: 'expenses', component: ExpensesComponent, canActivate: [AuthGuard] },
   {

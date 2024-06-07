@@ -14,19 +14,19 @@ export class AppComponent implements OnInit {
 
   constructor(
     private authService: AuthService,
-    private webSocketService: WebSocketService
+    private webSocketService: WebSocketService,
   ) { }
 
   ngOnInit() {
     this.isAuthenticated = this.authService.isAuthenticated();
+
     this.webSocketService.connect();
 
     this.webSocketService.getMessages().subscribe((message) => {
       this.displayNotification(message);
     });
   }
-
-
+  
   displayNotification(message: string) {
     // Add the message to the notifications array
     this.notifications.push(message);
