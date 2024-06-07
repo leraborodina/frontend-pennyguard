@@ -103,7 +103,7 @@ const routes: Routes = [
     canActivate: [AuthGuard],
   },
   {
-    path: 'app-transaction-analysis',
+    path: 'transaction-analysis',
     component: TransactionAnalysisComponent,
     canActivate: [AuthGuard],
   },

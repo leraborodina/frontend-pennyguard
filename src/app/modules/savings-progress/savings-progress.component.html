@@ -3,31 +3,16 @@
     <button (click)="navigateToCreateGoal()">Создать финансовую цель</button>
 </div>
 
-<!-- <div *ngFor="let goal of financialGoals" class="goal-item">
-    <h3>{{ goal.name }}</h3>
-    <div class="progress" style="height: 30px; position: relative;">
-        <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar"
-            [style.width.%]="calculateProgressPercentage(goal)" aria-valuemin="0" aria-valuemax="100">
-        </div>
-        <span class="progress-text">
-            {{ calculateProgressPercentage(goal) }}% ({{ balance | currency:'RUB ':'symbol' }} из {{
-            getTotalGoal(goal.id) | currency:'RUB ':'symbol'
-            }})
-        </span>
-    </div>
-</div> -->
-
 <div *ngFor="let goal of financialGoals" class="goal-item">
     <div class="goal-label-details-container">
         <div class="goal-label">
             <h3>{{ goal.name }}</h3>
         </div>
         <div class="goal-details">
-            <p>{{ goal.startDate | customDate:'dd/MM/yyyy' }}</p>
-            <p>{{ goal.endDate | customDate:'dd/MM/yyyy' }}</p>
+            <p>{{ goal.startDate | customDate:'dd/MM/yyyy' }} - {{ goal.endDate | customDate:'dd/MM/yyyy' }}</p>
         </div>
     </div>
-    <hr class="divider"> <!-- Horizontal line -->
+    <hr class="divider">
     <div class="progress-container">
         <div class="progress" style="height: 30px;">
             <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar"

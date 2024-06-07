@@ -1,60 +1,63 @@
-// Import the shared styles SCSS file
 @import '../../../styles/shared-styles.scss';
 
-.transaction-analysis-container {
-    @include container-styles;
+.transaction-analysis {
+    // @include container-styles;
     display: flex;
-    flex-direction: column;  
-    align-items: center; 
+    flex-direction: column;
+    align-items: center;
     gap: 20px;
-    max-width: 1200px;  
-    margin: 20px auto;  
+    max-width: 1200px;
+    margin: 20px auto;
+
+    .chart-container {
+        width: 100%;
+        position: relative;
+        display: flex;
+        justify-content: center;
+
+        app-barchart,
+        app-line-chart {
+            width: 100%;
+            max-width: calc(100% - 40px);
+            flex-grow: 1; // Ensure the first two charts grow to fill the space
+        }
+    }
 }
 
-.transaction-analysis-container>* {
-    width: 100%;  
-    max-width: calc(100% - 40px);  
-    position: relative;
-}
-
-.transaction-analysis-container>.long-container {
-    flex-grow: 0;
-    max-height: none;
-}
-
-.transaction-analysis-container>app-chart {
-    position: relative;
+.doughnut-chart-container {
+    @include container-styles;
+    max-width: 1200px;
+    margin: 20px auto;
     width: 100%;
-    height: 100%;
 }
 
-.transaction-analysis-container>app-chart:last-child {
-    max-width: calc(100% - 20px); 
-    display: flex;
-    justify-content: center;  
+.doughnut-chart-container doughnut-chart-card {
+    width: 100%;
+    max-width: calc(100% - 40px);
 }
+
 
 /* Media queries for responsive layouts */
 @include respond-to(small) {
-    .transaction-analysis-container>* {
+    .transaction-analysis .chart-container {
         max-width: calc(100% - 40px);
     }
 }
 
 @include respond-to(medium) {
-    .transaction-analysis-container>* {
+    .transaction-analysis .chart-container {
         max-width: calc(100% - 40px);
     }
 }
 
 @include respond-to(large) {
-    .transaction-analysis-container>* {
+    .transaction-analysis .chart-container {
         max-width: calc(100% - 40px);
     }
 }
 
 @include respond-to(xlarge) {
-    .transaction-analysis-container>* {
+    .transaction-analysis .chart-container {
         max-width: calc(100% - 40px);
     }
 }

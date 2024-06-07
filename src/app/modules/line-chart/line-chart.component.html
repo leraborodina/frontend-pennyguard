@@ -1,13 +1,16 @@
-<!-- line chart component html -->
-<div class="year-selector">
-    <div class="arrow-left" (click)="switchYear(displayedYear - 1)">
-        <i class="bi bi-arrow-left"></i>
+<div class="chart-responsive">
+    <div class="year-selector">
+        <div class="arrow-left" (click)="switchYear(displayedYear - 1)">
+            <i class="bi bi-arrow-left"></i>
+        </div>
+        <span>{{ displayedYear }}</span>
+        <div class="arrow-right" (click)="switchYear(displayedYear + 1)">
+            <i class="bi bi-arrow-right"></i>
+        </div>
     </div>
-    <span>{{ displayedYear }}</span>
-    <div class="arrow-right" (click)="switchYear(displayedYear + 1)">
-        <i class="bi bi-arrow-right"></i>
+    <div class="chart-container">
+        <div class="chart-wrapper">
+            <canvas id="MyLineChart" class="chart"></canvas>
+        </div>
     </div>
-</div>
-<div class="chart-container">
-    <canvas id="MyLineChart" width="400" height="100"></canvas>
 </div>

@@ -57,7 +57,16 @@ export class SavingsProgressComponent implements OnInit {
     return this.financialGoals.length === 0;
   }
 
-  deleteGoal(id: number) {
-
+  deleteGoal(id: number): void {
+    this.financialGoalService.deleteGoalById(id).subscribe(
+      () => {
+        this.financialGoals = this.financialGoals.filter(goal => goal.id !== id);
+        this.loadUserBalanceAfterSettingGoals();
+        console.log(`Goal with id ${id} deleted successfully`);
+      },
+      (error) => {
+        console.error(`Error deleting goal with id ${id}:`, error);
+      }
+    );
   }
 }

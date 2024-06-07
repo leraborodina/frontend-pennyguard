@@ -2,9 +2,8 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../../core/guards/auth.service';
-import { catchError } from 'rxjs/operators';
-import { throwError } from 'rxjs';
 import { UserService } from '../../../shared/services/user.service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-login',
@@ -70,15 +69,10 @@ export class LoginComponent implements OnInit {
     const { email, password } = this.loginForm.value;
 
     this.authService.login(email, password)
-      .pipe(
-        catchError((error) => {
-          this.handleLoginError(error);
-          return throwError(error);
-        })
-      )
-      .subscribe((response: { token: string }) => {
-        this.handleSuccessfulLogin(response.token);
-      });
+      .subscribe(
+        (response) => this.handleSuccessfulLogin(response.token),
+        (error: HttpErrorResponse) => this.handleLoginError(error)
+      );
   }
 
   private handleSuccessfulLogin(token: string): void {
@@ -95,8 +89,8 @@ export class LoginComponent implements OnInit {
   }
 
 
-  private handleLoginError(error: any): void {
+  private handleLoginError(error: HttpErrorResponse): void {
     this.errorMessage = error.error || 'Ошибка входа. Попробуйте еще раз.';
-    console.error('Login error:', error);
+    console.error('Login error:', this.errorMessage);
   }
 }

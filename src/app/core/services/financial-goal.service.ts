@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, catchError, throwError } from 'rxjs';
- 
+
 import { CookieService } from 'ngx-cookie-service';
 import { urls } from '../../config/config';
 import { FinancialGoal } from '../../shared/interfaces/financial-goal.interface';
@@ -49,6 +49,24 @@ export class FinancialGoalService {
       .pipe(
         catchError((error: any) => {
           console.error('Error in financial goal get request:', error);
+          return throwError(error);
+        })
+      );
+  }
+
+  deleteGoalById(id: number): Observable<void> {
+    const authToken = this.cookieService.get('authToken');
+
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${authToken}`
+    });
+
+    return this.http
+      .delete<void>(`${this.goalsEndpoint}/${id}`, { headers })
+      .pipe(
+        catchError((error: any) => {
+          console.error('Error in financial goal delete request:', error);
           return throwError(error);
         })
       );

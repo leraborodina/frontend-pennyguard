@@ -1,0 +1,52 @@
+@import '../styles/shared-styles.scss';
+.chart-responsive {
+    @include container-styles;
+    overflow-x: auto; // Enable horizontal scrolling
+    white-space: nowrap; // Prevent charts from wrapping to the next line
+    text-align: center; // Center align the year-selector
+}
+
+.year-selector {
+    display: flex; // Use flexbox to ensure year-selector stays in one line
+    align-items: center; // Center align items vertically
+    justify-content: center; // Center align items horizontally
+    margin-bottom: 20px; // Add some spacing between year-selector and chart-container
+}
+
+.year-selector .arrow-left,
+.year-selector .arrow-right {
+    cursor: pointer;
+    font-size: 24px;
+}
+
+.year-selector span {
+    margin: 0 10px;
+    font-size: 18px;
+}
+
+.chart-container {
+    overflow-x: auto; // Enable horizontal scrolling
+    border-radius: 0.25rem;
+}
+
+.chart-wrapper {
+    display: inline-block; // Ensure charts stay in a single line
+    margin-right: 20px; // Add some spacing between charts
+}
+
+.chart {
+    width: 600px; // Set fixed width for laptops
+    height: 400px; // Set fixed height for all devices
+}
+
+@media screen and (max-width: 992px) {
+    .chart {
+        width: 450px; // Adjust width for tablets
+    }
+}
+
+@media screen and (max-width: 576px) {
+    .chart {
+        width: 350px; // Adjust width for phones
+    }
+}

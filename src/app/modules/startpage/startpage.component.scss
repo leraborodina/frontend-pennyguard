@@ -26,18 +26,7 @@
     gap: 1rem;
     padding: 20px;
     flex: 1 1 45%;
-
-    &.limit {
-      text-align: right;
-      padding-right: 10%;
-      padding-left: 0%;
-    }
-
-    @include respond-to(small) {
-      align-items: center;
-      text-align: center;
-      padding: 10px;
-    }
+    text-align: left;
   }
 
   .image-container {
@@ -69,20 +58,12 @@
       font-size: 0.875rem;
     }
   }
-
-  .button-container {
-    display: flex;
-    gap: 1rem;
-  }
 }
 
-.tiles-container {
+.button-container {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 20px;
-  padding: 20px;
-  width: 100%;
+  gap: 1rem;
+  text-align: left;
 }
 
 @media (max-width: 600px) {
