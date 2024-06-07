@@ -14,12 +14,11 @@ export class AppComponent implements OnInit {
 
   constructor(
     private authService: AuthService,
-    private webSocketService: WebSocketService,
+    private webSocketService: WebSocketService
   ) { }
 
   ngOnInit() {
     this.isAuthenticated = this.authService.isAuthenticated();
-
     this.webSocketService.connect();
 
     this.webSocketService.getMessages().subscribe((message) => {
@@ -27,20 +26,6 @@ export class AppComponent implements OnInit {
     });
   }
 
-  // displayNotification(message: string) {
-  //   // Set the received message as the notification
-  //   this.notification = message;
-
-  //   // Automatically dismiss the notification after 15 seconds
-  //   setTimeout(() => {
-  //     this.dismissNotification();
-  //   }, 15000);
-  // }
-
-  // dismissNotification() {
-  //   // Clear the notification
-  //   this.notification = null;
-  // }
 
   displayNotification(message: string) {
     // Add the message to the notifications array

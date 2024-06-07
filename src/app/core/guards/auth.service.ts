@@ -1,5 +1,3 @@
-// auth.service.ts
-
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import {
@@ -153,13 +151,13 @@ export class AuthService {
     return this.checkTokenExpiration();
   }
 
-  logout(): void {
-    // Delete the authentication token, update authentication status, and navigate to login page
-    this.cookieService.delete(this.TOKEN_KEY);
-    this.setAuthenticationStatus(false);
-    this.router.navigate(['/startpage']);
+  // Method to check if the token is expired
+  checkTokenExpiration(): boolean {
+    const authToken: string | null = this.getAuthToken();
+    return authToken !== null && !this.tokenService.isTokenExpired();
   }
 
+  // Method to check token expiration and logout if necessary
   checkTokenExpirationAndLogout(): void {
     if (!this.checkTokenExpiration()) {
       // Token expired, logout the user
@@ -167,12 +165,12 @@ export class AuthService {
     }
   }
 
-  checkTokenExpiration(): boolean {
-    // Retrieve the authentication token from the cookie service
-    const authToken: string | null = this.getAuthToken();
-
-    // Check if the authentication token is expired using the token service
-    return authToken !== null && !this.tokenService.isTokenExpired(authToken);
+  // Method to logout the user
+  logout(): void {
+    // Delete the authentication token and navigate to the start page
+    this.cookieService.delete('authToken');
+    this.setAuthenticationStatus(false); // Update authentication status
+    this.router.navigate(['/startpage']);
   }
 
   // Routing Management

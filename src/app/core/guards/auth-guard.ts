@@ -9,32 +9,17 @@ export class AuthGuard implements CanActivate {
   constructor(
     private router: Router,
     private authService: AuthService,
-  ) {}
+  ) { }
 
-  // This method is called to check if the user is authenticated before navigating to a route
   canActivate(): boolean {
-    // Check if the user is authenticated; if not, navigate to the login page
-    if (!this.isAuthenticated()) {
-      this.router.navigate(['/login']);
-      return false;
+    const isAuthenticated = this.authService.isAuthenticated();
+    if (!isAuthenticated) {
+      // User is not authenticated, redirect to the start page
+      this.router.navigate(['/startpage']);
+    } else {
+      // User is authenticated, check for token expiration
+      this.authService.checkTokenExpirationAndLogout();
     }
-
-    // User is authenticated, allow navigation to the requested route
-    return true;
-  }
-
-  // Private method to check user authentication status based on custom logic
-  private isAuthenticated(): boolean {
-    // Check if the user is authenticated and the authentication token is still valid
-    if (
-      this.authService.isAuthenticated() &&
-      this.authService.checkTokenExpiration()
-    ) {
-      // User is authenticated
-      return true;
-    }
-
-    // User is not authenticated
-    return false;
+    return isAuthenticated;
   }
 }

@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { jwtDecode } from 'jwt-decode';
 import { EventService } from './event.service';
 
-
 @Injectable({
   providedIn: 'root',
 })
@@ -28,14 +27,13 @@ export class TokenService {
   }
 
   /**
-   * Checks if the given token is expired.
-   * @param token The authentication token to be checked.
+   * Checks if the token is expired.
    * @returns True if the token is expired, false otherwise.
    */
-  isTokenExpired(token: string): boolean {
-    if (token) {
+  isTokenExpired(): boolean {
+    if (this.token) {
       try {
-        const decodedToken: any = jwtDecode(token);
+        const decodedToken: any = jwtDecode(this.token);
         const expirationTimestamp: number = decodedToken.exp * 1000;
         const isExpired = Date.now() > expirationTimestamp;
 
@@ -52,4 +50,5 @@ export class TokenService {
 
     return true;
   }
+
 }

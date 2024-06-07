@@ -1,6 +1,7 @@
-<div class="container">
-  <savings-calculator></savings-calculator>
+<savings-calculator></savings-calculator>
 
+
+<div class="container">
   <form (ngSubmit)="createFinancialGoal()" [formGroup]="financialGoalForm">
     <div class="form-label">
       <h3>{{ financialGoal ? 'Обновить финансовую цель' : 'Создать финансовую цель' }}</h3>
