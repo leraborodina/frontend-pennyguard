@@ -14,7 +14,6 @@ import { switchMap } from 'rxjs';
 })
 export class CategoryFormComponent implements OnInit {
   categoryForm: FormGroup;
-  transactionTypes: TransactionType[] = [];
   category?: Category;
 
   errorMessage: string = '';
@@ -27,8 +26,7 @@ export class CategoryFormComponent implements OnInit {
     private route: ActivatedRoute
   ) {
     this.categoryForm = this.fb.group({
-      name: ['', Validators.required],
-      typeId: ['', Validators.required],
+      name: ['', Validators.required]
     });
   }
 
@@ -36,14 +34,6 @@ export class CategoryFormComponent implements OnInit {
    * Инициализация компонента.
    */
   ngOnInit(): void {
-    // Загрузка типов транзакций при инициализации компонента
-    this.utilsService.getTransactionTypes().subscribe(
-      (types: TransactionType[]) => {
-        this.transactionTypes = types;
-      },
-      (error: any) => console.error('Ошибка при загрузке типов транзакций:', error)
-    );
-
     // Получение и загрузка категории по ID, если таковая передана в параметрах маршрута
     this.route.paramMap.pipe(
       switchMap(params => {
@@ -59,7 +49,6 @@ export class CategoryFormComponent implements OnInit {
       // Заполнение формы данными категории
       this.categoryForm.patchValue({
         name: this.category.name,
-        typeId: this.category.typeId
       });
     });
   }
@@ -93,6 +82,7 @@ export class CategoryFormComponent implements OnInit {
     this.categoryService.updateCategory(category).subscribe(
       () => this.router.navigate(['/category-overview']),
       (error) => {
+        this.errorMessage = error;
         console.error('Error updating transaction:', error);
       },
     );

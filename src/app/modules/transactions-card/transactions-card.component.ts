@@ -85,7 +85,7 @@ export class TransactionsCardComponent implements OnInit {
    * Перенаправляет на страницу создания новой транзакции.
    */
   navigateToCreateTransaction(): void {
-    this.router.navigate(['/create-transaction']);
+    this.router.navigate(['/transaction-form']);
   }
 
   /**

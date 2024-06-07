@@ -37,8 +37,4 @@ export class CategoryOverviewComponent {
       this.categories = this.categories.filter(category => category.id !== id);
     });
   }
-
-  resolveTransactionType(typeId: number): string {
-    return this.utilsService.getTransactionTypeNameById(typeId); 
-  }
 }

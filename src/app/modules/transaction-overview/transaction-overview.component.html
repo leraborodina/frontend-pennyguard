@@ -77,14 +77,14 @@
               <tr>
                 <th>Дата</th>
                 <th>Категория</th>
-                <th>Назначение</th>
+                <th>Сообщение</th>
                 <th>Сумма</th>
                 <th>Действия</th>
               </tr>
             </thead>
             <tbody class="table-container">
               <tr *ngFor="let transaction of filteredTransactions; let i = index">
-                <td>{{ transaction.createdAt | date }}</td>
+                <td>{{ transaction.createdAt | customDate:'dd/MM/yyyy' }}</td>
                 <td>{{ getCategoryName(transaction.categoryId) }}</td>
                 <td>{{ transaction.purpose || "Нет данных" }}</td>
                 <td [ngStyle]="{'color': getAmountColorByTransactionType(transaction.typeId)}">{{

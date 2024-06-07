@@ -28,7 +28,7 @@ const routes: Routes = [
   { path: 'incomes', component: IncomesComponent, canActivate: [AuthGuard] },
   { path: 'expenses', component: ExpensesComponent, canActivate: [AuthGuard] },
   {
-    path: 'transaction',
+    path: 'transaction-form',
     component: TransactionFormComponent,
     canActivate: [AuthGuard],
   },
@@ -93,7 +93,7 @@ const routes: Routes = [
     canActivate: [AuthGuard],
   },
   {
-    path: 'create-goal',
+    path: 'goal-form',
     component: FinancialGoalFormComponent,
     canActivate: [AuthGuard],
   },

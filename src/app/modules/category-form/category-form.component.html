@@ -9,15 +9,6 @@
       <div *ngIf="isFieldInvalid('name')" class="error-message">Обязательное поле</div>
     </div>
 
-    <div class="form-group">
-      <label for="typeId">Тип:</label>
-      <select formControlName="typeId" id="typeId" required>
-        <option value="" disabled selected>Выберите тип</option>
-        <option *ngFor="let type of transactionTypes" [value]="type.id">{{ type.type }}</option>
-      </select>
-      <div *ngIf="isFieldInvalid('typeId')" class="error-message">Выберите тип категории</div>
-    </div>
-
     <button type="submit">{{ category ? 'Обновить' : 'Создать' }}</button>
 
     <div class="alert alert-danger d-flex justify-content-center align-items-center" role="alert" *ngIf="errorMessage">

@@ -106,25 +106,27 @@ export class TransactionOverviewComponent implements OnInit, OnDestroy {
     }
   }
 
-  /**
-   * Получение транзакций пользователя
-   */
-  fetchTransactions(): void {
-    this.subscription.add(this.transactionService.getTransactionsByUserId().subscribe(
-      (userTransactions: Transaction[]) => {
-        this.transactions = userTransactions.map((transaction) =>
-          this.transactionService.mapTransactionFromBackend(transaction),
-        );
+/**
+ * Получение транзакций пользователя
+ */
+fetchTransactions(): void {
+  this.subscription.add(this.transactionService.getTransactionsByUserId().subscribe(
+    (userTransactions: Transaction[]) => {
+      this.transactions = userTransactions.map((transaction) =>
+        this.transactionService.mapTransactionFromBackend(transaction),
+      );
 
-        this.filteredTransactions = userTransactions.map((transaction) =>
-          this.transactionService.mapTransactionFromBackend(transaction),
-        );
+      this.transactions.sort((a, b) => {
+        return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
+      });
 
-        this.applyFilters();
-      },
-      (error) => this.handleError('Ошибка при загрузке транзакций:', error),
-    ));
-  }
+      this.filteredTransactions = [...this.transactions];
+
+      this.applyFilters();
+    },
+    (error) => this.handleError('Ошибка при загрузке транзакций:', error),
+  ));
+}
 
   /**
   * Применение фильтров

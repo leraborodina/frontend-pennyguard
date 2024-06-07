@@ -12,7 +12,7 @@ export interface CardData {
       description: 'Записывайте каждую операцию в свой личный журнал, чтобы лучше понимать свое финансовое положение.',
       imageUrl: 'https://i.ibb.co/hBvZMQj/ed41642d18e94f2799434df6b313949f-png-tplv-6bxrjdptv7-image-Photoroom-png-Photoroom.png',
       buttonLabel: 'подробнее',
-      buttonAction: '/transaction-overview'
+      buttonAction: '/transaction-form'
     },
     {
       title: 'Лимиты',
@@ -26,7 +26,7 @@ export interface CardData {
       description: 'Используйте анализ транзакций. Визуальное представление поможет оптимизировать бюджет.',
       imageUrl: 'https://i.ibb.co/603F74z/Group-1000002301.png',
       buttonLabel: 'подробнее',
-      buttonAction: '/transaction-chart'
+      buttonAction: '/transaction-analysis'
     },
     {
       title: 'Цели',

@@ -9,14 +9,12 @@
           <thead>
             <tr>
               <th>Название категории</th>
-              <th>Тип категории</th>
               <th>Действия</th>
             </tr>
           </thead>
           <tbody>
             <tr *ngFor="let category of categories">
               <td>{{ category.name }}</td>
-              <td>{{ resolveTransactionType(category.typeId) }}</td>
               <td>
                 <div class="action-buttons">
                   <button type="button" (click)="updateCategory(category.id)">

@@ -245,7 +245,7 @@ export class DoughnutChartCardComponent implements OnInit, OnDestroy {
    * Навигация к странице статистики.
    */
   navigateToCharts() {
-    this.router.navigate(['/app-transaction-analysis']);
+    this.router.navigate(['/transaction-analysis']);
   }
 }
 

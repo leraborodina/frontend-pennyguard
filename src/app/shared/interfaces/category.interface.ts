@@ -3,5 +3,4 @@ export interface Category {
   name: string;
   isDefault?: boolean;
   userId?: number;
-  typeId: number;
 }
