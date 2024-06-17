@@ -1,5 +1,3 @@
-// auth.service.ts
-
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import {
@@ -173,21 +171,5 @@ export class AuthService {
 
     // Check if the authentication token is expired using the token service
     return authToken !== null && !this.tokenService.isTokenExpired(authToken);
-  }
-
-  // Routing Management
-  saveRouting(url: string): void {
-    // Save the current routing information in local storage
-    localStorage.setItem(this.ROUTING_KEY, url);
-  }
-
-  getSavedRouting(): string | null {
-    // Retrieve saved routing information from local storage
-    return localStorage.getItem(this.ROUTING_KEY);
-  }
-
-  clearSavedRouting(): void {
-    // Remove saved routing information from local storage
-    localStorage.removeItem(this.ROUTING_KEY);
   }
 }

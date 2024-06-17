@@ -1,0 +1,63 @@
+@import '../../../../styles/shared-styles.scss';
+
+.transaction-analysis {
+    // @include container-styles;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    max-width: 1200px;
+    margin: 20px auto;
+
+    .chart-container {
+        width: 100%;
+        position: relative;
+        display: flex;
+        justify-content: center;
+
+        app-barchart,
+        app-line-chart {
+            width: 100%;
+            max-width: calc(100% - 40px);
+            flex-grow: 1; // Ensure the first two charts grow to fill the space
+        }
+    }
+}
+
+.doughnut-chart-container {
+    @include container-styles;
+    max-width: 1200px;
+    margin: 20px auto;
+    width: 100%;
+}
+
+.doughnut-chart-container doughnut-chart-card {
+    width: 100%;
+    max-width: calc(100% - 40px);
+}
+
+
+/* Media queries for responsive layouts */
+@include respond-to(small) {
+    .transaction-analysis .chart-container {
+        max-width: calc(100% - 40px);
+    }
+}
+
+@include respond-to(medium) {
+    .transaction-analysis .chart-container {
+        max-width: calc(100% - 40px);
+    }
+}
+
+@include respond-to(large) {
+    .transaction-analysis .chart-container {
+        max-width: calc(100% - 40px);
+    }
+}
+
+@include respond-to(xlarge) {
+    .transaction-analysis .chart-container {
+        max-width: calc(100% - 40px);
+    }
+}

@@ -1,7 +1,7 @@
 import { Component, ElementRef, OnInit } from '@angular/core';
 import { AuthService } from '../../core/guards/auth.service';
 import { Router } from '@angular/router';
-import { CardData, cardData } from '../card/card-data';
+import { CardData, cardData } from './feature-card/card-data';
 
 @Component({
   selector: 'app-startpage',

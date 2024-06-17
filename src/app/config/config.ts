@@ -1,9 +1,9 @@
 /**
- * Centralized configuration for URLs and other constants.
+ * Централизованная настройка URL-адресов и других констант.
  */
 export const urls = {
   /**
-   * Base backend URL for the API.
+   * Базовый URL-адрес серверной (бекенд) части API.
    */
   baseUrl: 'http://localhost:8080/api',
 };

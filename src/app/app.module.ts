@@ -2,15 +2,10 @@ import { APP_INITIALIZER, ErrorHandler, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { LoginComponent } from './modules/login/login/login.component';
-import { RegistrationComponent } from './modules/registration/registration/registration.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { IncomesComponent } from './modules/incomes/incomes.component';
-import { ExpensesComponent } from './modules/expenses/expenses.component';
-import { LogoutComponent } from './modules/logout/logout.component';
-import { TransactionFormComponent } from './modules/transaction-form/transaction.component';
-import { TransactionOverviewComponent } from './modules/transaction-overview/transaction-overview.component';
+import { LogoutComponent } from './modules/auth/logout/logout.component';
+import { TransactionFormComponent } from './modules/transaction/transaction-form/transaction.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -26,46 +21,46 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MAT_DATE_LOCALE } from '@angular/material/core';
 import { MatNativeDateModule } from '@angular/material/core';
-import { TransactionChartComponent } from './modules/transaction-chart/transaction-chart.component';
 import { MatMenuModule } from '@angular/material/menu';
-import { UploadPdfComponent } from './modules/upload-pdf/upload-pdf.component';
-import { TransactionEditComponent } from './modules/transaction-edit/transaction-edit.component';
+import { UploadPdfComponent } from './modules/upload/upload-pdf/upload-pdf.component';
+import { TransactionEditComponent } from './modules/upload/transaction-edit/transaction-edit.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { CommonModule, DatePipe } from '@angular/common';
 import { MatPaginatorModule } from '@angular/material/paginator';
-import { NotificationsComponent } from './modules/notifications/notifications.component';
-import { LimitFormComponent } from './modules/limit-form/limit-form.component';
+import { NotificationsComponent } from './modules/notification/notifications/notifications.component';
 import { MatSidenav, MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { StartpageComponent } from './modules/startpage/startpage.component';
 import { DashboardComponent } from './modules/dashboard/dashboard.component';
 import { MatGridListModule } from '@angular/material/grid-list';
-import { TransactionsCardComponent } from './modules/transactions-card/transactions-card.component';
-import { LimitOverviewComponent } from './modules/limit-overview/limit-overview.component';
 import { WebSocketService } from './core/services/websocket.service';
 import { NotificationService } from './shared/services/notification.service';
-import { PopupMessageComponent } from './modules/popup-message/popup-message.component';
-import { NotificationsOverviewComponent } from './modules/notifications-overview/notifications-overview.component';
-import { FinancialGoalFormComponent } from './modules/financial-goal-form/financial-goal-form.component';
-import { SavingsCalculatorComponent } from './modules/savings-calculator/savings-calculator.component';
-import { SavingsProgressComponent } from './modules/savings-progress/savings-progress.component';
 import { SocketIoConfig } from 'ngx-socket-io';
-import { BarchartComponent } from './modules/barchart/barchart.component';
+import { BarchartComponent } from './modules/transaction/barchart/barchart.component';
 import { GlobalErrorHandlerService } from './core/services/global-error-handler.service.service';
 import { DropdownToggleDirective } from './shared/directives/dropdown-toggle.directive';
-import { BalanceCardComponent } from './modules/balance-card/balance-card.component';
-import { CategoryLimitsCardComponent } from './modules/category-limits-card/category-limits-card.component';
-import { FinancialGoalCardComponent } from './modules/financial-goal-card/financial-goal-card.component';
-import { FinancialGoalOverviewComponent } from './modules/financial-goal-overview/financial-goal-overview.component';
-import { MessageComponent } from './modules/message/message.component';
-import { CategoryFormComponent } from './modules/category-form/category-form.component';
-import { CategoryOverviewComponent } from './modules/category-overview/category-overview.component';
-import { TransactionAnalysisComponent } from './modules/transaction-analysis/transaction-analysis.component';
-import { LineChartComponent } from './modules/line-chart/line-chart.component';
 import { CustomDatePipe } from './shared/pipes/custom-date.pipe';
-import { CardComponent } from './modules/card/card.component';
-import { DoughnutChartCardComponent } from './modules/doughnut-chart-card/doughnut-chart-card.component';
+import { CardComponent } from './modules/startpage/feature-card/card.component';
+import { DoughnutChartCardComponent } from './modules/dashboard/doughnut-chart-card/doughnut-chart-card.component';
+import { LoginComponent } from './modules/auth/login/login/login.component';
+import { RegistrationComponent } from './modules/auth/registration/registration/registration.component';
+import { CategoryFormComponent } from './modules/category/category-form/category-form.component';
+import { CategoryOverviewComponent } from './modules/category/category-overview/category-overview.component';
+import { BalanceCardComponent } from './modules/dashboard/balance-card/balance-card.component';
+import { CategoryLimitsCardComponent } from './modules/dashboard/category-limits-card/category-limits-card.component';
+import { FinancialGoalCardComponent } from './modules/dashboard/financial-goal-card/financial-goal-card.component';
+import { TransactionsCardComponent } from './modules/dashboard/transactions-card/transactions-card.component';
+import { FinancialGoalFormComponent } from './modules/financial-goals/financial-goal-form/financial-goal-form.component';
+import { FinancialGoalOverviewComponent } from './modules/financial-goals/financial-goal-overview/financial-goal-overview.component';
+import { SavingsCalculatorComponent } from './modules/financial-goals/savings-calculator/savings-calculator.component';
+import { SavingsProgressComponent } from './modules/financial-goals/savings-progress/savings-progress.component';
+import { LimitFormComponent } from './modules/limits/limit-form/limit-form.component';
+import { LimitOverviewComponent } from './modules/limits/limit-overview/limit-overview.component';
+import { NotificationsOverviewComponent } from './modules/notification/notifications-overview/notifications-overview.component';
+import { LineChartComponent } from './modules/transaction/line-chart/line-chart.component';
+import { TransactionAnalysisComponent } from './modules/transaction/transaction-analysis/transaction-analysis.component';
+import { TransactionOverviewComponent } from './modules/transaction/transaction-overview/transaction-overview.component';
 
 const config: SocketIoConfig = { url: 'ws://localhost:8080', options: {} };
 
@@ -75,12 +70,10 @@ const config: SocketIoConfig = { url: 'ws://localhost:8080', options: {} };
     LoginComponent,
     LogoutComponent,
     RegistrationComponent,
-    IncomesComponent,
-    ExpensesComponent,
     TransactionFormComponent,
     TransactionOverviewComponent,
     NavbarComponent,
-    TransactionChartComponent,
+    TransactionsCardComponent,
     UploadPdfComponent,
     TransactionEditComponent,
     NotificationsComponent,
@@ -90,7 +83,6 @@ const config: SocketIoConfig = { url: 'ws://localhost:8080', options: {} };
     TransactionsCardComponent,
     LimitOverviewComponent,
     DoughnutChartCardComponent,
-    PopupMessageComponent,
     NotificationsOverviewComponent,
     BarchartComponent,
     FinancialGoalFormComponent,
@@ -101,7 +93,6 @@ const config: SocketIoConfig = { url: 'ws://localhost:8080', options: {} };
     CategoryLimitsCardComponent,
     FinancialGoalCardComponent,
     FinancialGoalOverviewComponent,
-    MessageComponent,
     CategoryFormComponent,
     CategoryOverviewComponent,
     TransactionAnalysisComponent,
