@@ -80,6 +80,7 @@ button:hover {
     background-color: var(--button-text-color);
     border-radius: var(--border-radius);
     width: 90%;
+    min-width: 320px; 
     // max-width: 320px;
     // padding: 20px;
     // margin: 20px;

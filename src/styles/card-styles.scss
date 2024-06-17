@@ -1,5 +1,11 @@
 @import '../styles/shared-styles.scss';
 
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
 .card {
     background-color: #ffff;
     border-radius: 10px;
@@ -7,6 +13,7 @@
     margin: 20px auto;
     max-width: 600px;
     font-family: var(--penny-guard-font-family);
+    overflow: hidden;
 
     .card-header {
         padding: 10px;
@@ -64,20 +71,27 @@
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
+                flex-wrap: wrap; 
 
-                .column-1 {
-                    flex: 2;
-                    text-align: left;
+                .column-1,
+                .column-2,
+                .column-3 {
+                    flex: 1; 
                     margin: 10px;
                     color: var(--tertiary-color);
+                    min-width: 0; 
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
+                }
+
+                .column-1 {
+                    text-align: left;
                 }
 
                 .column-2,
                 .column-3 {
-                    flex: 2;
                     text-align: right;
-                    margin: 10px;
-                    color: var(--tertiary-color);
                 }
             }
         }
