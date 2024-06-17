@@ -17,38 +17,35 @@ export class RegistrationService {
   constructor(private http: HttpClient) { }
 
   /**
-   * Registers a new user.
-   * @param user The user object to be registered.
-   * @returns An observable with the HTTP response.
+   * Регистрирует нового пользователя.
+   * @param user Объект пользователя, который необходимо зарегистрировать.
+   * @returns Наблюдаемая переменная с HTTP-ответом.
    */
   registerUser(user: any): Observable<HttpResponse<any>> {
-    // Make a POST request to the registration endpoint and observe the response
     return this.http
       .post<
         HttpResponse<any>
       >(this.registryEndpoint, user, { observe: 'response' })
       .pipe(
-        catchError(this.handleError), // Handle errors using the private handleError method
+        catchError(this.handleError)
       );
   }
 
   /**
-   * Handles HTTP errors during registration.
-   * @param error The error response.
-   * @returns An observable with the error message.
+   * Обрабатывает ошибки HTTP во время регистрации.
+   * @param error Ответ об ошибке.
+   * @returns Наблюдаемый объект с сообщением об ошибке.
    */
   private handleError(error: HttpErrorResponse): Observable<never> {
-    // Default error message for unexpected errors
     let errorMessage = 'An error occurred during registration.';
 
-    // Check if the error is a client-side error
     if (error.error instanceof ErrorEvent) {
-      errorMessage = error.error.message; // Extract client-side error message
+      errorMessage = error.error.message;
     } else {
-      errorMessage = error.error || errorMessage; // Extract server-side error message or use default
+      errorMessage = error.error || errorMessage;
     }
 
-    console.error(errorMessage); // Log the error message to the console
-    return throwError(errorMessage); // Return an observable with the error message
+    console.error(errorMessage);
+    return throwError(errorMessage);
   }
 }

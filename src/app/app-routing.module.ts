@@ -22,6 +22,7 @@ import { TransactionOverviewComponent } from './modules/transaction/transaction-
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'registration', component: RegistrationComponent },
+  { path: 'startpage', component: StartpageComponent },
   {
     path: 'transaction-form',
     component: TransactionFormComponent,
@@ -40,16 +41,6 @@ const routes: Routes = [
   {
     path: 'transaction-chart',
     component: TransactionFormComponent,
-    canActivate: [AuthGuard],
-  },
-  {
-    path: 'app-financial-goal-overview',
-    component: FinancialGoalOverviewComponent,
-    canActivate: [AuthGuard],
-  },
-  {
-    path: 'upload',
-    component: UploadPdfComponent,
     canActivate: [AuthGuard],
   },
   {
@@ -88,16 +79,6 @@ const routes: Routes = [
     canActivate: [AuthGuard],
   },
   {
-    path: 'goal-form',
-    component: FinancialGoalFormComponent,
-    canActivate: [AuthGuard],
-  },
-  {
-    path: 'notifications-overview',
-    component: NotificationsOverviewComponent,
-    canActivate: [AuthGuard],
-  },
-  {
     path: 'transaction-analysis',
     component: TransactionAnalysisComponent,
     canActivate: [AuthGuard],
@@ -112,7 +93,6 @@ const routes: Routes = [
     component: DashboardComponent,
     canActivate: [AuthGuard],
   },
-  { path: 'startpage', component: StartpageComponent },
   {
     path: 'limit-overview',
     component: LimitOverviewComponent,

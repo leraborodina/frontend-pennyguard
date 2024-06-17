@@ -22,16 +22,9 @@ import { LoginResponse } from '../../shared/interfaces/login-response.interface'
 export class AuthService {
   private readonly authEndpoint = `${urls.baseUrl}/auth`;
   private readonly TOKEN_KEY = 'authToken';
-
-  // BehaviorSubject to keep track of user authentication status
   private isUserAuthenticated = new BehaviorSubject<boolean>(false);
   public isAuthenticated$ = this.isUserAuthenticated.asObservable();
-
-  private ROUTING_KEY = 'saved_routing';
-
-  // BehaviorSubject to keep track of the authentication token
   private tokenSubject = new BehaviorSubject<string | null>(null);
-
   private redirectUrl!: string;
 
   setRedirectUrl(url: string): void {
@@ -49,13 +42,11 @@ export class AuthService {
     private cookieService: CookieService,
     private userService: UserService,
   ) {
-    // Initialize authentication state based on token presence
     this.isUserAuthenticated.next(this.isAuthenticated());
     this.initializeToken();
   }
 
   private initializeToken(): void {
-    // Retrieve and set the stored authentication token
     const storedToken = this.getAuthToken();
     this.tokenSubject.next(storedToken);
   }
@@ -95,29 +86,21 @@ export class AuthService {
       })
       .pipe(
         map((response: HttpResponse<LoginResponse>) => {
-          // Check if the response body is present
           if (response.body) {
-            // Extract user data from the response body
             const userData: UserData = {
               email: response.body.email,
               firstname: response.body.firstname,
               lastname: response.body.lastname,
             };
 
-            // Set the user data using UserDataService
             this.userService.setUserData(userData);
-
-            // Return the extracted user data
             return response.body;
           } else {
-            // Handle the case where the response body is empty
             throw new Error('Empty response body');
           }
         }),
         catchError((error: any) => {
-          // Handle HTTP errors
           console.error('HTTP error:', error);
-          // Re-throw the error to propagate it downstream
           throw error;
         }),
       );
@@ -130,29 +113,24 @@ export class AuthService {
   }
 
   setAuthenticationStatus(status: boolean): void {
-    // Update the authentication status
     this.isUserAuthenticated.next(status);
   }
 
   setAuthToken(token: string): void {
-    // Set the authentication token in both the token service and cookie service
     this.tokenService.setToken(token);
     this.cookieService.set(this.TOKEN_KEY, token);
     this.setAuthenticationStatus(true);
   }
 
   getAuthToken(): string | null {
-    // Retrieve the authentication token from the cookie service
     return this.cookieService.get(this.TOKEN_KEY) || null;
   }
 
   isAuthenticated(): boolean {
-    // Check if the user is authenticated based on the presence of the authentication token
     return this.checkTokenExpiration();
   }
 
   logout(): void {
-    // Delete the authentication token, update authentication status, and navigate to login page
     this.cookieService.delete(this.TOKEN_KEY);
     this.setAuthenticationStatus(false);
     this.router.navigate(['/startpage']);
@@ -160,16 +138,12 @@ export class AuthService {
 
   checkTokenExpirationAndLogout(): void {
     if (!this.checkTokenExpiration()) {
-      // Token expired, logout the user
       this.logout();
     }
   }
 
   checkTokenExpiration(): boolean {
-    // Retrieve the authentication token from the cookie service
     const authToken: string | null = this.getAuthToken();
-
-    // Check if the authentication token is expired using the token service
     return authToken !== null && !this.tokenService.isTokenExpired(authToken);
   }
 }

@@ -33,7 +33,7 @@ export interface CardData {
       description: 'Поставьте перед собой финансовые цели. Регулярное накопление приведет вас к ним гораздо быстрее, чем вы думаете.',
       imageUrl: './../assets/img/financial-goals.png',
       buttonLabel: 'подробнее',
-      buttonAction: '/goal-form'
+      buttonAction: '/financial-goal-form'
     }
   ];
   

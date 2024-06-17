@@ -6,14 +6,13 @@
     transition: box-shadow 0.3s ease;
     display: flex;
     flex-direction: column;
-    background-color:  rgba(255, 255, 255, 0.3);
+    background-color:  rgba(255, 255, 255, 0.8);
 }
 
 .goal-label-details-container {
     display: flex;
     justify-content: space-between;
     margin-bottom: 10px;
-    /* Add space between label/details and progress bar */
 }
 
 .goal-label {
@@ -23,7 +22,6 @@
 .goal-details {
     flex: 1;
     text-align: right;
-    /* Align end date to the right */
 }
 
 .divider {
@@ -44,7 +42,7 @@
     background-color: #d8d8d8;
     border-radius: 4px;
     overflow: hidden;
-    position: relative; /* Ensure relative positioning */
+    position: relative; 
 }
 
 
@@ -57,10 +55,10 @@
 }
 
 .progress-text {
-    position: absolute; /* Use absolute positioning */
-    top: 50%; /* Center vertically */
-    left: 50%; /* Center horizontally */
-    transform: translate(-50%, -50%); /* Center the text */
+    position: absolute; 
+    top: 50%; 
+    left: 50%; 
+    transform: translate(-50%, -50%); 
     color: black;
     font-weight: bold;
     white-space: nowrap;
@@ -68,7 +66,6 @@
 
 .delete-button-container {
     margin-left: 10px;
-    /* Adjust margin as needed */
 }
 
 .delete-button-container button {
@@ -77,7 +74,6 @@
 
 .end-date {
     margin-right: 0;
-    /* Remove margin from end date */
 }
 
 .no-goals-container {

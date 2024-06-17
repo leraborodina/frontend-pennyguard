@@ -1,6 +1,6 @@
 import { ErrorHandler, Injectable } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
-import { ErrorNotificationService } from './error-notification.service.service';
+import { ErrorNotificationService } from './error-notification.service';
 import { AuthService } from '../guards/auth.service';
 
 
@@ -19,9 +19,9 @@ export class GlobalErrorHandlerService implements ErrorHandler {
       this.errorNotificationService.showError(errorMessage);
 
       this.authService.refreshToken().subscribe(
-        (response) => {
+        () => {
           this.errorNotificationService.showInfo(
-            'Your token was refreshed. Repeat your last action, please.',
+            'Ваш токен обновлен. Повторите последнее действие, пожалуйста.',
           );
         },
         (error) => {
@@ -37,17 +37,15 @@ export class GlobalErrorHandlerService implements ErrorHandler {
       this.errorNotificationService.showError(errorMessage);
     } else {
       // TODO: handle other errors
-      console.error('An error occurred:', error);
+      console.error('Произошла ошибка:', error);
     }
   }
 
   private getErrorMessage(error: any): string {
     if (error instanceof HttpErrorResponse) {
-      // If the error is an instance of Error class, return the error message
       return error.error;
     } else {
-      // If the error is not an instance of Error class, return a generic error message
-      return 'An unexpected error occurred. Please try again later.';
+      return 'Произошла ошибка. Пожалуйста, повторите попытку позже.';
     }
   }
 }

@@ -7,8 +7,6 @@ import { urls } from '../../config/config';
 import { Transaction } from '../../shared/interfaces/transaction.interface';
 import { TransactionType } from '../../shared/interfaces/transaction-type.interface';
 
-
-
 @Injectable({
   providedIn: 'root',
 })
@@ -189,8 +187,6 @@ export class TransactionService {
   }
 
   mapTransactionFromBackend(transaction: any): Transaction {
-
-    // Map the properties to the Transaction interface
     return {
       id: transaction.id,
       purpose: transaction.purpose,
